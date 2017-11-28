@@ -1,3 +1,4 @@
+
 const autoBind = require('auto-bind');
 
 class BaseAutoBindedClass {

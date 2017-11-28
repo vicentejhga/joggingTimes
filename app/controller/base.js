@@ -1,3 +1,4 @@
+
 const ResponseManager = require(MANAGER_PATH + 'response');
 const BaseAutoBindedClass = require(BASE_PACKAGE_PATH + 'base-autobind');
 

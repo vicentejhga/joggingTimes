@@ -1,7 +1,10 @@
- 
-const router = require('express').Router();
-const UserController = require(CONTROLLER_PATH + 'user');
-let userController = new UserController();
 
-router.get('/', userController.get)
+const express = require('express'),
+    router = express.Router();
+
+
+router.use('/auth', require('./auth.js'));
+router.use('/users', require('./user.js'));
+
+
 module.exports = router;
