@@ -1,3 +1,5 @@
-module.exports = {
-    PORT: process.env.PORT || 3000
+ module.exports = {
+    db: require('./db'),
+    server: require('./server'),
+    jwtOptions: require('./jwt-options')
 };
