@@ -1,6 +1,6 @@
 
 'use strict';
-const BaseError = require(APP_ERROR_PATH + 'base');
+const BaseError = require(ERROR_PATH + 'base');
 
 class NotFoundError extends BaseError {
     constructor(message) {

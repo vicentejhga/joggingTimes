@@ -1,7 +1,7 @@
 
 
 'use strict';
-const BaseError = require(APP_ERROR_PATH + 'base');
+const BaseError = require(ERROR_PATH + 'base');
 
 class NotImplemented extends BaseError {
     constructor(message) {
