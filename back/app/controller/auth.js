@@ -35,9 +35,8 @@ class AuthController extends BaseController {
 
     authenticate(req, res, next, callback) {
         let responseManager = this._responseManager;
-        //this._passport.authenticate('credentials-auth', function (err, user) {
-        this._passport.authenticate('secret-key-auth', function (err, user) {
-            
+         
+        this._passport.authenticate('credentials-auth', function (err, user) {        
             if (err) {
                 responseManager.respondWithError(res, err.status || 401, err.message || "");
             } else {
