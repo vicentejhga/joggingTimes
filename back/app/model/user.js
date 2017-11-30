@@ -9,14 +9,25 @@ let UserSchema = new Schema({
         type: String,
         required: true
     },
-    isActive: {type: Boolean, default: true},
-    dateCreated: {type: Date, default: Date.now},
+    isActive: {
+        type: Boolean, 
+        default: true
+    },
+    role:{
+        type: String, 
+        default:'normal'
+    },
+    dateCreated: {
+        type: Date, 
+        default: Date.now
+    },
     email: String,
     hashedPassword: {
         type: String,
         required: true,
-    },
+    }
 });
+
 UserSchema.methods.toJSON = function () {
     let obj = this.toObject();
     delete obj.hashedPassword;

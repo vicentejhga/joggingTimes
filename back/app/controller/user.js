@@ -14,7 +14,7 @@ class UserController extends BaseController {
     get(req, res, next) {
         let responseManager = this._responseManager;
         let that = this;
-        this._passport.authenticate('jwt-rs-auth', {
+        this._passport.authenticate('jwt-rs-auth', { 
             onVerified: function (token, user) {
                 that._authHandler.getUserInfo(req, user, responseManager.getDefaultResponseHandler(res));
             },
@@ -28,9 +28,10 @@ class UserController extends BaseController {
         let responseManager = this._responseManager;
         this._authHandler.createNewUser(req, responseManager.getDefaultResponseHandler(res));
     }
-
+/*
     authenticate(req, res, callback) {
         let responseManager = this._responseManager;
+         
         this._passport.authenticate('jwt-rs-auth', {
             onVerified: callback,
             onFailure: function (error) {
@@ -38,7 +39,7 @@ class UserController extends BaseController {
             }
         })(req, res);
     }
-
+*/
 }
 
 module.exports = UserController;

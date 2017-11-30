@@ -28,13 +28,12 @@ class SecretKeyAuthStrategy extends BaseAuthStrategy {
     }
 
     _verifyCredentials(key) {
-        console.log(this.provideSecretKey());
         return key === this.provideSecretKey();
     }
 
     authenticate(req, callback) {
         let secretKey = SecretKeyAuthStrategy._extractKeyFromHeader(req);
-        console.log(secretKey);
+        
         if (!secretKey) {
             return callback.onFailure(new InvalidPayloadError("No auth key provided"));
         }

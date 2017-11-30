@@ -92,11 +92,6 @@ class AuthManager extends BaseAutoBindedClass {
         let key = this.getSecretKeyForStrategy(strategyName);
         switch (strategyName) {
             case 'jwt-rs-auth':
-
-
-            console.log(payload,
-                        key,
-                        options);
                 return new JwtToken(
                     this._jwtTokenHandler.sign(payload,
                         key,

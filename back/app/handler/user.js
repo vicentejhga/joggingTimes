@@ -84,7 +84,7 @@ class UserHandler {
     createNewUser(req, callback) {
         let data = req.body;
         let validator = this._validator;
-        console.log(req.body);
+        
         req.checkBody(UserHandler.USER_VALIDATION_SCHEME);
         req.getValidationResult()
             .then(function (result) {
