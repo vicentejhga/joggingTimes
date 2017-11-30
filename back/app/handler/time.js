@@ -70,9 +70,9 @@ class JoggingTimeHandler extends BaseAutoBindedClass {
     }
 
 
+
+
     getAll(req, callback) {
-        //req.checkParams('id', 'Invalid user id provided').isMongoId();
-   
         let userId = req.params.userId;
         let data = req.body;
         new Promise(function (resolve, reject) {
@@ -92,6 +92,92 @@ class JoggingTimeHandler extends BaseAutoBindedClass {
             callback.onError(error);
         });
     }
+
+
+
+    updateTime(req, callback) {
+        let data = req.body;
+        let validator = this._validator;
+        req.checkBody(JoggingTimeHandler.JOGGING_TIME_VALIDATION_SCHEME);
+        req.getValidationResult()
+            .then(function (result) {
+                if (!result.isEmpty()) {
+                    let errorMessages = result.array().map(function (elem) {
+                        return elem.msg;
+                    });
+                    throw new ValidationError('There are validation errors: ' + errorMessages.join(' && '));
+                }
+                return new Promise(function (resolve, reject) {
+                    JoggingTimeModel.findOne({_id: req.params.id}, function (err, time) {
+                        if (err !== null) {
+                            reject(err);
+                        } else {
+                            if (!time) {
+                                reject(new NotFoundError("Time not found"));
+                            }
+                            else {
+                                resolve(time);
+                            }
+                        }
+                    })
+                });
+            }
+        )
+        .then((time) => {
+            time.date = validator.trim(data.date);
+            time.time = validator.trim(data.time);
+            time.distance = validator.trim(data.distance);
+            time.save();
+            return time;
+        })
+        .then((saved) => {
+            callback.onSuccess(saved);
+        })
+        .catch((error) => {
+            callback.onError(error);
+        });
+    }
+
+
+    deleteTime(req, callback) {
+        let data = req.body;
+        req.checkParams('id', 'Invalid time id provided').isMongoId();
+        req.getValidationResult()
+            .then(function (result) {
+                    if (!result.isEmpty()) {
+                        let errorMessages = result.array().map(function (elem) {
+                            return elem.msg;
+                        });
+                        throw new ValidationError('There are validation errors: ' + errorMessages.join(' && '));
+                    }
+                    return new Promise(function (resolve, reject) {
+                        JoggingTimeModel.findOne({_id: req.params.id}, function (err, time) {
+                            if (err !== null) {
+                                reject(err);
+                            } else {
+                                if (!time) {
+                                    reject(new NotFoundError("Time not found"));
+                                }
+                                else {
+                                    resolve(time);
+                                }
+                            }
+                        })
+                    });
+                }
+            )
+            .then((time) => {
+                time.remove();
+                return time;
+            })
+            .then((saved) => {
+                callback.onSuccess(saved);
+            })
+            .catch((error) => {
+                callback.onError(error);
+            });
+    }
+
 }
 
 module.exports = JoggingTimeHandler;

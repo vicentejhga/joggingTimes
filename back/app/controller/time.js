@@ -24,11 +24,15 @@ class TimeController extends BaseController {
     }
 
     update(req, res, next) {
-      
+        this.authenticate(req, res, next, (token, user) => {
+            this._timeHandler.updateTime(req, this._responseManager.getDefaultResponseHandler(res));
+        });
     }
 
     remove(req, res, next) {
-        
+        this.authenticate(req, res, next, (token, user) => {
+            this._timeHandler.deleteTime(req, this._responseManager.getDefaultResponseHandler(res));
+        });
     }
 
     authenticate(req, res, next, callback) {
