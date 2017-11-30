@@ -11,7 +11,11 @@ class TimeController extends BaseController {
         this._passport = require('passport');
     }
 
- 
+    getAll(req, res, next) {
+        this.authenticate(req, res, next, (token, user) => {
+            this._timeHandler.getAll(req, this._responseManager.getDefaultResponseHandler(res));
+        });
+    }
 
     create(req, res, next) {
         this.authenticate(req, res, next, (token, user) => {

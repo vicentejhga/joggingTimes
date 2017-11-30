@@ -55,7 +55,7 @@ class UserHandler {
                     });
                     throw new ValidationError('There have been validation errors: ' + errorMessages.join(' && '));
                 }
-
+ 
                 let userId = req.params.id;
                 if (userToken.id !== req.params.id) {
                     throw new UnauthorizedError("Provided id doesn't match with  the requested user id")

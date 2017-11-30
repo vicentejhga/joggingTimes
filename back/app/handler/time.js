@@ -28,7 +28,7 @@ class JoggingTimeHandler extends BaseAutoBindedClass {
                 isMongoId: {
                     errorMessage: 'Invalid user Id'
                 },
-                errorMessage: "Invalid email provided"
+                errorMessage: 'Invalid email provided'
             }
         };
     }
@@ -41,8 +41,10 @@ class JoggingTimeHandler extends BaseAutoBindedClass {
         req.checkBody(JoggingTimeHandler.JOGGING_TIME_VALIDATION_SCHEME);
         req.getValidationResult()
             .then(function (result) {
+
                 if (!result.isEmpty()) {
                     let errorMessages = result.array().map(function (elem) {
+
                         return elem.msg;
                     });
                     throw new ValidationError('There are validation errors: ' + errorMessages.join(' && '));
@@ -50,13 +52,14 @@ class JoggingTimeHandler extends BaseAutoBindedClass {
                 return new JoggingTimeModel({
                     distance: data.distance,
                     time: data.time,
-                    date: date.date,
-                    authorId: data.authorId
+                    date: data.date,
+                    userId: data.userId
                 });
             })
-            .then((user) => {
-                user.save();
-                return user;
+            .then((time) => {
+                time.save();
+
+                return time;
             })
             .then((saved) => {
                 callback.onSuccess(saved);
@@ -66,6 +69,29 @@ class JoggingTimeHandler extends BaseAutoBindedClass {
             });
     }
 
+
+    getAll(req, callback) {
+        //req.checkParams('id', 'Invalid user id provided').isMongoId();
+   
+        let userId = req.params.userId;
+        let data = req.body;
+        new Promise(function (resolve, reject) {
+            JoggingTimeModel.find({"userId":userId}, function (err, times) {
+                if (err !== null) {
+                    reject(err);
+                } else {
+                    console.log(times)
+                    resolve(times);
+                }
+            });
+        })
+        .then((times) => {
+            callback.onSuccess(times);
+        })
+        .catch((error) => {
+            callback.onError(error);
+        });
+    }
 }
 
 module.exports = JoggingTimeHandler;

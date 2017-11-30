@@ -3,7 +3,7 @@ const Schema = mongoose.Schema;
 const ObjectId = Schema.ObjectId;
 
 let joggingTimeSchema = new Schema({
-    date: Date,
+    date: String,
     time: String,
     distance: Number,
     userId: {
@@ -13,9 +13,10 @@ let joggingTimeSchema = new Schema({
     
 });
 
+ 
 joggingTimeSchema.methods.toJSON = function () {
     let obj = this.toObject();
     delete obj.__v;
     return obj
 };
-module.exports.JoggingTimeModel = mongoose.model('Post', joggingTimeSchema);
+module.exports.JoggingTimeModel = mongoose.model('Time', joggingTimeSchema);

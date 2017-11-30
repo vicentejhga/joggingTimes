@@ -9,17 +9,17 @@ class AuthController extends BaseController {
         this._passport = require('passport');
     } 
 
-    // Request credentials
+    // Request token by credentials
     create(req, res, next) {
         let responseManager = this._responseManager;
         let that = this;
         this.authenticate(req, res, next, (user) => {
             let response =  {
-                onSuccess: function( userToken ) {
-                    let userCredentials = { 'userId':user.id,'token': userToken.token};
-                    responseManager.getDefaultResponseHandler(res).onSuccess(userCredentials);
+                onSuccess: function( jwtToken ) {
+                    let userToken = { 'userId':user.id,'token': jwtToken.token};
+                    responseManager.getDefaultResponseHandler(res).onSuccess(userToken);
                 },
-                onFailure: function( error ) {
+                onError: function( error ) {
                     responseManager.respondWithError(res, error.status || 401, error.message);
                 }
             }

@@ -4,15 +4,15 @@ let timeController = new TimeController();
 
 
 // Get all times (add id?)
-router.get('/', timeController.getAll);
+router.get('/:userId', timeController.getAll);
 
 // Get all times from?
 
 
 // Get one single time
-router.get('/:id', timeController.get);
+//router.get('/:id', timeController.get);
 
-
+ 
 // Create time
 router.post('/', timeController.create);
 
