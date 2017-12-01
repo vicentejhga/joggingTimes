@@ -1,5 +1,5 @@
 
-let apiCall = new api();
+
 class user {
     constructor() {
    
@@ -12,18 +12,15 @@ class user {
     }
 
     authenticate( ) {
-		apiCall.authenticate( this.email, this.password )
+		return apiCall.authenticate( this.email, this.password )
 			.then((userId) => apiCall.getUser(userId) )    	
         	.then(response => {
-        		var objUser = response.data.data; 
+        		let objUser = response.data.data; 
 				this.firstName = objUser.firstName;
 		  		this.lastName = objUser.lastName;
 		  		this.role = objUser.role;
 		  		this.id = objUser._id;             
         	})
-        	.catch(function (error) {
-                console.log("error",error);
-        	});
             	
     }
 

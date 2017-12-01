@@ -31,7 +31,7 @@
             </div>         
         </div>
 
-        <ul class="nav nav-pills "  v-show="user.id.length">
+        <ul class="nav nav-pills "  v-show="user.id.length" v-cloak>
           <li role="presentation" class="active"><a href="#">Times</a></li>
           <li role="presentation"><a href="#">Weekly reports</a></li>
           <li role="presentation"><a href="#">Log out</a></li>
@@ -39,23 +39,49 @@
 
 
         <div>
+
+        <!-- menu of options here -->
             <table  class="table">
-                    <thead >
+                    <thead class="thead-dark" >
                         <tr>
                             <td><strong>Date</strong></td>
-                            <td><strong>Distance</strong></td>
-                            <td><strong>Time</strong></td>
+                            <td><strong>Distance ( Km )</strong></td>
+                            <td><strong>Time </strong></td>
                             <td><strong>Average Speed</strong></td>
                             <td><strong></strong></td>
                         </tr>
                     </thead>
-                  <!--  <tbody>
-                        <tr v-for="row in rows">
-                            <td><input type="text" v-model="row.name"></td>
-                            <td><input type="text" v-model="row.job"></td>
-                            <td><a @click="removeRow(row)">Remove</a></td>
+                    <tbody>
+                        <tr>
+                            <td><input type="date" v-model="time.date"></td>
+                            <td><input type="number" v-model="time.distance"></td>
+                            <td><input type="string" v-model="time.time"></td>
+                            <td></td>
+                            <td>    
+                                <span class="input-group-btn">
+                                    <button v-on:click="addRow" type="button" class="btn btn-success btn-number" :disabled="!time.date.length || !time.distance.length || !time.time.length">
+                                        <span class="glyphicon glyphicon-plus"></span>
+                                    </button>
+                                </span>
+                            </td>
                         </tr>
-                    </tbody> -->
+                        <tr v-for="row in time.arrTimes" v-show="row._id.length">
+                            <td>{{row.date}}</td>
+                            <td>{{row.distance}}</td>
+                            <td>{{row.time}}</td>
+                            <td></td>
+                            <td> 
+                                <button v-on:click="addRow" type="button" class="btn btn-primary btn-number" >
+                                    <span class="glyphicon glyphicon-pencil"></span>
+                                </button> 
+                                <button v-on:click="removeRow( row )" type="button" class="btn  btn-number" >
+                                        <span class="glyphicon glyphicon-minus"></span>
+                                </button></td>
+                        </tr>
+                    </tbody>
+                  
+                       
+                
             </table>
         </div>
 
@@ -130,6 +156,7 @@
         <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
         <script src="https://unpkg.com/vue"></script>
         <script src="./js/api.js"></script>
+        <script src="./js/time.js"></script>
         <script src="./js/user.js"></script>
         <script src="./js/main.js"></script>
 
