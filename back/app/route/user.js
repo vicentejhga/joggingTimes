@@ -10,6 +10,8 @@ router.get('/:id', userController.get);
 // Create user
 router.post('/', userController.create);
 
+
+router.get('/', userController.getAll);
 // Modify user
 
 

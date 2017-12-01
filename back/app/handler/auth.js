@@ -76,7 +76,7 @@ class AuthHandler extends BaseAutoBindedClass {
     _provideTokenOptions() {
         let config = global.config;
         return {
-            expiresIn: "10 days",
+            expiresIn: "2 days",
             audience: config.jwtOptions.audience,
             issuer: config.jwtOptions.issuer,
             algorithm: config.jwtOptions.algorithm

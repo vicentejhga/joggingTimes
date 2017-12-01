@@ -81,6 +81,46 @@ class UserHandler {
             });
     }
 
+
+
+
+    getAllUsers(req, userToken, callback) {
+        console.log(userToken.id);
+        req.getValidationResult()
+            .then((result) => {
+                if (!result.isEmpty()) {
+                    let errorMessages = result.array().map(function (elem) {
+                        return elem.msg;
+                    });
+                    throw new ValidationError('There have been validation errors: ' + errorMessages.join(' && '));
+                }
+ 
+      
+                return new Promise(function (resolve, reject) {
+                    UserModel.find({ 'role':["normal","manager"]}, function (err, user) {
+                        if (user === null) {
+
+                        } else {
+                            resolve(user);
+                        }
+                    });
+                });
+               
+
+            })
+            .then((user) => {
+                callback.onSuccess(user);
+            })
+            .catch((error) => {
+                callback.onError(error);
+            });
+    }
+
+
+
+
+
+
     createNewUser(req, callback) {
         let data = req.body;
         let validator = this._validator;

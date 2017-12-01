@@ -24,10 +24,24 @@ class UserController extends BaseController {
         })(req, res, next);
     } 
 
+    getAll(req, res, next) {
+        let responseManager = this._responseManager;
+        let that = this;
+        this._passport.authenticate('jwt-rs-auth', { 
+            onVerified: function (token, user) {
+                that._authHandler.getAllUsers(req, user, responseManager.getDefaultResponseHandler(res));
+            },
+            onFailure: function (error) {
+                responseManager.respondWithError(res, error.status || 401, error.message);
+            }
+        })(req, res, next);
+    }
+
     create(req, res) {
         let responseManager = this._responseManager;
         this._authHandler.createNewUser(req, responseManager.getDefaultResponseHandler(res));
     }
+
 /*
     authenticate(req, res, callback) {
         let responseManager = this._responseManager;

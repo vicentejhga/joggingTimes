@@ -11,6 +11,9 @@ class time {
 
     add( userId ) {
     	return apiCall.addTime( userId, this )
+            .then((response) => {
+                this.arrTimes.unshift( response.data.data );
+            })
     }
 
     delete( objTime ) {

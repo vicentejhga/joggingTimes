@@ -63,10 +63,11 @@ class JwtRsStrategy extends BaseAuthStrategy {
         let self = this;
 
         let token = self._extractJwtToken(req);
-
+               
         if (!token) {
             return callback.onFailure(new Error("No auth token provided"));
         }
+    
         // Verify the JWT
         JwtRsStrategy._verifyDefault(token, this._publicKey, this._verifyOpts, function (jwt_err, payload) {
             if (jwt_err) {

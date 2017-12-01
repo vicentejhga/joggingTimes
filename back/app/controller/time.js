@@ -30,6 +30,7 @@ class TimeController extends BaseController {
     }
 
     remove(req, res, next) {
+
         this.authenticate(req, res, next, (token, user) => {
             this._timeHandler.deleteTime(req, this._responseManager.getDefaultResponseHandler(res));
         });

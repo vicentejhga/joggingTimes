@@ -15,6 +15,7 @@ class user {
 		return apiCall.authenticate( this.email, this.password )
 			.then((userId) => apiCall.getUser(userId) )    	
         	.then(response => {
+                console.log(response);
         		let objUser = response.data.data; 
 				this.firstName = objUser.firstName;
 		  		this.lastName = objUser.lastName;
@@ -25,6 +26,9 @@ class user {
     }
 
 
+    logOut( ) {
+        return apiCall.logOut( this.email, this.password );              
+    }
 
 }
  

@@ -14,8 +14,8 @@ let UserSchema = new Schema({
         default: true
     },
     role:{
-        type: String, 
-        default:'normal'
+        type: Number, 
+        default:100
     },
     dateCreated: {
         type: Date, 

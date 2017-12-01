@@ -80,7 +80,6 @@ class JoggingTimeHandler extends BaseAutoBindedClass {
                 if (err !== null) {
                     reject(err);
                 } else {
-                    console.log(times)
                     resolve(times);
                 }
             });

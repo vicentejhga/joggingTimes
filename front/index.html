@@ -6,56 +6,63 @@
         <link rel="stylesheet" type="text/css" href="./css/main.css">
 
         <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+      
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
- 
-
     </head>
     <body>
-    <div id="app">
-        <div  class="login-form-1"  v-show="!user.id.length">  
-           <div class="main-login-form" >
-                <div class="login-group">
-                    <div class="form-group">
- 
-                        <input type="text" class="form-control" v-model="user.email"  name="lg_username" placeholder="Email">
+        <div id="app" class = "container text-center" >
+            <nav class="navbar navbar-default" v-show="user.id.length">
+                <div class="container-fluid">
+                    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                        <ul class="nav navbar-nav">
+                            <li class="active"><a href="#">Your times <span class="sr-only">(current)</span></a></li>
+                            <li><a href="#" active>Your weekly reports</a></li>    
+                            <li><a href="#">Manager</a></li>    
+                        </ul>
+                    
+                        <ul class="nav navbar-nav navbar-right">
+                         
+                            <li><a href="#" v-on:click='logOut'>Log out ({{ this.user.email }})</a></li>
+                        </ul>
+                    </div><!-- /.navbar-collapse -->
+                </div><!-- /.container-fluid -->
+            </nav>
+
+            <div  class="login-form-1"  v-show="!user.id.length">  
+               <div class="main-login-form" >
+                    <div class="login-group">
+                        <div class="form-group">
+     
+                            <input type="text" class="form-control" v-model="user.email"  name="lg_username" placeholder="Email">
+                        </div>
+                        <div class="form-group">
+                   
+                            <input type="password" class="form-control" v-model="user.password"  name="lg_password" placeholder="Password">
+                        </div>
                     </div>
-                    <div class="form-group">
-               
-                        <input type="password" class="form-control" v-model="user.password"  name="lg_password" placeholder="Password">
-                    </div>
-                </div>
-                <button v-on:click="submitLogin" class="login-button"><i class="fa fa-chevron-right"></i></button>
-            </div>  
-            <div class="etc-login-form">
-                <p>new user? <a href="#">create new account</a></p>
-            </div>         
-        </div>
+                    <button v-on:click="submitLogin" :disabled="!user.email.length || !user.password.length" class="login-button"><i class="fa fa-chevron-right"></i></button>
+                </div>  
+                <div class="etc-login-form">
+                    <p>new user? <a href="#">create new account</a></p>
+                </div>         
+            </div>
 
-        <ul class="nav nav-pills "  v-show="user.id.length" v-cloak>
-          <li role="presentation" class="active"><a href="#">Times</a></li>
-          <li role="presentation"><a href="#">Weekly reports</a></li>
-          <li role="presentation"><a href="#">Log out</a></li>
-        </ul>
-
-
-        <div>
-
-        <!-- menu of options here -->
-            <table  class="table">
+            <div  v-show="user.id.length">
+                <table  class="table">
                     <thead class="thead-dark" >
                         <tr>
-                            <td><strong>Date</strong></td>
-                            <td><strong>Distance ( Km )</strong></td>
-                            <td><strong>Time </strong></td>
-                            <td><strong>Average Speed</strong></td>
-                            <td><strong></strong></td>
+                            <td class="text-center"><strong>Date</strong></td>
+                            <td class="text-center"><strong>Distance ( Km )</strong></td>
+                            <td class="text-center"><strong>Time </strong></td>
+                            <td class="text-center"><strong>Average Speed</strong></td>
+                            <td class="text-center"><strong></strong></td>
                         </tr>
                     </thead>
                     <tbody>
                         <tr>
-                            <td><input type="date" v-model="time.date"></td>
-                            <td><input type="number" v-model="time.distance"></td>
-                            <td><input type="string" v-model="time.time"></td>
+                            <td><input type="date" v-model="time.date" class ="borderless" ></td>
+                            <td><input type="number" v-model="time.distance" class ="borderless"></td>
+                            <td><input type="string" v-model="time.time" class ="borderless"></td>
                             <td></td>
                             <td>    
                                 <span class="input-group-btn">
@@ -75,84 +82,15 @@
                                     <span class="glyphicon glyphicon-pencil"></span>
                                 </button> 
                                 <button v-on:click="removeRow( row )" type="button" class="btn  btn-number" >
-                                        <span class="glyphicon glyphicon-minus"></span>
-                                </button></td>
+                                    <span class="glyphicon glyphicon-minus"></span>
+                                </button>
+                            </td>
                         </tr>
-                    </tbody>
-                  
-                       
-                
-            </table>
+                    </tbody>   
+                </table>
+            </div>
         </div>
 
-
-  <!--
-        <div v-show="api.token.length">
-
-       
-            NORMAL USER
-            Get all times 
-        -->
-            
-
-
-        <!-- 
-            Add time
-        -->
-        <!-- 
-           modify time
-        -->
-        <!-- 
-           delete time
-        -->
-       <!-- 
-            Get time from
-        -->
-
-
-
-        <!-- 
-          MANAGER USER
-        -->
-
-        <!-- 
-           create user
-        -->
-        <!-- 
-           delete user
-        -->
-
-        <!-- 
-          ADMIN USER
-        -->
-
-
-        <!-- 
-           create user
-
-        --><!-- 
-           list all user
-        -->
-        <!-- 
-           delete user
-        -->
-
-      <!-- 
-            Get all times for specific user
-        -->
-        <!-- 
-            Add time for specific user
-        -->
-        <!-- 
-           modify time for specific user
-        -->
-        <!-- 
-           delete time for specific user
-        -->
-       <!-- 
-            Get time from for specific user   
-        </div>-->
-        </div>
         <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
         <script src="https://unpkg.com/vue"></script>
         <script src="./js/api.js"></script>
