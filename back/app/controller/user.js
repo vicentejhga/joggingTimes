@@ -7,7 +7,7 @@ const util = require("util");
 class UserController extends BaseController {
     constructor() {
         super();
-        this._authHandler = new UserHandler();
+        this._userHandler = new UserHandler();
         this._passport = require('passport');
     }
 
@@ -16,7 +16,7 @@ class UserController extends BaseController {
         let that = this;
         this._passport.authenticate('jwt-rs-auth', { 
             onVerified: function (token, user) {
-                that._authHandler.getUserInfo(req, user, responseManager.getDefaultResponseHandler(res));
+                that._userHandler.getUserInfo(req, user, responseManager.getDefaultResponseHandler(res));
             },
             onFailure: function (error) {
                 responseManager.respondWithError(res, error.status || 401, error.message);
@@ -24,12 +24,12 @@ class UserController extends BaseController {
         })(req, res, next);
     } 
 
-    getAll(req, res, next) {
-        let responseManager = this._responseManager;
+    update(req, res, next) {
+      let responseManager = this._responseManager;
         let that = this;
         this._passport.authenticate('jwt-rs-auth', { 
             onVerified: function (token, user) {
-                that._authHandler.getAllUsers(req, user, responseManager.getDefaultResponseHandler(res));
+               that._userHandler.updateUser(req, responseManager.getDefaultResponseHandler(res));
             },
             onFailure: function (error) {
                 responseManager.respondWithError(res, error.status || 401, error.message);
@@ -37,9 +37,32 @@ class UserController extends BaseController {
         })(req, res, next);
     }
 
+    getAll(req, res, next) {
+        let responseManager = this._responseManager;
+        let that = this;
+        this._passport.authenticate('jwt-rs-auth', { 
+            onVerified: function (token, user) {
+                that._userHandler.getAllUsers(req, user, responseManager.getDefaultResponseHandler(res));
+            },
+            onFailure: function (error) {
+                responseManager.respondWithError(res, error.status || 401, error.message);
+            }
+        })(req, res, next);
+    }
+
+
+    remove(req, res, next) {
+        this.authenticate(req, res, next, (token, user) => {
+            this._userHandler.deleteUser(req, this._responseManager.getDefaultResponseHandler(res));
+        });
+    }
+
+
+
+
     create(req, res) {
         let responseManager = this._responseManager;
-        this._authHandler.createNewUser(req, responseManager.getDefaultResponseHandler(res));
+        this._userHandler.createNewUser(req, responseManager.getDefaultResponseHandler(res));
     }
 
 /*

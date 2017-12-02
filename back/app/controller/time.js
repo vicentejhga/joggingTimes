@@ -1,7 +1,7 @@
 
 const BaseController = require(CONTROLLER_PATH + 'base');
 const TimeHandler = require(HANDLER_PATH + 'time');
-
+const NotFoundError = require(ERROR_PATH + 'not-found');
 
 
 class TimeController extends BaseController {

@@ -1,5 +1,6 @@
 
 const ResponseManager = require(MANAGER_PATH + 'response');
+const PermisionManager = require(MANAGER_PATH + 'permision');
 const BaseAutoBindedClass = require(BASE_PACKAGE_PATH + 'base-autobind');
 
 class BaseController extends BaseAutoBindedClass {
@@ -9,6 +10,7 @@ class BaseController extends BaseAutoBindedClass {
             throw new TypeError("Cannot construct BaseController instances directly");
         }
         this._responseManager = ResponseManager;
+        this._permisionManager = ResponseManager;
     }
 
     getAll(req, res) {

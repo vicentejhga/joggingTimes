@@ -1,5 +1,6 @@
 
 const UserModel = require(MODEL_PATH + 'user').UserModel;
+const NotFoundError = require(ERROR_PATH + 'not-found');
 const AlreadyExistsError = require(ERROR_PATH + 'already-exists');
 const ValidationError = require(ERROR_PATH + 'validation');
 const UnauthorizedError = require(ERROR_PATH + 'unauthorized');
@@ -14,7 +15,7 @@ class UserHandler {
             'firstName': {
                 notEmpty: true,
                 isLength: {
-                    options: [{min: 2, max: 15}],
+                    options: [{min: 2, max: 20}],
                     errorMessage: 'First getName must be between 2 and 15 chars long'
                 },
                 errorMessage: 'Invalid First Name'
@@ -22,7 +23,7 @@ class UserHandler {
             'lastName': {
                 notEmpty: true,
                 isLength: {
-                    options: [{min: 2, max: 15}],
+                    options: [{min: 2, max: 20}],
                     errorMessage: 'Lastname must be between 2 and 15 chars long'
                 },
                 errorMessage: 'Invalid First Name'
@@ -33,10 +34,11 @@ class UserHandler {
                 },
                 errorMessage: "Invalid email provided"
             },
+
             'password': {
                 notEmpty: true,
                 isLength: {
-                    options: [{min: 6, max: 35}],
+                    options: [{min: 5, max: 35}],
                     errorMessage: 'Password must be between 6 and 35 chars long'
                 },
                 errorMessage: 'Invalid Password Format'
@@ -55,7 +57,7 @@ class UserHandler {
                     });
                     throw new ValidationError('There have been validation errors: ' + errorMessages.join(' && '));
                 }
- 
+                 
                 let userId = req.params.id;
                 if (userToken.id !== req.params.id) {
                     throw new UnauthorizedError("Provided id doesn't match with  the requested user id")
@@ -63,11 +65,16 @@ class UserHandler {
                 else {
                     return new Promise(function (resolve, reject) {
                         UserModel.findById(userId, function (err, user) {
-                            if (user === null) {
+                            if (err !== null) {
+                                reject(err);
+                            } 
 
+                            if ( !user ) {
+                                reject(new NotFoundError("User not found"));
                             } else {
                                 resolve(user);
                             }
+                            
                         });
                     });
                 }
@@ -82,32 +89,45 @@ class UserHandler {
     }
 
 
-
-
     getAllUsers(req, userToken, callback) {
-        console.log(userToken.id);
+  
         req.getValidationResult()
             .then((result) => {
+                console.log("first");
                 if (!result.isEmpty()) {
                     let errorMessages = result.array().map(function (elem) {
                         return elem.msg;
                     });
                     throw new ValidationError('There have been validation errors: ' + errorMessages.join(' && '));
                 }
- 
-      
-                return new Promise(function (resolve, reject) {
-                    UserModel.find({ 'role':["normal","manager"]}, function (err, user) {
-                        if (user === null) {
 
+                return new Promise(function (resolve, reject) {
+                        UserModel.findById(userToken.id, function (err, user) {
+                            if (err !== null) {
+                                reject(err);
+                            } 
+
+                            if ( !user ) {
+                                reject(new NotFoundError("User not found"));
+                            } else {
+                                resolve(user);
+                            }
+                            
+                        });
+                })
+            })
+            .then((user)=>{
+                return new Promise(function (resolve, reject) {
+                    UserModel.find({ 'role': { $lt: user.role } }, function (err, user) {
+                        if (err !== null) {
+                            reject(err);
                         } else {
-                            resolve(user);
+                            resolve(user);                            
                         }
                     });
                 });
-               
 
-            })
+            }) 
             .then((user) => {
                 callback.onSuccess(user);
             })
@@ -118,7 +138,98 @@ class UserHandler {
 
 
 
+    updateUser(req, callback) {
 
+        let data = req.body;
+
+        let validator = this._validator;
+
+
+
+        req.checkBody(UserHandler.USER_VALIDATION_SCHEME);
+
+        req.getValidationResult()
+            .then(function (result) {
+                if (!result.isEmpty()) {
+                    let errorMessages = result.array().map(function (elem) {
+                        return elem.msg;
+                    });
+                    throw new ValidationError('There are validation errors: ' + errorMessages.join(' && '));
+                }
+                return new Promise(function (resolve, reject) {
+                    UserModel.findOne({_id: req.params.id}, function (err, user) {
+                        if (err !== null) {
+                            reject(err);
+                        } else {
+                            if (!user) {
+                                reject(new NotFoundError("User not found"));
+                            }
+                            else {
+                                resolve(user);
+                            }
+                        }
+                    })
+                });
+            }
+        )
+        .then((user) => {
+            user.firstName = validator.trim(data.firstName);
+            user.lastName = validator.trim(data.lastName);
+            user.email = validator.trim(data.email);
+            user.password = validator.trim(data.password);
+ 
+            user.save();
+            return user;
+        })
+        .then((saved) => {
+            callback.onSuccess(saved);
+        })
+        .catch((error) => {
+            console.log(error);
+            callback.onError(error);
+        });
+    }
+
+
+
+    deleteUser(req, callback) {
+        let data = req.body;
+        req.checkParams('id', 'Invalid user id provided').isMongoId();
+        req.getValidationResult()
+            .then(function (result) {
+                    if (!result.isEmpty()) {
+                        let errorMessages = result.array().map(function (elem) {
+                            return elem.msg;
+                        });
+                        throw new ValidationError('There are validation errors: ' + errorMessages.join(' && '));
+                    }
+                    return new Promise(function (resolve, reject) {
+                        UserModel.findOne({_id: req.params.id}, function (err, time) {
+                            if (err !== null) {
+                                reject(err);
+                            } else {
+                                if (!time) {
+                                    reject(new NotFoundError("Time not found"));
+                                }
+                                else {
+                                    resolve(time);
+                                }
+                            }
+                        })
+                    });
+                }
+            )
+            .then((time) => {
+                time.remove();
+                return time;
+            })
+            .then((saved) => {
+                callback.onSuccess(saved);
+            })
+            .catch((error) => {
+                callback.onError(error);
+            });
+    }
 
 
     createNewUser(req, callback) {

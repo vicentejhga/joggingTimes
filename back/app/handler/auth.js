@@ -25,6 +25,8 @@ class AuthHandler extends BaseAutoBindedClass {
         }
     }
 
+
+ 
     revokeToken(req,token, callback) {
         let that = this;
         req.checkParams('token', 'Invalid token id provided').notEmpty().isAlphanumeric().isLength(SHA_HASH_LENGTH);

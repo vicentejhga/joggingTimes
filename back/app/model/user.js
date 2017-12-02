@@ -13,9 +13,12 @@ let UserSchema = new Schema({
         type: Boolean, 
         default: true
     },
+    // 10: Normal
+    // 20: Manager
+    // 30: Admin
     role:{
         type: Number, 
-        default:100
+        default: 10
     },
     dateCreated: {
         type: Date, 
@@ -40,6 +43,7 @@ UserSchema.virtual('id')
     .get(function () {
         return this._id;
     });
+
 UserSchema.virtual('password')
     .set(function (password) {
         this.salt = crypto.randomBytes(32).toString('base64');
@@ -48,6 +52,7 @@ UserSchema.virtual('password')
     .get(function () {
         return this.hashedPassword;
     });
+
 
 UserSchema.methods.encryptPassword = function (password, salt) {
     return crypto.createHmac('sha1', salt).update(password).digest('hex');
