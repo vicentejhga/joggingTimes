@@ -13,12 +13,9 @@ let UserSchema = new Schema({
         type: Boolean, 
         default: true
     },
-    // 10: Normal
-    // 20: Manager
-    // 30: Admin
     role:{
-        type: Number, 
-        default: 10
+        type: String, 
+        default: "Admin"
     },
     dateCreated: {
         type: Date, 

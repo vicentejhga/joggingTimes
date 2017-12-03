@@ -1,6 +1,6 @@
 
 const ResponseManager = require(MANAGER_PATH + 'response');
-const PermisionManager = require(MANAGER_PATH + 'permision');
+ 
 const BaseAutoBindedClass = require(BASE_PACKAGE_PATH + 'base-autobind');
 
 class BaseController extends BaseAutoBindedClass {
@@ -10,31 +10,34 @@ class BaseController extends BaseAutoBindedClass {
             throw new TypeError("Cannot construct BaseController instances directly");
         }
         this._responseManager = ResponseManager;
-        this._permisionManager = ResponseManager;
+ 
     }
 
-    getAll(req, res) {
 
+    authenticate(req, res, next, callback) {
+        let responseManager = this._responseManager;
+        
+        this._passport.authenticate('jwt-rs-auth', {
+            onVerified: callback,
+            onFailure: function (error) {
+                responseManager.respondWithError(res, error.status || 401, error.message);
+            }
+        })(req, res, next);
     }
 
-    get(req, res) {
-
-    }
-
-    create(req, res) {
-
-    }
-
-    update(req, res) {
-
-    }
-
-    remove(req, res) {
-
-    }
-
-    authenticate(req, res, callback) {
-
+    permission( allowed ){
+        let that = this;
+        return function (req, res, next) {
+            that.authenticate(req, res, next, (token, user) => {
+                let arr_allowed = allowed.split(',');
+                if (( arr_allowed.indexOf( user.role ) > -1 ) ||
+                    ( arr_allowed.indexOf( 'Itself' ) > -1 && user.id == req.params.id )) {
+                    next();
+                } else {
+                    that._responseManager.respondWithError( res,401, "User is not authorized");
+                }
+            }); 
+        };
     }
 }
 module.exports = BaseController;

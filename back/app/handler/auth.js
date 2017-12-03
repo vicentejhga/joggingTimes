@@ -14,8 +14,7 @@ class AuthHandler extends BaseAutoBindedClass {
     }
 
     issueNewToken(req, user, callback) {
-        let that = this;
-  
+        let that = this; 
         if (user) {
             let jwtToken = that._authManager.signToken("jwt-rs-auth", that._provideTokenPayload(user), that._provideTokenOptions());
             callback.onSuccess(jwtToken);
@@ -69,7 +68,8 @@ class AuthHandler extends BaseAutoBindedClass {
 
 
     _provideTokenPayload(user) {
-        return {
+   
+        return {   
             id: user.id,
             scope: 'default'
         };
