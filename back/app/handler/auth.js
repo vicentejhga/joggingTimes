@@ -71,6 +71,7 @@ class AuthHandler extends BaseAutoBindedClass {
    
         return {   
             id: user.id,
+            role: user.role,
             scope: 'default'
         };
     }

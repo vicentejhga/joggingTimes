@@ -93,7 +93,6 @@ class UserHandler {
   
         req.getValidationResult()
             .then((result) => {
-                console.log("first");
                 if (!result.isEmpty()) {
                     let errorMessages = result.array().map(function (elem) {
                         return elem.msg;

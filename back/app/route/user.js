@@ -6,7 +6,7 @@ const UserController = require(CONTROLLER_PATH + 'user');
 let userController = new UserController();
 
 // Get single user
-router.get('/:id', userController.permission('Itself,Admin,Manager'), userController.get);
+router.get('/:id', userController.permission('Admin,Manager,Itself'), userController.get);
 
 // Get all users
 router.get('/', userController.permission('Admin,Manager'), userController.getAll);
@@ -19,7 +19,7 @@ router.post('/',  userController.create);
 router.put('/:id', userController.permission('Admin,Manager'), userController.update);
 
 // Delete user
-router.delete('/:id', userController.permission('Admin,Manager'), userController.remove )
+router.delete('/:id',  userController.permission('Admin,Manager'), userController.remove )
 
 
 module.exports = router;
