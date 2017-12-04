@@ -1,11 +1,11 @@
 <template>
   	<div class="loginForm">
       	<h1>New user</h1>
-      	<input type = "text" placeholder="First name" />
-        <input type = "text" placeholder="Second name" />
-        <input type = "text" placeholder="E-mail" />
-      	<input type = "password" placeholder="Password" />
-  		  <button v-on:click="signIn">Create account</button>
+      	<input type = "text" placeholder="First name" v-model="userForm.firstName"/>
+        <input type = "text" placeholder="Last name" v-model="userForm.lastName" />
+        <input type = "text" placeholder="E-mail" v-model="userForm.email"/>
+      	<input type = "password" placeholder="Password" v-model="userForm.password"/>
+  		  <button v-on:click="signUp">Create account</button>
   	
   </div>
 </template>
@@ -13,19 +13,25 @@
 
 
 <script>
+
+import api from '../api'
+
 export default {
   name: 'Register',
   data () {
     return {
-        firstName: '',
-        lastName: '',
-        email: '',
-        password: ''
+      userForm: {
+          firstName: '',
+          lastName: '',
+          email: '',
+          password: ''
+      },
+      error: ''
     }
   },
   methods: {
   		signUp: function() {
-  			alert("ok");
+  			  api.createNewUser( this, this.userForm );  
   		}
   }
 }

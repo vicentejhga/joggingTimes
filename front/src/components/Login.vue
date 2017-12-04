@@ -21,6 +21,7 @@ export default {
   data () {
     return {
         credentials:{ email: '', password: '' },
+        user: { id: ''},
         error: ''
     } 
   },

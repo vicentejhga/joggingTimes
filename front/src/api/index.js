@@ -1,6 +1,6 @@
 import router from '../router/index'
 let axios = require('axios');
-let apiUrl = 'http://192.168.1.37:3000/';
+let apiUrl = 'http://192.168.1.43:3000/';
 
 export default {
 
@@ -9,25 +9,26 @@ export default {
     },
 
     login( context, credentials ) {  
-        axios.post( apiUrl + 'auth/',{ 'email': credentials.email, 'password': credentials.password })
+        axios.post( apiUrl + 'auth/', credentials )
             .then(response => {
                     this.token = response.data.data.token;
                     axios.defaults.headers.common['Authorization'] = 'JWT ' + this.token;
-                    console.log("here we are",response.data.data.userId);
-                    return response.data.data.userId;           
+                    console.log(context._data);
+                    context.user.id = response.data.data.userId;
+                    router.push('/times');          
             })
-/*
-        var error = false;
-        if ( error ) {
-            context.error="error";
-        } else {
-            router.push('/times');
-        }
-*/
+            .catch((err)=> {context.error = err.message});
+
     },
 
-    register( context, user ) {
+    createNewUser( context, userForm ) {
 
+        axios.post( apiUrl + 'users/', userForm )
+            .then( function(){
+                router.push('/times');
+            })
+            .catch((err)=> {context.error = err.message});
+    
     }
 
 }
@@ -55,17 +56,6 @@ class api {
 
 
     // USER 
-
-    authenticate( email, password ) {
-        return axios.post( apiUrl + 'auth/',{ 'email': email, 'password': password })
-            .then(response => {
-                    this.token = response.data.data.token;
-                    console.log(  this.token );
-                    axios.defaults.headers.common['Authorization'] = 'JWT ' + this.token;
-                    return response.data.data.userId;           
-            })
-           
-    }
 
     logOut(){
           return axios.delete( apiUrl + 'auth/'+this.token ,{  })
