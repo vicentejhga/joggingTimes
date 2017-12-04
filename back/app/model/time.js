@@ -13,7 +13,6 @@ let joggingTimeSchema = new Schema({
     
 });
 
- 
 joggingTimeSchema.methods.toJSON = function () {
     let obj = this.toObject();
     delete obj.__v;
