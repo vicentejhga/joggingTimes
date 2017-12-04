@@ -18,8 +18,8 @@ export default new Router({
       component: Register
     },
      {
-      path: '/test',
-      name: 'HelloWorld',
+      path: '/times',
+      name: 'Times',
       component: HelloWorld
     }
   ]

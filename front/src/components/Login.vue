@@ -1,27 +1,31 @@
 <template>
   	<div class="loginForm">
       	<h1>Login</h1>
-      	<input type = "text" placeholder="E-mail" />
-      	<input type = "password" placeholder="Password" />
-  		<button v-on:click="signIn">Sign in</button>
-  	<div><p>New user? <a href="#/test">create new account</a></p></div>
+      	<input type = "text" placeholder="E-mail" v-model="email"/>
+      	<input type = "password" placeholder="Password" v-model="password"/>
+  		<button v-on:click="signIn" :disabled="!this.email.length||!this.password.length">Sign in</button>
+  	<div><p>New user? <a href="#/register">create new account</a></p></div>
   </div>
 </template>
 
 
 
 <script>
+import api from '../api'
 export default {
   name: 'Login',
   data () {
     return {
-      msg: 'Welcome to Your Vue.js App'
+      email:'',
+      password:''
     }
   },
   methods: {
-  		signIn:function() {
-  			alert("ok");
-  		}
+  	signIn() {
+        let email = this.$refs.email.value;
+        let password = this.$refs.password.value;
+        api.login( email, password );
+     }
   }
 }
 </script>
