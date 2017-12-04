@@ -1,30 +1,33 @@
 <template>
   	<div class="loginForm">
       	<h1>Login</h1>
-      	<input type = "text" placeholder="E-mail" v-model="email"/>
-      	<input type = "password" placeholder="Password" v-model="password"/>
-  		<button v-on:click="signIn" :disabled="!this.email.length||!this.password.length">Sign in</button>
+      	<input type = "text" placeholder="E-mail" v-model="credentials.email"/>
+      	<input type = "password" placeholder="Password" v-model="credentials.password"/>
+  		  <button v-on:click="signIn" :disabled="!credentials.email.length||!credentials.password.length">Sign in</button>
   	<div><p>New user? <a href="#/register">create new account</a></p></div>
+    <div v-if="error.length"><p class="danger">{{error}}</p></div>
   </div>
 </template>
 
-
+ 
 
 <script>
 import api from '../api'
+
+import router from '../router/index'
+
 export default {
   name: 'Login',
   data () {
     return {
-      email:'',
-      password:''
-    }
+        credentials:{ email: '', password: '' },
+        error: ''
+    } 
   },
   methods: {
   	signIn() {
-        let email = this.$refs.email.value;
-        let password = this.$refs.password.value;
-        api.login( email, password );
+        api.login( this, this.credentials );  
+      
      }
   }
 }
@@ -34,5 +37,7 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-
+    .danger{
+        background-color: #f2dede;
+    }
 </style>

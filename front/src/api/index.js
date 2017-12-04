@@ -1,16 +1,33 @@
 import router from '../router/index'
+let axios = require('axios');
+let apiUrl = 'http://192.168.1.37:3000/';
 
 export default {
-
 
     user: {
             token:''
     },
 
-    login() {
+    login( context, credentials ) {  
+        axios.post( apiUrl + 'auth/',{ 'email': credentials.email, 'password': credentials.password })
+            .then(response => {
+                    this.token = response.data.data.token;
+                    axios.defaults.headers.common['Authorization'] = 'JWT ' + this.token;
+                    console.log("here we are",response.data.data.userId);
+                    return response.data.data.userId;           
+            })
+/*
+        var error = false;
+        if ( error ) {
+            context.error="error";
+        } else {
+            router.push('/times');
+        }
+*/
+    },
 
-        this.token = 'hello';
-         
+    register( context, user ) {
+
     }
 
 }
