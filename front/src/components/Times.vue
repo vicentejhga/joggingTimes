@@ -55,12 +55,32 @@ export default {
       }
   },
   created: function(){
-     api.getTimes(this)
+    let that = this;
+      api.getTimes()
+          .then( function( response ){
+                that.arrTimes = response.data.data;
+            })
+          .catch((err)=> {
+            console.log("errroring", err);
+          });
   },
 
   methods: {
-  		addTime:function() {    
-  			 api.createNewTime(this, this.formNewTime);
+  		addTime:function() {
+      let that = this;    
+  			 api.createNewTime( this.formNewTime)
+            .then(() => api.getTimes() )
+            .then( function( response ){
+                that.arrTimes = response.data.data;
+            })
+            .then(()=>{
+                this.formNewTime = {'date':'','distance':'','time':''}
+            })
+            .catch(( error )=>{
+
+                console.log(error);
+            })
+
   		},
       deleteTime:function() { 
           api.deleteTime(this, this.formNewTime);

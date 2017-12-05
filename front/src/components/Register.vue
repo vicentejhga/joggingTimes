@@ -41,5 +41,10 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-
+  input {
+      text-align: center;
+      display:block;
+      margin:0 auto;
+      margin-bottom:10px;
+    }
 </style>

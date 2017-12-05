@@ -3,8 +3,7 @@
 		<ul id="menu">
 			<a href="#"><li>Times</li></a>
 			<a href="#"><li>Weekly report</li></a>
-			<a href="#"><li>Texto</li></a>
-			<a href="#"><li>Texto</li></a>
+			<a href="#"><li>{{ user.role }} stuff</li></a>
 			<a href="#"><li>Log out</li></a>
 		</ul> 
 	</div>

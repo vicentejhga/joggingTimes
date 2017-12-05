@@ -10,14 +10,16 @@ export default {
     
 
     login( context, credentials ) {  
+        
         axios.post( apiUrl + 'auth/', credentials )
             .then(response => {
                     this.token = response.data.data.token;
                     axios.defaults.headers.common['Authorization'] = 'JWT ' + this.token;
-                    this.user.id = response.data.data.userId;
-                  
-                    router.push('/times');          
+                    this.user.id = response.data.data.userId;         
+                   
             })
+            .then(() => this.getUser(this.user.id) )     
+            .then(() => router.push('/times'))      
             .catch((err)=> {context.error = err.message});
 
     },
@@ -30,8 +32,18 @@ export default {
             .catch((err)=> {context.error = err.message});
     
     },
-
-    getUsers() {
+    
+    // If not userId provided get all users
+    getUser( userId ) {
+        axios.get( apiUrl + 'users/' + userId, {} )
+            .then(response => {          
+                let objUser = response.data.data; 
+                this.user.firstName = objUser.firstName;
+                this.user.lastName = objUser.lastName;
+                this.user.role = objUser.role;
+                this.user.email = objUser.email;            
+            })
+            .catch((err)=> {context.error = err.message});
 
     },
 
@@ -44,11 +56,10 @@ export default {
 
     },
 
-    createNewTime( context, newTimeForm ) {
-        newTimeForm['userId']=this.user.id;
-        axios.post( apiUrl + 'times/',  newTimeForm )
-            .then((response) => context.arrTimes.unshift(response.data.data))
-            .catch((err)=> {context.error = err.message});
+    createNewTime( newTimeForm ) {
+        newTimeForm['userId'] = this.user.id;
+        return axios.post( apiUrl + 'times/',  newTimeForm )
+           
     },
 
 
@@ -61,13 +72,9 @@ export default {
 
     },
 
-    getTimes( context ) {
-
-        axios.get( apiUrl + 'times/' + this.user.id )
-            .then( function( response ){
-                context.arrTimes = response.data.data;
-            })
-            .catch((err)=> {context.error = err.message});
+    getTimes(   ) {
+     
+        return axios.get( apiUrl + 'times/' + this.user.id )
     }
 
 }

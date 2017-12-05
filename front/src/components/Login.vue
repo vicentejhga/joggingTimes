@@ -1,10 +1,13 @@
 <template>
   	<div class="loginForm">
-      	<h1>Login</h1>
+      	 
+        <h1>Login</h1>
+      
       	<input type = "text" placeholder="E-mail" v-model="credentials.email"/>
       	<input type = "password" placeholder="Password" v-model="credentials.password"/>
   		  <button v-on:click="signIn" :disabled="!credentials.email.length||!credentials.password.length">Sign in</button>
-  	<div><p>New user? <a href="#/register">create new account</a></p></div>
+  	     <div><p>New user? <a href="#/register">create new account</a></p></div>
+ 
     <div v-if="error.length"><p class="danger">{{error}}</p></div>
   </div>
 </template>
@@ -40,4 +43,11 @@ export default {
     .danger{
         background-color: #f2dede;
     }
+    input {
+      text-align: center;
+      display:block;
+      margin:0 auto;
+      margin-bottom:10px;
+    }
+
 </style>

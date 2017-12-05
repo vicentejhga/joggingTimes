@@ -8,7 +8,8 @@ export default {
             lastName:'',
             email:'',
             password:'',
-            token:''
+            token:'',
+            role:''
     },
 
     login( context, credentials ) {  
