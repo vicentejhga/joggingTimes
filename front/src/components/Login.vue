@@ -13,7 +13,6 @@
 
 <script>
 import api from '../api'
-
 import router from '../router/index'
 
 export default {

@@ -1,20 +1,19 @@
-import router from '../router/index'
+import router from '../router/index';
+import user from './user';
+
 let axios = require('axios');
 let apiUrl = 'http://192.168.1.43:3000/';
 
 export default {
 
-    user: {
-            token:''
-    },
+    user: user.user,
 
     login( context, credentials ) {  
         axios.post( apiUrl + 'auth/', credentials )
             .then(response => {
                     this.token = response.data.data.token;
                     axios.defaults.headers.common['Authorization'] = 'JWT ' + this.token;
-                    console.log(context._data);
-                    context.user.id = response.data.data.userId;
+                    this.user.id = response.data.data.userId;
                     router.push('/times');          
             })
             .catch((err)=> {context.error = err.message});
@@ -22,13 +21,43 @@ export default {
     },
 
     createNewUser( context, userForm ) {
-
         axios.post( apiUrl + 'users/', userForm )
             .then( function(){
                 router.push('/times');
             })
             .catch((err)=> {context.error = err.message});
     
+    },
+
+    getUsers() {
+
+    },
+
+    updateUser() {
+
+    },
+
+    deleteUser() {
+
+
+    },
+
+    createNewTime() {
+
+    },
+
+
+    updateTime() {
+
+    },
+
+    deleteTime() {
+
+
+    },
+
+    getTimes() {
+
     }
 
 }

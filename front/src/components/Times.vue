@@ -15,6 +15,9 @@ export default {
       msg: 'Welcome to Your Vue.js App'
     }
   },
+  created: function(){
+      console.log("here we aer");
+  },
   methods: {
   		signIn:function() {
   			alert("ok");

@@ -1,5 +1,98 @@
 
 
+export default {
+
+    user: {
+            id:'',
+            firstName:'',
+            lastName:'',
+            email:'',
+            password:'',
+            token:''
+    },
+
+    login( context, credentials ) {  
+     
+
+    }
+
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*
+
+class api {
+    constructor() {
+        this.token = ''
+    }
+
+
+    // USER 
+
+    logOut(){
+          return axios.delete( apiUrl + 'auth/'+this.token ,{  })
+            .then(response => {
+                    this.token = '';
+                    axios.defaults.headers.common['Authorization'] = '';                       
+            })
+           
+    }
+
+
+
+
+    getUser( userId ) {
+        return axios.get( apiUrl + 'users/' + userId, {} );
+
+    }
+
+
+
+
+    // TIME
+    addTime( userId, objTime ) {
+
+        return axios.post( apiUrl + 'times/',  {
+                                                'userId': userId, 
+                                                'date': objTime.date, 
+                                                'distance': objTime.distance, 
+                                                'time': objTime.time
+                                                })
+    }
+
+    deleteTime( objTime ) {
+        return axios.delete( apiUrl + 'times/' + objTime._id,  { 'userId':objTime.userId })
+    }
+
+    getAllTimes( userId ) {
+        return axios.get( apiUrl + 'times/' + userId, {} )
+    }
+}
+ 
+*/
+
+
+
+
+
+
+
+/*
+
 class user {
     constructor() {
    
@@ -32,3 +125,4 @@ class user {
 
 }
  
+*/
