@@ -2,6 +2,14 @@
 <template>
   	<div class="loginForm">
     <h1>Times</h1>
+
+    
+    
+      <label> Filter from:</label>
+        <input type="date"/>
+        <button>Edit</button>
+        <button>Delete</button>
+   
         <table>
           <thead>
               <tr>
@@ -11,9 +19,7 @@
                   <th> Average Speed </th>
                   <th>  </th>
               </tr>
-          </thead>
-          <tbody>
-            <tr>
+               <tr>
                 <td> <input type="date" v-model="formNewTime.date"/> </td>
                 <td> <input type="text" v-model="formNewTime.time"/> </td>
                 <td> <input type="number" v-model="formNewTime.distance"/> </td>
@@ -21,21 +27,39 @@
                 <td>  </td>
                 <td> <button v-on:click="addTime">add</button></td>
             </tr>
-            <tr v-for="row in arrTimes">
-                <td> {{ row.date }} </td>
-                <td> {{ row.time }} </td>
-                <td> {{ row.distance }} </td>
-                <td> </td>
-                <td> <button v-on:click="editTime">edit</button> </td>
-                <td> 
-                      
-                      <button v-on:click="deleteTime">delete</button>
-                </td>
+          </thead>
+          <tbody>
+           
+
+
+
+            <tr v-for="row in arrTimes" >
+                 <template v-if ="editing == row" >
+                    <td><input type="date" v-model = " row.date " /></td>
+                    <td><input type="text" v-model = " row.time " /></td>
+                    <td><input type="number" v-model = " row.distance " /></td>
+                    <td></td>
+                    <td> <button @click="editTime(row)">save</button> </td>
+                    <td> <button @click="editing=null">cancel</button> </td>
+                </template>
+                <template v-else>
+                    <td> {{ row.date }} </td>
+                    <td> {{ row.time }} </td>
+                    <td> {{ row.distance }} </td>
+                    <td>    </td>
+                    <td> <button @click="editing=row">edit</button> </td>
+                    <td> <button @click="deleteTime(row)">delete</button> </td>
+                </template>
+         
+               
+             
+           
+            
             </tr>
           </tbody>
         </table>
-  	
-  </div>
+  	</div>
+ 
 </template>
  
 
@@ -48,7 +72,8 @@ export default {
   name: 'Times',
   data () {
       return {
-          editing:false,
+        
+          editing:null,
           ownerTimes:'',
           formNewTime:{'date':'','distance':'','time':''},
           arrTimes: []  
@@ -82,11 +107,30 @@ export default {
             })
 
   		},
-      deleteTime:function() { 
-          api.deleteTime(this, this.formNewTime);
+      deleteTime:function( time ) { 
+       let that = this; 
+          this.editing = null;     
+          api.deleteTime(time)
+              .then(() => api.getTimes() )
+              .then( function( response ){
+                  that.arrTimes = response.data.data;
+              })
+              .catch(( error )=>{
+                  console.log(error);
+              })
       },
-      editTime:function() {
-          api.updateTime(this, this.formNewTime);
+      editTime:function( time ) {
+          this.editing = null;
+        //  api.updateTime( time )
+         //    .catch(( error )=>{
+           //     console.log(error);
+            //})
+
+         /* api.updateTime(this, this.formNewTime)
+                 .catch(( error )=>{
+
+                console.log(error);
+            })*/
       }
   }
 }
@@ -100,10 +144,18 @@ table {
     margin-left:auto; 
     margin-right:auto;
 }
+.right{
+  float:right;
+}
    .edit {
       display: none;
     }
     .editing .edit {
       display: block
+    }
+  
+
+    input {
+      text-align: center
     }
 </style>
