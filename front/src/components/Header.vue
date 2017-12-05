@@ -1,12 +1,12 @@
  <template>
-	<div class="nav">
+	<div class="nav" v-if="user.id.length > 0"> 
 		<ul id="menu">
-			<a href="#" title="Texto"><li>Times</li></a>
-			<a href="#" title="Texto"><li>Texto</li></a>
-			<a href="#" title="Texto"><li>Texto</li></a>
-			<a href="#" title="Texto"><li>Texto</li></a>
-			<a href="#" title="Texto"><li>Log out</li></a>
-		</ul>
+			<a href="#"><li>Times</li></a>
+			<a href="#"><li>Weekly report</li></a>
+			<a href="#"><li>Texto</li></a>
+			<a href="#"><li>Texto</li></a>
+			<a href="#"><li>Log out</li></a>
+		</ul> 
 	</div>
 </template>
 
@@ -14,9 +14,14 @@
 
 <script>
 
-
+import api from '../api'
 export default {
-  name: 'Header'
+  	name: 'Header',
+   	data () {
+    	return {
+        	user: api.user
+    	} 
+	}
 }
 </script>
 

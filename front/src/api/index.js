@@ -7,6 +7,7 @@ let apiUrl = 'http://192.168.1.43:3000/';
 export default {
 
     user: user.user,
+    
 
     login( context, credentials ) {  
         axios.post( apiUrl + 'auth/', credentials )
@@ -14,6 +15,7 @@ export default {
                     this.token = response.data.data.token;
                     axios.defaults.headers.common['Authorization'] = 'JWT ' + this.token;
                     this.user.id = response.data.data.userId;
+                  
                     router.push('/times');          
             })
             .catch((err)=> {context.error = err.message});
@@ -42,8 +44,11 @@ export default {
 
     },
 
-    createNewTime() {
-
+    createNewTime( context, newTimeForm ) {
+        newTimeForm['userId']=this.user.id;
+        axios.post( apiUrl + 'times/',  newTimeForm )
+            .then((response) => context.arrTimes.unshift(response.data.data))
+            .catch((err)=> {context.error = err.message});
     },
 
 
@@ -56,8 +61,13 @@ export default {
 
     },
 
-    getTimes() {
+    getTimes( context ) {
 
+        axios.get( apiUrl + 'times/' + this.user.id )
+            .then( function( response ){
+                context.arrTimes = response.data.data;
+            })
+            .catch((err)=> {context.error = err.message});
     }
 
 }
