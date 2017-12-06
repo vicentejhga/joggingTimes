@@ -1,41 +1,26 @@
 import router from '../router/index';
 
-    var crypto = require('crypto');
+var crypto = require('crypto');
 let axios = require('axios');
 let apiUrl = 'http://192.168.1.43:3000/';
 
 export default {
-
-    user: {
-            id:'',
-            firstName:'',
-            lastName:'',
-            email:'',
-            password:'',
-            token:'',
-            role:''
-    },
+    token:'',
      
 
-    login(  credentials ) {  
-        
+    login(  credentials ) {         
        return  axios.post( apiUrl + 'auth/', credentials )
-            .then(response => {
-                    this.user.token = response.data.data.token;
-                    axios.defaults.headers.common['Authorization'] = 'JWT ' +  this.user.token;
-                    this.user.id = response.data.data.userId;  
-                    console.log(this.user.id);       
-                return this.user.id;
-            })
-               
-            
-
+                .then(response => {
+                    this.token = response.data.data.token;
+                    axios.defaults.headers.common['Authorization'] = 'JWT ' +  this.token; 
+                    return response.data.data.userId;
+                })
     },
 
     logout() {
        
         var hash = crypto.createHash('sha256', 'supersecretbulletproofkey')
-                   .update(this.user.token)
+                   .update(this.token)
                    .digest('hex');
                   
 
@@ -56,7 +41,7 @@ export default {
      
     // If not userId provided get all users
     getUser( userId ) {
-        return axios.get( apiUrl + 'users/' + userId)         
+        return axios.get( apiUrl + 'users/' + userId )         
     },
 
     updateUser() {

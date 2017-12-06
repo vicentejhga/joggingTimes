@@ -7,19 +7,20 @@
 			<a href="#" @click="logout()"><li>Log out</li></a>
 		</ul> 
 	</div>
+
 </template>
 
  
 
 <script>
 
-import api from '../api'
+import user from '../api/user.js'
 import router from '../router'
 export default {
   	name: 'Header',
    	data () {
     	return {
-        	user: api.user
+        	user: user
     	}  
 	},
 	methods: {

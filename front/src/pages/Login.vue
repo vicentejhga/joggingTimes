@@ -1,11 +1,9 @@
 <template>
-  	<div class="loginForm">
-      	 
+  	<div class="loginForm">    	 
         <h1>Login</h1>
-      
       	<input type = "text" placeholder="E-mail" v-model="credentials.email"/>
       	<input type = "password" placeholder="Password" v-model="credentials.password"/>
-  		  <button v-on:click="signIn" :disabled="!credentials.email.length||!credentials.password.length">Sign in</button>
+  		    <button v-on:click="signIn" :disabled="!credentials.email.length||!credentials.password.length">Sign in</button>
   	     <div><p>New user? <a href="#/register">create new account</a></p></div>
  
     <div v-if="error.length"><p class="danger">{{error}}</p></div>
@@ -15,24 +13,23 @@
  
 
 <script>
-import api from '../api'
+
+import user from '../api/user.js'
 import router from '../router/index'
 
 export default {
-  name: 'Login',
+  name: 'Login', 
   data () {
     return {
         credentials:{ email: '', password: '' },
-        user: { id: ''},
         error: ''
     } 
   },
-  methods: {
+  methods: { 
   	signIn() {
-        api.login(  this.credentials )
-            .then(( userId ) => api.getUser( userId ) ) 
-            .then(() => router.push('/times'))      
+        user.login( this.credentials )
             .catch((err)=> {console.log(err)});  
+      
       
      }
   }
