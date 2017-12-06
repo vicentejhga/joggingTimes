@@ -2,9 +2,6 @@
 <template>
   	<div class="loginForm">
     <h1>Times</h1>
-
-    
-    
       <label> Filter from:</label>
         <input type="date" class="bottomMargin"/>
         <table>
@@ -13,7 +10,7 @@
                   <th> Date </th>
                   <th> Time </th>
                   <th> Distance </th>
-                  <th> Average Speed </th>
+                  <th> Average </th>
                   <th>  </th>
               </tr>
                <tr>
@@ -30,9 +27,9 @@
 
             <tr v-for="row in arrTimes" >
                  <template v-if ="editing == row" >
-                    <td><input type="date" v-model = " row.date " /></td>
-                    <td><input type="text" v-model = " row.time " /></td>
-                    <td><input type="number" v-model = " row.distance " /></td>
+                    <td><input type="date" v-model = "row.date" /></td>
+                    <td><input type="text" v-model = "row.time" /></td>
+                    <td><input type="number" v-model = "row.distance" /></td>
                     <td></td>
                     <td> <button @click="editTime(row)">save</button> </td>
                     <td> <button @click="editing=null">cancel</button> </td>
@@ -41,15 +38,10 @@
                     <td> {{ row.date }} </td>
                     <td> {{ row.time }} </td>
                     <td> {{ row.distance }} </td>
-                    <td>    </td>
+                    <td> {{ row.average }} </td>
                     <td> <button @click="editing=row">edit</button> </td>
                     <td> <button @click="deleteTime(row)">delete</button> </td>
                 </template>
-         
-               
-             
-           
-            
             </tr>
           </tbody>
         </table>
@@ -114,18 +106,19 @@ export default {
                   console.log(error);
               })
       },
+
       editTime:function( time ) {
-          this.editing = null;
-        //  api.updateTime( time )
-         //    .catch(( error )=>{
-           //     console.log(error);
-            //})
-
-         /* api.updateTime(this, this.formNewTime)
-                 .catch(( error )=>{
-
+          let that = this; 
+          api.updateTime( time )
+              .then(() => api.getTimes() )
+              .then( function( response ){
+                  that.arrTimes = response.data.data;
+              })
+             .catch(( error )=>{
                 console.log(error);
-            })*/
+          })
+
+         
       }
   }
 }

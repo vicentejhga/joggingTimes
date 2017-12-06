@@ -17,9 +17,9 @@ export default {
     },
     
 
-    login( context, credentials ) {  
+    login(  credentials ) {  
         
-        axios.post( apiUrl + 'auth/', credentials )
+       return  axios.post( apiUrl + 'auth/', credentials )
             .then(response => {
                     this.user.token = response.data.data.token;
                     axios.defaults.headers.common['Authorization'] = 'JWT ' +  this.user.token;
@@ -27,8 +27,7 @@ export default {
                    
             })
             .then(() => this.getUser(this.user.id) )     
-            .then(() => router.push('/times'))      
-            .catch((err)=> {context.error = err.message});
+            
 
     },
 
@@ -49,27 +48,18 @@ export default {
             })
     },
 
-    createNewUser( context, userForm ) {
-        axios.post( apiUrl + 'users/', userForm )
-            .then( function(){
-                router.push('/times');
-            })
-            .catch((err)=> {context.error = err.message});
-    
+    createNewUser(  userForm ) {
+        return axios.post( apiUrl + 'users/', userForm );
+        
     },
-    
+     
     // If not userId provided get all users
     getUser( userId ) {
-        axios.get( apiUrl + 'users/' + userId, {} )
-            .then(response => {          
-                let objUser = response.data.data; 
-                this.user.firstName = objUser.firstName;
-                this.user.lastName = objUser.lastName;
-                this.user.role = objUser.role;
-                this.user.email = objUser.email;            
-            })
-            .catch((err)=> {context.error = err.message});
-
+        var id = ( typeof(userId)==="undefined") ?'':userId;  
+        console.log("here we are");
+        console.log(id);  
+        console.log(axios.defaults.headers.common['Authorization']);
+        return axios.get( apiUrl + 'users/' + id)         
     },
 
     updateUser() {
@@ -88,9 +78,12 @@ export default {
     },
 
 
-    updateTime() {
-        return axios.delete( apiUrl + 'times/' + objTime._id,  { 'userId': this.user.id })
+    updateTime( objTime ) {
+        return axios.put( apiUrl + 'times/' + objTime._id,  objTime)
    },
+
+
+
 
     deleteTime( objTime ) {
         return axios.delete( apiUrl + 'times/' + objTime._id,  { 'userId': this.user.id })

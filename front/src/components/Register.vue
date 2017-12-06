@@ -15,7 +15,7 @@
 <script>
 
 import api from '../api'
-
+    import router from '../router/index'
 export default {
   name: 'Register',
   data () {
@@ -31,7 +31,12 @@ export default {
   },
   methods: {
   		signUp: function() {
-  			  api.createNewUser( this, this.userForm );  
+  			  api.createNewUser( this.userForm )
+              .then( function(){
+                  router.push('/');
+              })
+            .catch((err)=> {console.log(err)});
+    
   		}
   }
 }

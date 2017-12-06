@@ -3,7 +3,7 @@
 		<ul id="menu">
 			<a href="#" @click="redirect('/times')"><li>Times</li></a>
 			<a href="#" @click="redirect('/weekly')"><li>Weekly report</li></a>
-			<a href="#"><li>{{ user.role }} stuff</li></a>
+			<a href="#" @click="redirect('/users')" v-if="user.role!='Normal'"><li>{{ user.role }} stuff</li></a>
 			<a href="#" @click="logout()"><li>Log out</li></a>
 		</ul> 
 	</div>

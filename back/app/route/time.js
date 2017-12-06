@@ -12,11 +12,11 @@ router.post('/', timeController.permission('Admin,Itself'), timeController.creat
 router.delete('/:id', timeController.permission('Admin,Itself'), timeController.remove);
 
 // Get all times for an specific user
-router.get('/:userId', timeController.permission('Admin,Itself'), timeController.getAll);
+router.get('/:id', timeController.permission('Admin,Itself'), timeController.getAll);
 
 
 // Get all times for an specific user
-router.get('/weekly/:userId', timeController.permission('Admin,Itself'), timeController.getWeeklyReport);
+router.get('/weekly/:id', timeController.permission('Admin,Itself'), timeController.getWeeklyReport);
 
 
 
