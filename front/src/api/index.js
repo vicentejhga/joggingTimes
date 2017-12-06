@@ -35,50 +35,9 @@ export default {
             })
     },
 
-    createNewUser(  userForm ) {
-
-        return axios.post( apiUrl + 'users/', userForm );
-        
-    },
-     
-    // If not userId provided get all users
-    getUser( userId ) {
-        return axios.get( apiUrl + 'users/' + userId )         
-    },
-
-    updateUser() {
-
-    },
-
-    deleteUser() {
-
-
-    },
-
-    createNewTime( newTimeForm ) {
-        newTimeForm['userId'] = this.user.id;
-        return axios.post( apiUrl + 'times/',  newTimeForm )
-           
-    },
-
-
     updateTime( objTime ) {
         return axios.put( apiUrl + 'times/' + objTime._id,  objTime)
-   },
-
-    deleteTime( objTime ) {
-        return axios.delete( apiUrl + 'times/' + objTime._id,  { 'userId': this.user.id })
-    },
-
-    getTimes( userId ) {
-
-        return axios.get( apiUrl + 'times/' + userId )
-    },
-
-
-    getWeeklyReports() {
-
-    }
+   }
 
 }
 

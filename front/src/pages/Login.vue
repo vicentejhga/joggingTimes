@@ -30,7 +30,7 @@ export default {
   	signIn() {
         user.login( this.credentials )
             .then(()=> { 
-              time.setOwner( user.id );
+                time.setOwner( user.id );
             } )
             .then(() => router.push('/times'))    
             .catch((err)=> {console.log(err)});  

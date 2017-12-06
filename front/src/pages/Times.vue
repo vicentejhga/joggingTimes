@@ -4,7 +4,7 @@
     <h1>Times</h1>
       <label> Filter from:</label>
         <input type="date" class="bottomMargin"/>
-        <table>
+       <table>
           <thead>
               <tr>
                   <th> Date </th>
@@ -23,10 +23,10 @@
             </tr>
           </thead>
           <tbody>
-           
+        
 
-            <tr v-for="row in arrTimes" >
-                 <template v-if ="editing == row" >
+            <tr v-for="row in this.arrTimes" >
+                  <template v-if ="editing == row" >
                     <td><input type="date" v-model = "row.date" /></td>
                     <td><input type="text" v-model = "row.time" /></td>
                     <td><input type="number" v-model = "row.distance" /></td>
@@ -61,43 +61,45 @@ export default {
   data () {
       return {     
           editing: null,
-          formNewTime: {'date':'','distance':'','time':''},
+          formNewTime: {'date':'','time':'','distance':''},
           arrTimes: time.arrTimes
       }
   },
   created: function(){
-    
       time.getTimes()
-          .catch((err)=> {
+      .then(()=>{  
+        this.arrTimes = time.arrTimes;
+        })
+          .catch((err)=> { 
             console.log("errroring", err);
           });
   },
 
   methods: {
   		addTime:function() {
-      let that = this;    
-  			 api.createNewTime( this.formNewTime )
-            .then(() => api.getTimes() )
-            .then( function( response ){
-                that.arrTimes = response.data.data;
-            })
+        let newTime = this.formNewTime;
+       
+        time.createNewTime( newTime.date, newTime.time, newTime.distance   ) 
+            .then(() => time.getTimes() )
             .then(()=>{
+                this.arrTimes = time.arrTimes;
                 this.formNewTime = {'date':'','distance':'','time':''}
             })
             .catch(( error )=>{
-
                 console.log(error);
-            })
+            })        
+      },
 
-  		},
-      deleteTime:function( time ) { 
-       let that = this; 
-          this.editing = null;     
-          api.deleteTime(time)
-              .then(() => api.getTimes() )
+
+ deleteTime:function( selectedTime ) { 
+        let that = this; 
+          this.editing = null;  
+
+          time.deleteTime(selectedTime )
+            /*  .then(() => time.getTimes() )
               .then( function( response ){
                   that.arrTimes = response.data.data;
-              })
+              })*/
               .catch(( error )=>{
                   console.log(error);
               })
@@ -114,8 +116,11 @@ export default {
                 console.log(error);
           })
 
-         
-      }
+
+
+
+
+    }
   }
 }
 </script>
@@ -124,10 +129,11 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-table {
+  table {
     margin-left:auto; 
     margin-right:auto;
-}
+  }
+
 .bottomMargin{
   margin-bottom: 20px;
 }

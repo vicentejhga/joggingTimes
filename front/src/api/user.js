@@ -1,3 +1,6 @@
+var crypto = require('crypto');
+let axios = require('axios');
+let apiUrl = 'http://192.168.1.43:3000/';
 
 import api from '../api'
 import router from '../router'
@@ -12,7 +15,7 @@ export default {
 
 	login( credentials ) {
 		return api.login(  credentials )
-        	.then( userId => api.getUser( userId ) )
+        	.then( userId => this.getUser( userId ) )
         	.then( response => {
         			this.id = response.data.data._id;
         			this.firstName = response.data.data.firstName;
@@ -21,9 +24,15 @@ export default {
         			this.role = response.data.data.role;
         	}) 
 	},
-	redirect( path ) {
-		router.push(path)
-	},
+
+    createNewUser ( userForm ){
+         return axios.post( apiUrl + 'users/', userForm );
+    },
+
+    getUser( userId ) {
+          return axios.get( apiUrl + 'users/' + userId )       
+    },
+
 	logout() {
 		api.logout(  ) 
 		 	.then(() => router.push('/')) 
