@@ -7,7 +7,7 @@ let apiUrl = 'http://192.168.1.43:3000/';
 export default {
 
     user: {
-           id:'',
+            id:'',
             firstName:'',
             lastName:'',
             email:'',
@@ -15,7 +15,7 @@ export default {
             token:'',
             role:''
     },
-    
+     
 
     login(  credentials ) {  
         
@@ -23,7 +23,8 @@ export default {
             .then(response => {
                     this.user.token = response.data.data.token;
                     axios.defaults.headers.common['Authorization'] = 'JWT ' +  this.user.token;
-                    this.user.id = response.data.data.userId;         
+                    this.user.id = response.data.data.userId;  
+                    console.log(this.user.id);       
                 return this.user.id;
             })
                
@@ -77,9 +78,6 @@ export default {
     updateTime( objTime ) {
         return axios.put( apiUrl + 'times/' + objTime._id,  objTime)
    },
-
-
-
 
     deleteTime( objTime ) {
         return axios.delete( apiUrl + 'times/' + objTime._id,  { 'userId': this.user.id })
