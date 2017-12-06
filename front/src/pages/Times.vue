@@ -35,10 +35,10 @@
                     <td> <button @click="editing=null">cancel</button> </td>
                 </template>
                 <template v-else>
-                    <td> {{ row.date }} </td>
+                    <td> {{ reverse(row.date) }}  </td>
                     <td> {{ row.time }} </td>
                     <td> {{ row.distance }} </td>
-                    <td> {{ row.average }} </td>
+                    <td> {{ row.average }} </td>  
                     <td> <button @click="editing=row">edit</button> </td>
                     <td> <button @click="deleteTime(row)">delete</button> </td>
                 </template>
@@ -76,6 +76,7 @@ export default {
   },
 
   methods: {
+      reverse:(value ) => {return value.split('-').reverse().join('-');},
   		addTime:function() {
         let newTime = this.formNewTime;
        
