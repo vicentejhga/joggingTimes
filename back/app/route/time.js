@@ -14,6 +14,12 @@ router.delete('/:id', timeController.permission('Admin,Itself'), timeController.
 // Get all times for an specific user
 router.get('/:userId', timeController.permission('Admin,Itself'), timeController.getAll);
 
+
+// Get all times for an specific user
+router.get('/weekly/:userId', timeController.permission('Admin,Itself'), timeController.getWeeklyReport);
+
+
+
 // Update time
 router.put('/:id', timeController.permission('Admin,Itself'), timeController.update);
 

@@ -5,10 +5,15 @@ const AlreadyExistsError = require(ERROR_PATH + 'already-exists');
 const ValidationError = require(ERROR_PATH + 'validation');
 const UnauthorizedError = require(ERROR_PATH + 'unauthorized');
 
+ 
+
 class UserHandler {
     constructor() {
         this._validator = require('validator');
     }
+
+
+
 
     static get USER_VALIDATION_SCHEME() {
         return {

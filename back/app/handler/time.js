@@ -50,10 +50,11 @@ class JoggingTimeHandler extends BaseAutoBindedClass {
                     });
                     throw new ValidationError('There are validation errors: ' + errorMessages.join(' && '));
                 }
+
                 return new JoggingTimeModel({
                     distance: data.distance,
                     time: data.time,
-                    date: data.date,
+                    date: new Date( data.date ),
                     userId: data.userId,
                     average: data.distance/data.time
                 });
@@ -76,9 +77,14 @@ class JoggingTimeHandler extends BaseAutoBindedClass {
 
     getAll(req, callback) {
         let userId = req.params.userId;
+     
         let data = req.body;
         new Promise(function (resolve, reject) {
-            JoggingTimeModel.find({"userId":userId}, function (err, times) {
+            let search = {
+                            "userId":userId
+                        }
+
+            JoggingTimeModel.find(search, function (err, times) {
                 if (err !== null) {
                     reject(err);
                 } else {
@@ -95,6 +101,26 @@ class JoggingTimeHandler extends BaseAutoBindedClass {
     }
 
 
+    getWeeklyReport(req, callback) {
+          let userId = req.params.userId;
+        let data = req.body;
+        new Promise(function (resolve, reject) {
+            JoggingTimeModel.find({"userId":userId,$project:0}, function (err, times) {
+                if (err !== null) {
+                    reject(err);
+                } else {
+                    resolve(times);
+                }
+            }).sort( { date: -1 } );
+        })
+        .then((times) => {
+            console.log(times);
+            callback.onSuccess(times);
+        })
+        .catch((error) => {
+            callback.onError(error);
+        });
+    }
 
     updateTime(req, callback) {
         let data = req.body;
@@ -139,6 +165,7 @@ class JoggingTimeHandler extends BaseAutoBindedClass {
             callback.onError(error);
         });
     }
+
 
 
     deleteTime(req, callback) {

@@ -15,6 +15,13 @@ class TimeController extends BaseController {
             this._timeHandler.getAll(req, this._responseManager.getDefaultResponseHandler(res));
         });
     }
+    
+
+    getWeeklyReport(req, res, next) {
+        this.authenticate(req, res, next, (token, user) => {
+            this._timeHandler.getWeeklyReport(req, this._responseManager.getDefaultResponseHandler(res));
+        });
+    }
 
 
     create(req, res, next) {
@@ -36,6 +43,8 @@ class TimeController extends BaseController {
             this._timeHandler.deleteTime(req, this._responseManager.getDefaultResponseHandler(res));
         });
     }
+
+
 }
 
 module.exports = TimeController;
