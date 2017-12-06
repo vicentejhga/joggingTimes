@@ -30,6 +30,7 @@ class JoggingTimeHandler extends BaseAutoBindedClass {
                 },
                 errorMessage: 'Invalid email provided'
             }
+            
         };
     }
 
@@ -53,7 +54,8 @@ class JoggingTimeHandler extends BaseAutoBindedClass {
                     distance: data.distance,
                     time: data.time,
                     date: data.date,
-                    userId: data.userId
+                    userId: data.userId,
+                    average: data.distance/data.time
                 });
             })
             .then((time) => {
@@ -126,6 +128,7 @@ class JoggingTimeHandler extends BaseAutoBindedClass {
             time.date = validator.trim(data.date);
             time.time = validator.trim(data.time);
             time.distance = validator.trim(data.distance);
+            time.average = data.distance/data.time;
             time.save();
             return time;
         })

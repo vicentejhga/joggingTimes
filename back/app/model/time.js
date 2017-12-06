@@ -6,6 +6,7 @@ let joggingTimeSchema = new Schema({
     date: String,
     time: String,
     distance: Number,
+    average: Number,
     userId: {
         type: ObjectId,
         required: true
