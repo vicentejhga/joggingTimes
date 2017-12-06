@@ -30,7 +30,7 @@ class BaseController extends BaseAutoBindedClass {
         return function (req, res, next) {
             that.authenticate(req, res, next, (token, user) => {
                 let arr_allowed = allowed.split(',');
-                console.log(user);
+               
                 if (( arr_allowed.indexOf( user.role ) > -1 ) ||
                     ( arr_allowed.indexOf( 'Itself' ) > -1 && user.id == req.params.id )) {
                     next();

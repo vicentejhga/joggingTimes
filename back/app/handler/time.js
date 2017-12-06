@@ -82,7 +82,7 @@ class JoggingTimeHandler extends BaseAutoBindedClass {
                 } else {
                     resolve(times);
                 }
-            });
+            }).sort( { date: -1 } );
         })
         .then((times) => {
             callback.onSuccess(times);
