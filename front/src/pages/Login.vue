@@ -28,6 +28,7 @@ export default {
   methods: { 
   	signIn() {
         user.login( this.credentials )
+            .then(() => router.push('/times'))    
             .catch((err)=> {console.log(err)});  
       
       

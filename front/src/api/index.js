@@ -8,7 +8,8 @@ export default {
     token:'',
      
 
-    login(  credentials ) {         
+    login(  credentials ) {   
+            console.log(credentials);      
        return  axios.post( apiUrl + 'auth/', credentials )
                 .then(response => {
                     this.token = response.data.data.token;
@@ -35,12 +36,14 @@ export default {
     },
 
     createNewUser(  userForm ) {
+
         return axios.post( apiUrl + 'users/', userForm );
         
     },
      
     // If not userId provided get all users
     getUser( userId ) {
+
         return axios.get( apiUrl + 'users/' + userId )         
     },
 

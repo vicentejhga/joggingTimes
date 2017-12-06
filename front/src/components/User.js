@@ -17,7 +17,7 @@ export default {
 	},
 	methods: {
 		login( credentials ) {
-			return api.login(  this.credentials )
+			return api.login(  credentials )
             	.then( userId => api.getUser( userId ) )
             	.then(response=> {
             			this.id = response.data.data.id;
