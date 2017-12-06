@@ -1,20 +1,28 @@
 import router from '../router/index';
-import user from './user';
 
+    var crypto = require('crypto');
 let axios = require('axios');
 let apiUrl = 'http://192.168.1.43:3000/';
 
 export default {
 
-    user: user.user,
+    user: {
+           id:'',
+            firstName:'',
+            lastName:'',
+            email:'',
+            password:'',
+            token:'',
+            role:''
+    },
     
 
     login( context, credentials ) {  
         
         axios.post( apiUrl + 'auth/', credentials )
             .then(response => {
-                    this.token = response.data.data.token;
-                    axios.defaults.headers.common['Authorization'] = 'JWT ' + this.token;
+                    this.user.token = response.data.data.token;
+                    axios.defaults.headers.common['Authorization'] = 'JWT ' +  this.user.token;
                     this.user.id = response.data.data.userId;         
                    
             })
@@ -25,7 +33,20 @@ export default {
     },
 
     logout() {
+       
+        var hash = crypto.createHash('sha256', 'supersecretbulletproofkey')
+                   .update(this.user.token)
+                   .digest('hex');
+                  
 
+        return axios.delete( apiUrl + 'auth/'+ hash ,{  })
+            .then(response => {
+                    axios.defaults.headers.common['Authorization'] = ''; 
+                    let that = this;
+                    Object.keys(this.user).forEach(function (prop) {
+                        that[prop]='';
+                    });                 
+            })
     },
 
     createNewUser( context, userForm ) {
@@ -68,11 +89,8 @@ export default {
 
 
     updateTime() {
-
-
-
-
-    },
+        return axios.delete( apiUrl + 'times/' + objTime._id,  { 'userId': this.user.id })
+   },
 
     deleteTime( objTime ) {
         return axios.delete( apiUrl + 'times/' + objTime._id,  { 'userId': this.user.id })

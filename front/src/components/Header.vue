@@ -1,10 +1,10 @@
  <template>
 	<div class="nav" v-if="user.id.length > 0"> 
 		<ul id="menu">
-			<a href="#"><li>Times</li></a>
-			<a href="#"><li>Weekly report</li></a>
+			<a href="#" @click="redirect('/times')"><li>Times</li></a>
+			<a href="#" @click="redirect('/weekly')"><li>Weekly report</li></a>
 			<a href="#"><li>{{ user.role }} stuff</li></a>
-			<a href="#"><li>Log out</li></a>
+			<a href="#" @click="logout()"><li>Log out</li></a>
 		</ul> 
 	</div>
 </template>
@@ -14,12 +14,24 @@
 <script>
 
 import api from '../api'
+import router from '../router'
 export default {
   	name: 'Header',
    	data () {
     	return {
         	user: api.user
-    	} 
+    	}  
+	},
+	methods: {
+		redirect( path ) {
+			router.push(path)
+		},
+		logout() {
+			api.logout(  ) 
+			 	.then(() => router.push('/')) 
+			 	.catch((err)=>{})
+		}
+
 	}
 }
 </script>

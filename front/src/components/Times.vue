@@ -6,10 +6,7 @@
     
     
       <label> Filter from:</label>
-        <input type="date"/>
-        <button>Edit</button>
-        <button>Delete</button>
-   
+        <input type="date" class="bottomMargin"/>
         <table>
           <thead>
               <tr>
@@ -30,8 +27,6 @@
           </thead>
           <tbody>
            
-
-
 
             <tr v-for="row in arrTimes" >
                  <template v-if ="editing == row" >
@@ -144,6 +139,10 @@ table {
     margin-left:auto; 
     margin-right:auto;
 }
+.bottomMargin{
+  margin-bottom: 20px;
+}
+
 .right{
   float:right;
 }
