@@ -25,6 +25,7 @@ class TimeController extends BaseController {
 
 
     create(req, res, next) {
+
         this.authenticate(req, res, next, (token, user) => {
             this._timeHandler.createNewTime(req, this._responseManager.getDefaultResponseHandler(res));
         });

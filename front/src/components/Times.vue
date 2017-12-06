@@ -80,7 +80,7 @@ export default {
   methods: {
   		addTime:function() {
       let that = this;    
-  			 api.createNewTime( this.formNewTime)
+  			 api.createNewTime( this.formNewTime )
             .then(() => api.getTimes() )
             .then( function( response ){
                 that.arrTimes = response.data.data;
