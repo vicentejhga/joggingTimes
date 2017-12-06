@@ -13,34 +13,30 @@ class BaseController extends BaseAutoBindedClass {
         this._passport = require('passport')
     }
 
-    authenticate(req, res, next, callback) {
-         
+    authenticate(req, res, next, callback, allowed ) {
+        let that= this;
         let responseManager = this._responseManager;
-        
         this._passport.authenticate('jwt-rs-auth', {
-            onVerified: callback,
+            onVerified: function( token, user ) {
+
+                let reqParams = req.params.userId || req.body.userId;
+                if ( typeof(allowed)!=="undefined" ) {
+                    let arr_allowed = allowed.split(',');
+                    if (( arr_allowed.indexOf( user.role ) > -1 ) ||
+                        ( arr_allowed.indexOf( 'Itself' ) > -1 && user.id == reqParams )) {
+                        callback( token, user );
+                    } else { 
+                        that._responseManager.respondWithError( res,401, "User is not authorized");
+                    }
+                } else {
+                    callback(token, user);
+                }
+            },
+
             onFailure: function (error) {
                 responseManager.respondWithError(res, error.status || 401, error.message);
             }
         })(req, res, next);
-    }
-
-    permission( allowed ){
-        let that = this;
-        return function (req, res, next) {
-            that.authenticate(req, res, next, (token, user) => {
-
-                let arr_allowed = allowed.split(',');
-
-                if (( arr_allowed.indexOf( user.role ) > -1 ) ||
-                    ( arr_allowed.indexOf( 'Itself' ) > -1 && user.id == req.params.id )) {
-                    next();
-                } else {
-              
-                    that._responseManager.respondWithError( res,401, "User is not authorized");
-                }
-            }); 
-        };
     }
 }
 module.exports = BaseController;

@@ -13,36 +13,35 @@ class TimeController extends BaseController {
     getAll(req, res, next) {
         this.authenticate(req, res, next, (token, user) => {
             this._timeHandler.getAll(req, this._responseManager.getDefaultResponseHandler(res));
-        });
+        },'Admin,Itself' );
     }
     
 
     getWeeklyReport(req, res, next) {
         this.authenticate(req, res, next, (token, user) => {
             this._timeHandler.getWeeklyReport(req, this._responseManager.getDefaultResponseHandler(res));
-        });
+        },'Admin,Itself' );
     }
 
 
     create(req, res, next) {
-
-        this.authenticate(req, res, next, (token, user) => {
+        this.authenticate(req, res, next,(token, user) => {
             this._timeHandler.createNewTime(req, this._responseManager.getDefaultResponseHandler(res));
-        });
+        }, 'Admin,Itself' );
     }
 
 
     update(req, res, next) {
         this.authenticate(req, res, next, (token, user) => {
             this._timeHandler.updateTime(req, this._responseManager.getDefaultResponseHandler(res));
-        });
+        }, 'Admin,Itself' );
     }
 
 
     remove(req, res, next) {
         this.authenticate(req, res, next, (token, user) => {
             this._timeHandler.deleteTime(req, this._responseManager.getDefaultResponseHandler(res));
-        });
+        },'Admin,Itself' );
     }
 
 

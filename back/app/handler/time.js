@@ -80,11 +80,8 @@ class JoggingTimeHandler extends BaseAutoBindedClass {
      
         let data = req.body;
         new Promise(function (resolve, reject) {
-            let search = {
-                            "userId":userId
-                        }
-
-            JoggingTimeModel.find(search, function (err, times) {
+        
+            JoggingTimeModel.find({"userId":userId}, function (err, times) {
                 if (err !== null) {
                     reject(err);
                 } else {

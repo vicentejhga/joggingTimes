@@ -6,21 +6,21 @@ let timeController = new TimeController();
 
 
 // Create time
-router.post('/', timeController.permission('Admin,Itself'), timeController.create);
+router.post('/', timeController.create);
 
 // Remove time
-router.delete('/:id', timeController.permission('Admin,Itself'), timeController.remove);
+router.delete('/:id',  timeController.remove);
 
 // Get all times for an specific user
-router.get('/:id', timeController.permission('Admin,Itself'), timeController.getAll);
+router.get('/:userId',  timeController.getAll);
 
 
 // Get all times for an specific user
-router.get('/weekly/:id', timeController.permission('Admin,Itself'), timeController.getWeeklyReport);
+router.get('/weekly/:userId', timeController.getWeeklyReport);
 
 
 
 // Update time
-router.put('/:id', timeController.permission('Admin,Itself'), timeController.update);
+router.put('/:id',  timeController.update);
 
 module.exports = router;

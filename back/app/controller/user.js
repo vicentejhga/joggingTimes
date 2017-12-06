@@ -11,14 +11,14 @@ class UserController extends BaseController {
     get(req, res, next) {  
         this.authenticate(req, res, next, (token, user) => {
             this._userHandler.getUserInfo(req, user, this._responseManager.getDefaultResponseHandler(res));
-       });    
+       },'Admin,Manager,Itself');    
     } 
 
 
     remove(req, res, next) {
         this.authenticate(req, res, next, (token, user) => {
             this._userHandler.deleteUser(req, this._responseManager.getDefaultResponseHandler(res));
-        });
+        },'Admin,Manager');
     }
 
 
@@ -30,14 +30,14 @@ class UserController extends BaseController {
     getAll(req, res, next) {
         this.authenticate(req, res, next, (token, user) => {
             this._userHandler.getAllUsers(req, user, this._responseManager.getDefaultResponseHandler(res));
-        });
+        },'Admin,Manager');
     }
 
 
     update(req, res, next) {   
         this.authenticate(req, res, next, (token, user) => {
             this._userHandler.updateUser(req, this._responseManager.getDefaultResponseHandler(res));     
-        });    
+        },'Admin,Manager');    
     }
    
 }

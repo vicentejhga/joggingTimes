@@ -5,21 +5,21 @@ const UserController = require(CONTROLLER_PATH + 'user');
 
 let userController = new UserController();
 
-// Get single user
-router.get('/:id', userController.permission('Admin,Manager,Itself'), userController.get);
+// Get single user userController.permission('Admin,Manager,Itself'),
+router.get('/:id',  userController.get);
 
-// Get all users
-router.get('/', userController.permission('Admin,Manager'), userController.getAll);
+// Get all users, userController.permission('Admin,Manager'),
+router.get('/', userController.getAll);
 
 // Create user
 router.post('/',  userController.create);
 
 
-// Modify user
-router.put('/:id', userController.permission('Admin,Manager'), userController.update);
+// Modify user userController.permission('Admin,Manager'),
+router.put('/:id',  userController.update);
 
-// Delete user
-router.delete('/:id',  userController.permission('Admin,Manager'), userController.remove )
+// Delete user userController.permission('Admin,Manager'),
+router.delete('/:id',   userController.remove )
 
 
 module.exports = router;
