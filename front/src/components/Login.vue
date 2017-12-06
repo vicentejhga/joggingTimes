@@ -29,8 +29,9 @@ export default {
   },
   methods: {
   	signIn() {
-        api.login(  this.credentials ) 
-          .then(() => router.push('/times'))      
+        api.login(  this.credentials )
+            .then(( userId ) => api.getUser( userId ) ) 
+            .then(() => router.push('/times'))      
             .catch((err)=> {console.log(err)});  
       
      }

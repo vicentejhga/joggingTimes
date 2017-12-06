@@ -24,9 +24,9 @@ export default {
                     this.user.token = response.data.data.token;
                     axios.defaults.headers.common['Authorization'] = 'JWT ' +  this.user.token;
                     this.user.id = response.data.data.userId;         
-                   console.log(this.user.id);
+                return this.user.id;
             })
-            .then(() => this.getUser(this.user.id) )     
+               
             
 
     },
@@ -55,9 +55,7 @@ export default {
      
     // If not userId provided get all users
     getUser( userId ) {
-        var id = ( typeof(userId)==="undefined") ?'':userId;  
-       
-        return axios.get( apiUrl + 'users/' + id)         
+        return axios.get( apiUrl + 'users/' + userId)         
     },
 
     updateUser() {
@@ -70,10 +68,7 @@ export default {
     },
 
     createNewTime( newTimeForm ) {
-        
         newTimeForm['userId'] = this.user.id;
-        console.log("_____________",this.user.id);
-        console.log(newTimeForm)
         return axios.post( apiUrl + 'times/',  newTimeForm )
            
     },
@@ -90,8 +85,8 @@ export default {
         return axios.delete( apiUrl + 'times/' + objTime._id,  { 'userId': this.user.id })
     },
 
-    getTimes(   ) {
-        return axios.get( apiUrl + 'times/' + this.user.id )
+    getTimes( userId ) {
+        return axios.get( apiUrl + 'times/' + userId )
     },
 
 

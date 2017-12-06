@@ -18,9 +18,11 @@ class BaseController extends BaseAutoBindedClass {
         let responseManager = this._responseManager;
         this._passport.authenticate('jwt-rs-auth', {
             onVerified: function( token, user ) {
+            
+                let reqParams = req.params.userId || req.body.userId || req.params.id || req.body.id ;
 
-                let reqParams = req.params.userId || req.body.userId;
                 if ( typeof(allowed)!=="undefined" ) {
+
                     let arr_allowed = allowed.split(',');
                     if (( arr_allowed.indexOf( user.role ) > -1 ) ||
                         ( arr_allowed.indexOf( 'Itself' ) > -1 && user.id == reqParams )) {

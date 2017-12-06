@@ -54,7 +54,7 @@ class JoggingTimeHandler extends BaseAutoBindedClass {
                 return new JoggingTimeModel({
                     distance: data.distance,
                     time: data.time,
-                    date: new Date( data.date ),
+                    date: data.date ,
                     userId: data.userId,
                     average: data.distance/data.time
                 });

@@ -11,6 +11,8 @@ class TimeController extends BaseController {
 
 
     getAll(req, res, next) {
+        console.log("here we are");
+        console.log(req.params);
         this.authenticate(req, res, next, (token, user) => {
             this._timeHandler.getAll(req, this._responseManager.getDefaultResponseHandler(res));
         },'Admin,Itself' );
