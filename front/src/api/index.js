@@ -9,7 +9,7 @@ export default {
      
 
     login(  credentials ) {   
-            console.log(credentials);      
+               
        return  axios.post( apiUrl + 'auth/', credentials )
                 .then(response => {
                     this.token = response.data.data.token;
@@ -43,7 +43,6 @@ export default {
      
     // If not userId provided get all users
     getUser( userId ) {
-
         return axios.get( apiUrl + 'users/' + userId )         
     },
 
@@ -72,6 +71,7 @@ export default {
     },
 
     getTimes( userId ) {
+
         return axios.get( apiUrl + 'times/' + userId )
     },
 

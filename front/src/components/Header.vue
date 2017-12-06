@@ -1,5 +1,7 @@
  <template>
-	<div class="nav" v-if="user.id.length > 0"> 
+	<!--<div class="nav" v-if="user.id.length > 0"> -->
+	<div class="nav">
+	{{user}}
 		<ul id="menu">
 			<a href="#" @click="redirect('/times')"><li>Times</li></a>
 			<a href="#" @click="redirect('/weekly')"><li>Weekly report</li></a>

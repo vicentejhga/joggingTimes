@@ -15,6 +15,7 @@
 <script>
 
 import user from '../api/user.js'
+import time from '../api/time.js'
 import router from '../router/index'
 
 export default {
@@ -28,6 +29,9 @@ export default {
   methods: { 
   	signIn() {
         user.login( this.credentials )
+            .then(()=> { 
+              time.setOwner( user.id );
+            } )
             .then(() => router.push('/times'))    
             .catch((err)=> {console.log(err)});  
       

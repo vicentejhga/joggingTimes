@@ -54,24 +54,20 @@
 <script>
 
 import api from '../api'
+import time from '../api/time.js'
 
 export default {
   name: 'Times',
   data () {
-      return {
-        
-          editing:null,
-          ownerTimes:'',
-          formNewTime:{'date':'','distance':'','time':''},
-          arrTimes: []  
+      return {     
+          editing: null,
+          formNewTime: {'date':'','distance':'','time':''},
+          arrTimes: time.arrTimes
       }
   },
   created: function(){
-    let that = this;
-      api.getTimes()
-          .then( function( response ){
-                that.arrTimes = response.data.data;
-            })
+    
+      time.getTimes()
           .catch((err)=> {
             console.log("errroring", err);
           });

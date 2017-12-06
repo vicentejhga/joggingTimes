@@ -13,8 +13,8 @@ export default {
 	login( credentials ) {
 		return api.login(  credentials )
         	.then( userId => api.getUser( userId ) )
-        	.then(response=> {
-        			this.id = response.data.data.id;
+        	.then( response => {
+        			this.id = response.data.data._id;
         			this.firstName = response.data.data.firstName;
         			this.lastName = response.data.data.lastName;
         			this.email = response.data.data.email;
