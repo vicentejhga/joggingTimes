@@ -5,6 +5,7 @@
 			<a href="#" @click="redirect('/weekly')"><li>Weekly report</li></a>
 			<a href="#" @click="redirect('/users')" v-if="user.role!='Normal'"><li>{{ user.role }} stuff</li></a>
 			<a href="#" @click="logout()"><li>Log out</li></a>
+			
 		</ul> 
 	</div>
 
