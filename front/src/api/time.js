@@ -21,9 +21,8 @@ export default {
     },
 
     getTimes( ) {
-        var params = { };
-        if ( this.from !== '' ) { params['from'] = this.from; }
-    	return axios.get( apiUrl + 'times/' + this.ownerTimes,params  )
+        
+        return axios.get( apiUrl + 'times/' + this.ownerTimes + '/' + this.from )
           	.then( ( response ) => {
                 this.arrTimes = response.data.data;
             }) 

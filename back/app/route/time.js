@@ -12,7 +12,8 @@ router.post('/', timeController.create);
 router.delete('/:id',  timeController.remove);
 
 // Get all times for an specific user
-router.get('/:userId',  timeController.getAll);
+router.get('/:userId/:from?',  timeController.getAll);
+//router.get('/:userId/',  timeController.getAll);
 
 
 // Get all times for an specific user
