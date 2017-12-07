@@ -19,9 +19,10 @@ class TimeController extends BaseController {
     
 
     getWeeklyReport(req, res, next) {
+        console.log("inside");
         this.authenticate(req, res, next, (token, user) => {
             this._timeHandler.getWeeklyReport(req, this._responseManager.getDefaultResponseHandler(res));
-        },'Admin,Itself' );
+        } );
     }
 
 

@@ -20,14 +20,14 @@ class BaseController extends BaseAutoBindedClass {
         let responseManager = this._responseManager;
         this._passport.authenticate('jwt-rs-auth', {
             onVerified: function( token, user ) {
-            
                 if ( typeof(allowed)!=="undefined" ) {
-
                     let arr_allowed = allowed.split(',');
                     if (( arr_allowed.indexOf( user.role ) > -1 ) ||
                         ( arr_allowed.indexOf( 'Itself' ) > -1 && user.id == reqParams )) {
+                        
                         callback( token, user );
                     } else { 
+                        console.log("ERRORING");
                         that._responseManager.respondWithError( res,401, "User is not authorized");
                     }
                 } else {
@@ -36,6 +36,7 @@ class BaseController extends BaseAutoBindedClass {
             },
 
             onFailure: function (error) {
+                console.log("OUTSIDE");
                 responseManager.respondWithError(res, error.status || 401, error.message);
             }
         })(req, res, next);

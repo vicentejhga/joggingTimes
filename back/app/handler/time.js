@@ -102,6 +102,10 @@ class JoggingTimeHandler extends BaseAutoBindedClass {
 
 
     getWeeklyReport(req, callback) {
+        console.log("here we are");
+
+
+
           let userId = req.params.userId;
         let data = req.body;
         new Promise(function (resolve, reject) {

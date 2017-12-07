@@ -9,6 +9,7 @@ class UserController extends BaseController {
 
 
     get(req, res, next) {  
+        console.log("***********************************");
         this.authenticate(req, res, next, (token, user) => {
             this._userHandler.getUserInfo(req, user, this._responseManager.getDefaultResponseHandler(res));
        },'Admin,Manager,Itself');    

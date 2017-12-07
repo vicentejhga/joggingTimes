@@ -64,26 +64,20 @@ class UserHandler {
                 }
                  
                 let userId = req.params.id;
-                if (userToken.id !== req.params.id) {
-                    throw new UnauthorizedError("Provided id doesn't match with  the requested user id")
-                }
-                else {
-                    return new Promise(function (resolve, reject) {
-                        UserModel.findById(userId, function (err, user) {
-                            if (err !== null) {
-                                reject(err);
-                            } 
+                return new Promise(function (resolve, reject) {
+                    UserModel.findById(userId, function (err, user) {
+                        if (err !== null) {
+                            reject(err);
+                        } 
 
-                            if ( !user ) {
-                                reject(new NotFoundError("User not found"));
-                            } else {
-                                resolve(user);
-                            }
-                            
-                        });
+                        if ( !user ) {
+                            reject(new NotFoundError("User not found"));
+                        } else {
+                            resolve(user);
+                        }
+                        
                     });
-                }
-
+                });
             })
             .then((user) => {
                 callback.onSuccess(user);
