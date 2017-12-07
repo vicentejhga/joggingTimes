@@ -16,6 +16,7 @@ const app = express();
 // Include dependencies
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
+
 const routes = require(ROUTE_PATH);
 const ValidationManager = require(MANAGER_PATH + 'validation');
 const authManager = require(MANAGER_PATH + 'auth');
@@ -24,7 +25,9 @@ const validationManager = new ValidationManager();
 
 // Connect to DB
 mongoose.Promise = global.Promise;
-mongoose.connect(config.db.MONGO_CONNECT_URL);
+mongoose.connect(config.db.MONGO_CONNECT_URL,{
+	useMongoClient: true
+});
 
 
 
