@@ -15,6 +15,7 @@
 <script>
 
 import user from '../api/user.js'
+import time from '../api/time.js'
 import api from '../api/'
 import router from '../router'
 export default {

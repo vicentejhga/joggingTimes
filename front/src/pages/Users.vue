@@ -45,7 +45,7 @@
                     <td> <button @click="editing=row">edit</button> </td>
                     <td> <button @click="deleteUser(row)">delete</button> </td>
                 </template>
-                <td> <button @click="deleteUser(row)" v-if="role=='Admin'">Times</button> </td>
+                <td> <button @click="manageTimes(row)" v-if="role=='Admin'">Times</button> </td>
             </tr>
           </tbody>
         </table>
@@ -58,6 +58,8 @@
 <script>
 
 import user from '../api/user.js'
+import time from '../api/time.js'
+import router from '../router/index'
 
 export default {
   name: 'Times',
@@ -70,8 +72,7 @@ export default {
         role: user.role
       }
   },
-  created: function(){
-     
+  created: function(){ 
       user.getUser()
           .then( ( response ) => this.arrUsers = response.data.data )
           .catch(( err )=> {
@@ -94,7 +95,11 @@ export default {
                 console.log(error);
             })        
       },
+      manageTimes: function( selectedUser ) {
+          time.setOwner( selectedUser._id );
+          router.push('/Times')
 
+      },
 
       deleteUser:function( selectedUser ) { 
           this.editing = null;  
