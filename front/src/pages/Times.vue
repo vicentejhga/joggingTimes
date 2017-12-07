@@ -3,7 +3,7 @@
   	<div class="loginForm">
     <h1>Times</h1>
       <label> Filter from:</label>
-        <input type="date" class="bottomMargin"/>
+        <input type="date" class="bottomMargin" v-model="filterFrom" @change="updateDateFilter"/>
        <table>
           <thead>
               <tr>
@@ -56,13 +56,14 @@
 import api from '../api'
 import time from '../api/time.js'
 
-export default {
+export default { 
   name: 'Times',
   data () {
       return {     
           editing: null,
           formNewTime: {'date':'','time':'','distance':''},
-          arrTimes: time.arrTimes
+          arrTimes: time.arrTimes,
+          filterFrom: ''
       }
   },
   created: function(){
@@ -93,7 +94,7 @@ export default {
       },
 
 
- deleteTime:function( selectedTime ) { 
+      deleteTime:function( selectedTime ) { 
           this.editing = null;  
           time.deleteTime( selectedTime )
               .then(() => time.getTimes() )
@@ -111,9 +112,16 @@ export default {
               .catch(( error )=>{
                   console.log(error);
               })
+    },
 
 
-
+    updateDateFilter:function() {
+        time.setFrom(  this.filterFrom );
+        time.getTimes() 
+              .then(()=> this.arrTimes = time.arrTimes )
+              .catch(( error )=>{
+                  console.log(error);
+              })
 
 
     }

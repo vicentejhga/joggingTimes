@@ -9,15 +9,21 @@ import router from '../router'
 export default {
     arrTimes: [],  
     ownerTimes: '',
+    from: '',
 
- 
+    setFrom( time ) { 
+        this.from = time;
+    },
+
 
     setOwner( id ) {
     	this.ownerTimes = id;
     },
 
     getTimes( ) {
-    	return axios.get( apiUrl + 'times/' + this.ownerTimes )
+        var params = { };
+        if ( this.from !== '' ) { params['from'] = this.from; }
+    	return axios.get( apiUrl + 'times/' + this.ownerTimes,params  )
           	.then( ( response ) => {
                 this.arrTimes = response.data.data;
             }) 

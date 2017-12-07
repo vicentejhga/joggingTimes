@@ -79,9 +79,14 @@ class JoggingTimeHandler extends BaseAutoBindedClass {
         let userId = req.params.userId;
      
         let data = req.body;
+        console.log(data);
         new Promise(function (resolve, reject) {
-        
-            JoggingTimeModel.find({"userId":userId}, function (err, times) {
+            let search = {"userId":userId}
+            if ( typeof( data.from ) !== "undefined" )
+            {
+                search['data']= { $gt:data.from };
+            }
+            JoggingTimeModel.find( search, function (err, times) {
                 if (err !== null) {
                     reject(err);
                 } else {
