@@ -8,7 +8,7 @@
                   <th> First name </th>
                   <th> Last name </th>
                   <th> E-mail </th>
-                  <th> Role </th>
+                  <th> Password </th>
                   <th>  </th>
               </tr> 
                <tr>
@@ -19,6 +19,13 @@
                 <td>  </td>
                 <td> <button v-on:click="addUser">add</button></td>
             </tr>     
+               <tr>
+                  <th> First name </th>
+                  <th> Last name </th>
+                  <th> E-mail </th>
+                  <th> Role </th>
+                  <th>  </th>
+              </tr> 
           </thead>
           <tbody>     
             <tr v-for="row in this.arrUsers" >
@@ -71,7 +78,19 @@ export default {
 
 
   methods: {
-      addUser: function( ) {},
+      addUser: function( ) {
+        let newUser = this.formNewUser;
+       
+        user.createNewUser( newUser.firstName, newUser.lastName, newUser.email, newUser.password   ) 
+           .then(() => user.getUser() )
+              .then(( response ) => {
+                this.arrUsers = response.data.data; 
+                this.formNewUser = {'firstName':'','lastName':'','email':'','password':''}
+              })
+            .catch(( error )=>{
+                console.log(error);
+            })        
+      },
 
 
       deleteUser:function( selectedUser ) { 
