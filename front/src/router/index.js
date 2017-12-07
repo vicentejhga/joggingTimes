@@ -24,6 +24,7 @@ export default new Router({
       name: 'Times',
       component: Times
     },
+    
     {
       path: '/users',
       name: 'Users',

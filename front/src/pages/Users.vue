@@ -97,7 +97,7 @@ export default {
       },
       manageTimes: function( selectedUser ) {
           time.setOwner( selectedUser._id );
-          router.push('/Times')
+          router.push('/times')
 
       },
 

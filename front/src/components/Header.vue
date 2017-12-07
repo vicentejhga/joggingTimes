@@ -1,9 +1,9 @@
  <template>
 	<div class="nav" v-if="user.id.length > 0"> 
 		<ul id="menu">
-			<a href="#" @click="goToTimesPage()"><li>Times</li></a>
-			<a href="#" @click="redirect('/weekly')"><li>Weekly report</li></a>
-			<a href="#" @click="redirect('/users')" v-if="user.role!='Normal'"><li>{{ user.role }} stuff</li></a>
+			<a href="#" @click="goToTimesPage()" ><li v-bind:class="{active:selected=='times'}">Times</li></a>
+			<a href="#" @click="goToWeeklyReportPage()"><li v-bind:class="{active:selected=='weekly'}">Weekly report</li></a>
+			<a href="#" @click="manageUsers()" v-if="user.role!='Normal'"><li v-bind:class="{active:selected=='users'}">Manage users</li></a>
 			<a href="#" @click="logout()"><li>Log out</li></a>
 			
 		</ul> 
@@ -23,7 +23,8 @@ export default {
   	name: 'Header',
    	data () {
     	return {
-        	user: user
+        	user: user,
+        	selected: 'times'
     	}  
 	},
 	methods: {
@@ -31,10 +32,17 @@ export default {
 			router.push(path);
 
 		},
-
 		goToTimesPage( ){
 			time.setOwner(user.id);
-			this.redirect('/times')
+			router.push('/times')
+		},
+		goToWeeklyReportPage( ){
+		 	this.selected = 'weekly';
+			router.push('/weekly')
+		},
+		manageUsers( ){
+		 	this.selected = 'users';
+			router.push('/users')
 		},
 		logout() {
 			api.logout(  ) 
@@ -57,13 +65,17 @@ export default {
 	div.nav {
 		overflow:auto;
 	}
-
+	#menu li.active {
+		background:#3863a0;
+		 
+	}
 	#menu {
 		width:500px;
 		margin:0 auto;
 	}
 
  	#menu li {
+ 		 
 		float: left;
 		display: inline;
 		position: relative;
@@ -75,10 +87,7 @@ export default {
 		list-style:none;
 		padding:2px 0;
 	}
-
-	#menu li:hover {
-		background:#3863a0;
-	}
+ 
 
 	#menu  a{
 		font:bold 11px Arial, Helvetica, sans-serif;

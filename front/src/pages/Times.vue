@@ -1,6 +1,5 @@
 <template>
   	<div  v-bind:class="{ info: !yourOwn }">
-      
     <div  v-if="!yourOwn">
       <h2>{{ownerInfo.email}} times</h2>
       </div>
@@ -74,7 +73,7 @@ export default {
       }
   },
   created: function(){
-    
+    console.log("created");
       user.getUser( time.ownerTimes )
           .then((response)=> { 
             this.ownerInfo = response.data.data;
@@ -86,6 +85,17 @@ export default {
           .catch((err)=> { 
             console.log("errroring", err);
           });
+  },
+  mounted:function(){
+    console.log("mounted");
+  }
+
+  ,
+  beforeUpdate:function(){
+    console.log("updated");
+  },
+ beforeUpdate:function(){
+    console.log("updated");
   },
 
   methods: {
