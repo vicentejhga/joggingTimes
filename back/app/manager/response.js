@@ -58,14 +58,6 @@ class ResponseManager {
         };
     }
 
-    static generateHATEOASLink(link, method, rel) {
-        return {
-            link: link,
-            method: method,
-            rel: rel
-        }
-    }
-
     static respondWithSuccess(res, code, data, message = "", links = []) {
         let response = Object.assign({}, BasicResponse);
         response.success = true;

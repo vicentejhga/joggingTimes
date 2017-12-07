@@ -8,7 +8,7 @@
                   <th> First name </th>
                   <th> Last name </th>
                   <th> E-mail </th>
-                  <th> Password </th>
+                  <th> Role </th>
                   <th>  </th>
               </tr> 
                <tr>
@@ -21,25 +21,24 @@
             </tr>     
           </thead>
           <tbody>     
-        <!--    <tr v-for="row in this.arrTimes" >
+            <tr v-for="row in this.arrUsers" >
                   <template v-if ="editing == row" >
-                    <td><input type="date" v-model = "row.date" /></td>
-                    <td><input type="text" v-model = "row.time" /></td>
-                    <td><input type="number" v-model = "row.distance" /></td>
-                    <td></td>
-                    <td> <button @click="editTime(row)">save</button> </td>
+                    <td><input type="text" v-model = "row.firstName" /></td>
+                    <td><input type="text" v-model = "row.lastName" /></td>
+                    <td><input type="email" v-model = "row.email" /></td>
+                    <td> {{ row.role }} </td>
+                    <td> <button @click="editUser(row)">save</button> </td>
                     <td> <button @click="editing=null">cancel</button> </td>
                 </template>
                 <template v-else>
-                    <td> {{ reverse(row.date) }}  </td>
-                    <td> {{ row.time }} </td>
-                    <td> {{ row.distance }} </td>
-                    <td> {{ row.average }} </td>  
+                    <td> {{ row.firstName }}  </td>
+                    <td> {{ row.lastName }} </td>
+                    <td> {{ row.email }} </td>
+                    <td> {{ row.role }} </td>  
                     <td> <button @click="editing=row">edit</button> </td>
-                    <td> <button @click="deleteTime(row)">delete</button> </td>
+                    <td> <button @click="deleteUser(row)">delete</button> </td>
                 </template>
-            </tr>-->
-          
+            </tr>
           </tbody>
         </table>
   	</div>
@@ -56,22 +55,45 @@ export default {
   name: 'Times',
   data () {
       return {
+        editing: null,
         formNewUser: {'firstName':'','lastName':'','email':'','password':''},
         arrUsers: []  
       }
   },
   created: function(){
-     let that = this;
+     
       user.getUser()
-          .then( ( response ) => { this.arrUsers = response.data.data; })
-          .catch((err)=> {
+          .then( ( response ) => this.arrUsers = response.data.data )
+          .catch(( err )=> {
             console.log("errroring", err);
           });
   },
 
 
   methods: {
-      addUser: function( ) {}
+      addUser: function( ) {},
+
+
+      deleteUser:function( selectedUser ) { 
+          this.editing = null;  
+          user.deleteUser( selectedUser )
+              .then(() => user.getUser() )
+              .then(( response ) => this.arrUsers = response.data.data )
+              .catch(( error )=>{
+                  console.log(error);
+              })  
+      },
+
+      editUser:function( selectedUser ) {
+          this.editing = null;  
+          user.updateUser( selectedUser )
+              .then(() => user.getUser() )
+              .then(( response ) => this.arrUsers = response.data.data )
+              .catch(( error )=>{
+                  console.log(error);
+              })
+
+            }
   }
 }
 </script>

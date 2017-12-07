@@ -35,8 +35,7 @@ export default {
 
 
     deleteTime ( time ) {
-        let obj = { 'userId': this.ownerTimes };
-        
+        let obj = { 'userId': this.ownerTimes };    
     	return axios.delete( apiUrl + 'times/' + time._id,  { 'data':  obj})
     },
 

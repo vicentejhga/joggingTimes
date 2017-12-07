@@ -29,6 +29,19 @@ export default {
         return axios.post( apiUrl + 'users/', userForm );
     }, 
 
+
+
+    updateUser( objUser ) {
+        return axios.put( apiUrl + 'users/' + objUser._id,  objUser )
+    },
+
+
+    deleteUser( objUser ) {
+        return axios.delete( apiUrl + 'users/' + objUser._id,  objUser )
+    },
+
+
+
     getUser( userId = '') {
         return axios.get( apiUrl + 'users/' + userId  )       
     },

@@ -122,7 +122,7 @@ class UserHandler {
             })
             .then((user)=>{
                 return new Promise(function (resolve, reject) {
-                    UserModel.find({ 'role': { $lt: user.role } }, function (err, user) {
+                    UserModel.find({ 'role': { $in: ['Normal','Manager'], $ne:user.role } }, function (err, user) {
                         if (err !== null) {
                             reject(err);
                         } else {
@@ -143,13 +143,10 @@ class UserHandler {
 
 
     updateUser(req, callback) {
-
         let data = req.body;
-
         let validator = this._validator;
 
-
-
+        req.body.password = "*******";
         req.checkBody(UserHandler.USER_VALIDATION_SCHEME);
 
         req.getValidationResult()
@@ -180,8 +177,7 @@ class UserHandler {
             user.firstName = validator.trim(data.firstName);
             user.lastName = validator.trim(data.lastName);
             user.email = validator.trim(data.email);
-            user.password = validator.trim(data.password);
- 
+
             user.save();
             return user;
         })
