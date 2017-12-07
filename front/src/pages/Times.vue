@@ -76,7 +76,8 @@ export default {
   },
 
   methods: {
-      reverse:(value ) => {return value.split('-').reverse().join('-');},
+      reverse:( value ) => {return value.split('-').reverse().join('-');},
+
   		addTime:function() {
         let newTime = this.formNewTime;
        
@@ -93,29 +94,23 @@ export default {
 
 
  deleteTime:function( selectedTime ) { 
-        let that = this; 
           this.editing = null;  
+          time.deleteTime( selectedTime )
+              .then(() => time.getTimes() )
+              .then( () =>   this.arrTimes = time.arrTimes )
+              .catch(( error )=>{
+                  console.log(error);
+              })  
+      },
 
-          time.deleteTime(selectedTime )
-            /*  .then(() => time.getTimes() )
-              .then( function( response ){
-                  that.arrTimes = response.data.data;
-              })*/
+      editTime:function( selectedTime ) {
+         
+          time.updateTime( selectedTime )
+              .then(() => time.getTimes() )
+              .then(()=> this.arrTimes = time.arrTimes )
               .catch(( error )=>{
                   console.log(error);
               })
-      },
-
-      editTime:function( time ) {
-          let that = this; 
-          api.updateTime( time )
-              .then(() => api.getTimes() )
-              .then( function( response ){
-                  that.arrTimes = response.data.data;
-              })
-             .catch(( error )=>{
-                console.log(error);
-          })
 
 
 

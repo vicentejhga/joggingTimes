@@ -33,11 +33,8 @@ export default {
                         that[prop]='';
                     });                 
             })
-    },
+    }
 
-    updateTime( objTime ) {
-        return axios.put( apiUrl + 'times/' + objTime._id,  objTime)
-   }
 
 }
 

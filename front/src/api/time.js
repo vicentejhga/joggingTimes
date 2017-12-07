@@ -20,7 +20,6 @@ export default {
     	return axios.get( apiUrl + 'times/' + this.ownerTimes )
           	.then( ( response ) => {
                 this.arrTimes = response.data.data;
-                console.log(this.arrTimes);
             }) 
     },
 
@@ -29,11 +28,16 @@ export default {
     	return axios.post( apiUrl + 'times/',  objParams )        
     },
 
+
     deleteTime ( time ) {
-    	return axios.delete( apiUrl + 'times/' + time._id,  { 'userId': this.ownerTimes })
-    }
+        let obj = { 'userId': this.ownerTimes };
+        
+    	return axios.delete( apiUrl + 'times/' + time._id,  { 'data':  obj})
+    },
 
-
+    updateTime( objTime ) {
+        return axios.put( apiUrl + 'times/' + objTime._id,  objTime )
+   }
 
 
 }

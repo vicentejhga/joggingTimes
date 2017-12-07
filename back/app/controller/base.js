@@ -14,13 +14,13 @@ class BaseController extends BaseAutoBindedClass {
     }
 
     authenticate(req, res, next, callback, allowed ) {
+        let reqParams = req.params.userId || req.body.userId || req.params.id || req.body.id ;
+                
         let that= this;
         let responseManager = this._responseManager;
         this._passport.authenticate('jwt-rs-auth', {
             onVerified: function( token, user ) {
             
-                let reqParams = req.params.userId || req.body.userId || req.params.id || req.body.id ;
-
                 if ( typeof(allowed)!=="undefined" ) {
 
                     let arr_allowed = allowed.split(',');
