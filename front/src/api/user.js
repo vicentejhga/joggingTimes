@@ -5,7 +5,7 @@ let apiUrl = 'http://192.168.1.43:3000/';
 import api from '../api'
 import router from '../router'
 export default {
-  	name: 'Header',
+  	
 	id: '',
     firstName: '',
     lastName: '',
@@ -27,10 +27,10 @@ export default {
 
     createNewUser ( userForm ){
         return axios.post( apiUrl + 'users/', userForm );
-    },
+    }, 
 
-    getUser( userId ) {
-          return axios.get( apiUrl + 'users/' + userId )       
+    getUser( userId = '') {
+        return axios.get( apiUrl + 'users/' + userId  )       
     },
 
 	logout() {

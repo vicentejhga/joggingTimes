@@ -22,9 +22,7 @@
                 <td> <button v-on:click="addTime">add</button></td>
             </tr>
           </thead>
-          <tbody>
-        
-
+          <tbody>     
             <tr v-for="row in this.arrTimes" >
                   <template v-if ="editing == row" >
                     <td><input type="date" v-model = "row.date" /></td>
