@@ -15,6 +15,7 @@
 <script>
 
 import user from '../api/user.js'
+import api from '../api/'
 import router from '../router'
 export default {
   	name: 'Header',
@@ -29,8 +30,12 @@ export default {
 		},
 		logout() {
 			api.logout(  ) 
-			 	.then(() => router.push('/')) 
-			 	.catch((err)=>{})
+				.then(() => { this.user.id = ''; } )
+			 	.then(() => { router.push('/'); }) 
+			 	.catch((err)=>{
+
+
+			 	})
 		}
 
 	}

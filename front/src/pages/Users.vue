@@ -45,6 +45,7 @@
                     <td> <button @click="editing=row">edit</button> </td>
                     <td> <button @click="deleteUser(row)">delete</button> </td>
                 </template>
+                <td> <button @click="deleteUser(row)" v-if="role=='Admin'">Times</button> </td>
             </tr>
           </tbody>
         </table>
@@ -64,7 +65,9 @@ export default {
       return {
         editing: null,
         formNewUser: {'firstName':'','lastName':'','email':'','password':''},
-        arrUsers: []  
+        arrUsers: []
+        ,
+        role: user.role
       }
   },
   created: function(){

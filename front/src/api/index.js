@@ -26,13 +26,7 @@ export default {
                   
 
         return axios.delete( apiUrl + 'auth/'+ hash ,{  })
-            .then(response => {
-                    axios.defaults.headers.common['Authorization'] = ''; 
-                    let that = this;
-                    Object.keys(this.user).forEach(function (prop) {
-                        that[prop]='';
-                    });                 
-            })
+            .then( () => { axios.defaults.headers.common['Authorization'] = '';  })
     }
 
 
