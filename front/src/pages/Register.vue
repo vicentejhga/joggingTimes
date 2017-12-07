@@ -6,51 +6,42 @@
         <input type = "text" placeholder="E-mail" v-model="userForm.email"/>
       	<input type = "password" placeholder="Password" v-model="userForm.password"/>
   		  <button v-on:click="signUp">Create account</button>
-  	
-  </div>
+    </div>
 </template>
-
-
 
 <script>
 
-import user from '../api/user.js'
-import router from '../router/index'
+    import user from '../api/user.js'
+    import router from '../router/index'
 
-export default {
-  name: 'Register',
-  data () {
-    return {
-      userForm: {
-          firstName: '',
-          lastName: '',
-          email: '',
-          password: ''
-      },
-      error: ''
+    export default {
+        name: 'Register',
+        data () {
+        return {
+            userForm: {
+                firstName: '',
+                lastName: '',
+                email: '',
+                password: ''
+            },
+            error: ''
+        }
+    },
+    methods: {
+        signUp: function() {
+      			  user.createNewUser( this.userForm )
+                  .then(() => { router.push('/'); })
+                  .catch((err)=> {console.log(err)});
+      		}
+      }
     }
-  },
-  methods: {
-  		signUp: function() {
-  			  user.createNewUser( this.userForm )
-              .then( function(){
-                  router.push('/');
-              })
-            .catch((err)=> {console.log(err)});
-    
-  		}
-  }
-}
 </script>
 
-
-
-<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-  input {
-      text-align: center;
-      display:block;
-      margin:0 auto;
-      margin-bottom:10px;
+    input {
+        text-align: center;
+        display:block;
+        margin:0 auto;
+        margin-bottom:10px;
     }
 </style>

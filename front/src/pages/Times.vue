@@ -1,4 +1,3 @@
-
 <template>
   	<div class="loginForm">
     <h1>Times</h1>
@@ -44,7 +43,6 @@
           </tbody>
         </table>
   	</div>
- 
 </template>
  
 
