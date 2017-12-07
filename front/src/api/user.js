@@ -26,7 +26,7 @@ export default {
 	},
 
     createNewUser ( userForm ){
-         return axios.post( apiUrl + 'users/', userForm );
+        return axios.post( apiUrl + 'users/', userForm );
     },
 
     getUser( userId ) {

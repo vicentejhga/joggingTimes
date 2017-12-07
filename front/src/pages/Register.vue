@@ -14,8 +14,9 @@
 
 <script>
 
-import api from '../api'
-    import router from '../router/index'
+import user from '../api/user.js'
+import router from '../router/index'
+
 export default {
   name: 'Register',
   data () {
@@ -31,7 +32,7 @@ export default {
   },
   methods: {
   		signUp: function() {
-  			  api.createNewUser( this.userForm )
+  			  user.createNewUser( this.userForm )
               .then( function(){
                   router.push('/');
               })
