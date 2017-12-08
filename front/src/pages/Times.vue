@@ -16,7 +16,7 @@
           <thead>
               <tr>
                   <th> Date <sub>(dd/mm/aaaa)</sub></th>
-                  <th> Time <sub>(hh:mm:ss)</sub></th>
+                  <th> Time <sub>(hh:mm:ss)  </sub></th>
                   <th> Distance <sub>(Km)</sub></th>
                   <th> Average </th>
                   <th>  </th>
@@ -42,7 +42,7 @@
                 </template>
                 <template v-else>
                     <td> {{ dateFormat(row.date) }}  </td>
-                    <td> {{ row.time }} </td>
+                    <td> {{ convertfromSecondsToHMS(row.time) }} </td>
                     <td> {{ row.distance }} </td>
                     <td> {{ row.average }} </td>  
                     <td> <button @click="editing=row">edit</button> </td>
@@ -92,11 +92,23 @@ export default {
       dateFormat:function(value){
         return time.dateFormat(value);
       },
+// From seconds to hh:mm:ss
+ 
+      convertfromSecondsToHMS:function( seconds ){
+    var date = new Date(null);
+        date.setSeconds(seconds); // specify value for SECONDS here
+        return date.toISOString().substr(11, 8);
+      },
+      convertHMSToSeconds:function( hms ){
+           var a = hms.split(':'); // split it at the colons
+         // minutes are worth 60 seconds. Hours are worth 60 minutes.
+          return (+a[0]) * 60 * 60 + (+a[1]) * 60 + (+a[2]); 
+      },
 
   		addTime:function() {
           let newTime = this.formNewTime;
        
-          time.createNewTime( newTime.date, newTime.time, newTime.distance   ) 
+          time.createNewTime( newTime.date, this.convertHMSToSeconds(newTime.time), newTime.distance   ) 
               .then(() => time.getTimes() )
               .then(()=> {
                   this.arrTimes = time.arrTimes;
