@@ -13,15 +13,15 @@
        <table>
           <thead>
               <tr>
-                  <th> Date </th>
-                  <th> Time </th>
-                  <th> Distance </th>
+                  <th> Date <sub>(dd/mm/aaaa)</sub></th>
+                  <th> Time <sub>(hh:mm:ss)</sub></th>
+                  <th> Distance <sub>(Km)</sub></th>
                   <th> Average </th>
                   <th>  </th>
               </tr>
                <tr>
                 <td> <input type="date" v-model="formNewTime.date"/> </td>
-                <td> <input type="text" v-model="formNewTime.time"/> </td>
+                <td> <input type="text" v-model="formNewTime.time" placeholder="hh:mm:ss" /> </td>
                 <td> <input type="number" v-model="formNewTime.distance"/> </td>
                 <td>  </td>
                 <td>  </td>
