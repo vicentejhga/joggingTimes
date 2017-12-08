@@ -78,8 +78,6 @@ class JoggingTimeHandler extends BaseAutoBindedClass {
     getAll(req, callback) {
         let userId = req.params.userId;
         let dataFrom = req.params.from||'';
-       
-//        db.times.find({date:{$gt:""}})
 
         new Promise(function (resolve, reject) {
             let search = {"userId":userId}
@@ -102,7 +100,6 @@ class JoggingTimeHandler extends BaseAutoBindedClass {
 
 
     getWeeklyReport(req, callback) {
-        console.log("here we are");
         let userId = req.params.userId;
         let data = req.body;
         new Promise(function (resolve, reject) {
@@ -110,6 +107,7 @@ class JoggingTimeHandler extends BaseAutoBindedClass {
                 {   $match: { userId:mongoose.Types.ObjectId(userId) }},
                 {   $project : {      
                         year : { $year : "$date" }, 
+                        month : { $month : "$date" }, 
                         week : { $week : "$date" },
                         userId: "$userId",
                         distance: "$distance",
@@ -120,8 +118,8 @@ class JoggingTimeHandler extends BaseAutoBindedClass {
                 {   $group : {
                         _id : {
                             year : "$year",
-                            week : "$week",
-                            userId: "$userId"
+                            month: "$month",
+                            week : "$week"
                         }, 
                         average:{ $avg: "$average" },     
                         distance:{ $avg: "$distance" },     

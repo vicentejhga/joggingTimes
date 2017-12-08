@@ -73,12 +73,10 @@ export default {
       }
   },
   created: function(){
-    console.log("created");
       user.getUser( time.ownerTimes )
           .then((response)=> { 
             this.ownerInfo = response.data.data;
             this.yourOwn = (this.ownerInfo._id == user.id)
-            console.log(this.yourOwn)
           })
           .then( time.getTimes() )
           .then(() => { this.arrTimes = time.arrTimes; })

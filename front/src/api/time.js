@@ -41,6 +41,10 @@ export default {
 
     updateTime( objTime ) {
         return axios.put( apiUrl + 'times/' + objTime._id,  objTime )
+   },
+
+   getWeeklyReport( ) {
+        return axios.get( apiUrl + 'times/weekly/' +  this.ownerTimes )
    }
 
 

@@ -4,6 +4,7 @@ import Login from '@/pages/Login'
 import Register from '@/pages/Register'
 import Times from '@/pages/Times'
 import Users from '@/pages/Users'
+import Weekly from '@/pages/Weekly'
 
 Vue.use(Router)
 
@@ -23,6 +24,11 @@ export default new Router({
       path: '/times',
       name: 'Times',
       component: Times
+    },
+    {
+      path: '/weekly',
+      name: 'Weekly',
+      component: Weekly
     },
     
     {
