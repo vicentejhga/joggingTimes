@@ -4,7 +4,7 @@ const ObjectId = Schema.ObjectId;
 
 let joggingTimeSchema = new Schema({
     date: Date,
-    time: String,
+    time: Number,
     distance: Number,
     average: Number,
     userId: {

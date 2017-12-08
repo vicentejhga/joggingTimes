@@ -14,21 +14,30 @@ class JoggingTimeHandler extends BaseAutoBindedClass {
         return {
             'distance':{
                 notEmpty: true,
+                  isNumeric:{
+                    errorMessage: 'Invalid time'
+                },
                 errorMessage: 'Invalid distance'
             },
             'time':{
                 notEmpty: true,
+                isNumeric:{
+                    errorMessage: 'Invalid time'
+                },
                 errorMessage: 'Invalid time'
             },
             'date':{
                 notEmpty: true,
+                isDate:{
+                    errorMessage: 'Invalid date'
+                },
                 errorMessage: 'Invalid date'
             },  
             'userId': {
                 isMongoId: {
                     errorMessage: 'Invalid user Id'
                 },
-                errorMessage: 'Invalid email provided'
+                errorMessage: 'Invalid user Id'
             }
             
         };
@@ -40,9 +49,10 @@ class JoggingTimeHandler extends BaseAutoBindedClass {
         let validator = this._validator;
         
         req.checkBody(JoggingTimeHandler.JOGGING_TIME_VALIDATION_SCHEME);
+          
         req.getValidationResult()
             .then(function (result) {
-
+ 
                 if (!result.isEmpty()) {
                     let errorMessages = result.array().map(function (elem) {
 
@@ -68,6 +78,7 @@ class JoggingTimeHandler extends BaseAutoBindedClass {
                 callback.onSuccess(saved);
             })
             .catch((error) => {
+
                 callback.onError(error);
             });
     }
