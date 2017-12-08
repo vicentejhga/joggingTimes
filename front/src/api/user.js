@@ -25,9 +25,8 @@ export default {
         	}) 
 	},
 
-    createNewUser ( firstName, lastName, email, password ){
-        let objParams = {'firstName':firstName,'lastName':lastName,'email':email, 'password':password  };
-        
+    createNewUser ( userForm ){
+        let objParams = {'firstName':userForm.firstName,'lastName':userForm.lastName,'email':userForm.email, 'password':userForm.password  };
         return axios.post( apiUrl + 'users/', objParams );
     }, 
 

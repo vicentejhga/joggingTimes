@@ -1,14 +1,13 @@
- <template>
-	<div class="nav" v-if="user.id.length > 0"> 
-		<ul id="menu">
-			<a href="#" @click="goToTimesPage()" ><li v-bind:class="{active:selected=='times'}">Times</li></a>
-			<a href="#" @click="goToWeeklyReportPage()"><li v-bind:class="{active:selected=='weekly'}">Weekly report</li></a>
-			<a href="#" @click="manageUsers()" v-if="user.role!='Normal'"><li v-bind:class="{active:selected=='users'}">Manage users</li></a>
-			<a href="#" @click="logout()"><li>Log out</li></a>
-			
-		</ul> 
+ <template> 
+		<div class="nav" > 
+			<ul id="menu" v-if="user.id.length > 0">
+				<a href="#" @click="goToTimesPage()" ><li v-bind:class="{active:selected=='times'}">Times</li></a>
+				<a href="#" @click="goToWeeklyReportPage()"><li v-bind:class="{active:selected=='weekly'}">Weekly report</li></a>
+				<a href="#" @click="manageUsers()" v-if="user.role!='Normal'"><li v-bind:class="{active:selected=='users'}">Manage users</li></a>
+				<a href="#" @click="logout()"><li>Log out</li></a>			
+			</ul> 
 	</div>
-
+	
 </template>
 
  
@@ -33,6 +32,7 @@ export default {
 
 		},
 		goToTimesPage( ){
+			this.selected = 'times';
 			time.setOwner(user.id);
 			router.push('/times')
 		},
@@ -62,6 +62,7 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+ 
 	div.nav {
 		overflow:auto;
 	}

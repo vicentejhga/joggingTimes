@@ -86,17 +86,7 @@ export default {
             console.log("errroring", err);
           });
   },
-  mounted:function(){
-    console.log("mounted");
-  }
-
-  ,
-  beforeUpdate:function(){
-    console.log("updated");
-  },
- beforeUpdate:function(){
-    console.log("updated");
-  },
+ 
 
   methods: {
       reverse:( value ) => {return value.split('-').reverse().join('-');},

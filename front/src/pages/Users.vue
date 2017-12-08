@@ -11,23 +11,23 @@
                   <th> Password </th>
                   <th>  </th>
               </tr> 
-               <tr>
-                <td> <input type="text" v-model="formNewUser.firstName"/> </td>
-                <td> <input type="text" v-model="formNewUser.lastName"/> </td>
-                <td> <input type="email" v-model="formNewUser.email"/> </td>
-                <td> <input type="password" v-model="formNewUser.password"/> </td>
-                <td>  </td>
-                <td> <button v-on:click="addUser">add</button></td>
+              <tr>
+                  <td> <input type="text" v-model="formNewUser.firstName"/> </td>
+                  <td> <input type="text" v-model="formNewUser.lastName"/> </td>
+                  <td> <input type="email" v-model="formNewUser.email"/> </td>
+                  <td> <input type="password" v-model="formNewUser.password"/> </td>
+                  <td>  </td>
+                  <td> <button v-on:click="addUser">add</button></td>
             </tr>     
-               <tr>
+            <tr>
                   <th> First name </th>
                   <th> Last name </th>
                   <th> E-mail </th>
                   <th> Role </th>
                   <th>  </th>
-              </tr> 
-          </thead>
-          <tbody>     
+            </tr> 
+        </thead>
+        <tbody>     
             <tr v-for="row in this.arrUsers" >
                   <template v-if ="editing == row" >
                     <td><input type="text" v-model = "row.firstName" /></td>
@@ -97,7 +97,7 @@ export default {
       },
       manageTimes: function( selectedUser ) {
           time.setOwner( selectedUser._id );
-          router.push('/times')
+          router.push('Times')
 
       },
 

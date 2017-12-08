@@ -1,13 +1,9 @@
 <template>
     <div id="app">
-          <img src="./assets/logo.png">
-      
-                    <app-header ></app-header>
-          
+        <img src="./assets/logo.png">
+        <app-header ></app-header>  
         <router-view/>
-  
-
-  </div>
+    </div>
 </template>
 
 <script>
