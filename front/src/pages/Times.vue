@@ -1,4 +1,6 @@
 <template>
+<div>
+ <p class="danger" > {{this.error}}</p>
   	<div  v-bind:class="{ info: !yourOwn }">
     <div  v-if="!yourOwn">
       <h2>{{ownerInfo.email}} times</h2>
@@ -50,9 +52,8 @@
           </tbody>
         </table>
   	</div>
+    </div>
 </template>
- 
-
 
 <script>
 
@@ -69,7 +70,8 @@ export default {
           formNewTime: {'date':'','time':'','distance':''},
           arrTimes: time.arrTimes,
           filterFrom: '',
-          yourOwn:true
+          yourOwn:true,
+          error:''
       }
   },
   created: function(){
@@ -81,7 +83,7 @@ export default {
           .then( time.getTimes() )
           .then(() => { this.arrTimes = time.arrTimes; })
           .catch((err)=> { 
-            console.log("errroring", err);
+              this.error=err.message;
           });
   },
  
@@ -101,7 +103,7 @@ export default {
                   this.formNewTime = {'date':'','distance':'','time':''}
               })
               .catch(( error )=>{
-                  console.log(error);
+                 this.error=err.message;
               })        
       },
 
@@ -112,7 +114,7 @@ export default {
               .then(() => time.getTimes() )
               .then( () =>   this.arrTimes = time.arrTimes )
               .catch(( error )=>{
-                  console.log(error);
+                  this.error=err.message;
               })  
       },
 
@@ -122,7 +124,7 @@ export default {
               .then(() => time.getTimes() )
               .then(()=> this.arrTimes = time.arrTimes )
               .catch(( error )=>{
-                  console.log(error);
+                  this.error=err.message;
               })
     },
 
@@ -132,7 +134,7 @@ export default {
         time.getTimes() 
               .then(()=> this.arrTimes = time.arrTimes )
               .catch(( error )=>{
-                  console.log(error);
+                  this.error=err.message;
               })
     }
   }
@@ -144,9 +146,9 @@ export default {
         margin-left:auto; 
         margin-right:auto;
     }
-.info {
-  background-color: #ddd;
-}    
+    .info {
+        background-color: #ddd;
+    }    
     .bottomMargin {
         margin-bottom: 20px;
     }
@@ -157,6 +159,11 @@ export default {
 
    .edit {
         display: none;
+    }
+
+    .danger {
+        color:white;
+        background-color: #dc3545;    
     }
 
     .editing .edit {

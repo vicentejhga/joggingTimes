@@ -1,26 +1,23 @@
 <template>
-  	<div> 
-
-  		    <h1>Weekly report</h1>
-   
-   	
-   	<table  class="table">
-          <thead>
-              <tr>
-              	  <th>Week</th>
-                  <th> Average speed </th>
-                  <th> Average distance </th>
-              </tr>
-          </thead>
-          <tbody>     
-            <tr v-for="row in this.arrReport" >
-            	<td > {{getDateFromWeekNumber( row._id )}} </td>       
-                <td> {{row.average}}  </td>
-                <td> {{row.distance}} </td>               
-            </tr> 
-          </tbody>
+  	<div>    
+        <p class="danger" > {{this.error}}</p>
+        <h1>Weekly report</h1>
+       	<table  class="table">
+            <thead>
+                <tr>
+                	  <th>Week</th>
+                    <th> Average speed </th>
+                    <th> Average distance </th>
+                </tr>
+            </thead>
+            <tbody>     
+                <tr v-for="row in this.arrReport" >
+                	 <td > {{getDateFromWeekNumber( row._id )}} </td>       
+                    <td> {{row.average}}  </td>
+                    <td> {{row.distance}} </td>               
+                </tr> 
+            </tbody>
         </table> 
-
     </div>
 </template>
 
@@ -31,29 +28,29 @@
         name: 'Weekly', 
         data () {
             return {
-               arrReport:[]
+               arrReport:[],
+               error:''
             }  
         },
 
         created: function() { 
       		time.getWeeklyReport()
 	          .then( ( response ) => { 
-	          	console.log(response);
-					this.arrReport = response.data.data;
-	           })
+					      this.arrReport = response.data.data;
+	          })
 	          .catch(( err )=> {
-	            console.log("errroring", err);
+	            this.error = err.msg;
 	          });
  		},
 
  		methods: {
       		getDateFromWeekNumber: function( objDate ) {
-				var d = new Date("Jan 01, "+ objDate.year +" 01:00:00");
-				var w = d.getTime() + 604800000 * (objDate.week-1);
-				var n1 = time.dateFormat( new Date(w)) ;
-				var n2 = time.dateFormat( new Date(w + 518400000) );
+      				var d = new Date("Jan 01, "+ objDate.year +" 01:00:00");
+      				var w = d.getTime() + 604800000 * (objDate.week-1);
+      				var n1 = time.dateFormat( new Date(w)) ;
+      				var n2 = time.dateFormat( new Date(w + 518400000) );
 
-				return n1 + " to " + n2;
+      				return n1 + " to " + n2;
       		}
   		}
     }
@@ -61,7 +58,11 @@
 
 
 <style scoped>
-
+    .danger {
+        color:white;
+        background-color: #dc3545;    
+    }
+    
     
     table {
         margin-left:auto; 

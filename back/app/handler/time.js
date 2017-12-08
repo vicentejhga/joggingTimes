@@ -114,8 +114,8 @@ class JoggingTimeHandler extends BaseAutoBindedClass {
                         week : { $week : "$date" },
                         userId: "$userId",
                         distance: "$distance",
-                        average: "$average",
-                        userId: "$userId"
+                        average: "$average"
+                       
                     }
                 },
                 {   $group : {

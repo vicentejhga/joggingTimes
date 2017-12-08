@@ -1,11 +1,11 @@
  <template> 
-		<div class="nav" > 
-			<ul id="menu" v-if="user.id.length > 0">
-				<a href="#" @click="goToTimesPage()" ><li v-bind:class="{active:selected=='times'}">Times</li></a>
-				<a href="#" @click="goToWeeklyReportPage()"><li v-bind:class="{active:selected=='weekly'}">Weekly report</li></a>
-				<a href="#" @click="manageUsers()" v-if="user.role!='Normal'"><li v-bind:class="{active:selected=='users'}">Manage users</li></a>
-				<a href="#" @click="logout()"><li>Log out</li></a>			
-			</ul> 
+	<div class="nav" > 
+		<ul id="menu" v-if="user.id.length > 0">
+			<a href="#" @click="goToTimesPage()" ><li v-bind:class="{active:selected=='times'}">Times</li></a>
+			<a href="#" @click="goToWeeklyReportPage()"><li v-bind:class="{active:selected=='weekly'}">Weekly report</li></a>
+			<a href="#" @click="manageUsers()" v-if="user.role!='Normal'"><li v-bind:class="{active:selected=='users'}">Manage users</li></a>
+			<a href="#" @click="logout()"><li>Log out</li></a>	
+		</ul> 
 	</div>
 	
 </template>
@@ -31,19 +31,23 @@ export default {
 			router.push(path);
 
 		},
+
 		goToTimesPage( ){
 			this.selected = 'times';
 			time.setOwner(user.id);
 			router.push('/times')
 		},
+
 		goToWeeklyReportPage( ){
 		 	this.selected = 'weekly';
 			router.push('/weekly')
 		},
+
 		manageUsers( ){
 		 	this.selected = 'users';
 			router.push('/users')
 		},
+		
 		logout() {
 			api.logout(  ) 
 				.then(() => { this.user.id = ''; } )

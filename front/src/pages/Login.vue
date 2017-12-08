@@ -1,6 +1,6 @@
 <template>
   	<div class="loginForm">   
-    <app-error></app-error>	 
+        <p class="danger" > {{this.error}}</p>
         <h1>Login</h1>
       	<input type = "text" placeholder="E-mail" v-model="credentials.email"/>
       	<input type = "password" placeholder="Password" v-model="credentials.password"/>
@@ -15,28 +15,23 @@
     import time from '../api/time.js'
     import router from '../router/index'
 
- import errorHandler from '../components/Error.vue'
-
     export default {
         name: 'Login', 
         data () {
             return {
-                credentials:{ email: '', password: '' }
+                credentials:{ email: '', password: '' },
+                error:''
             } 
-        },
-        components: {
-          'app-error': errorHandler 
         },
 
         methods: { 
-      	    signIn() {
+            signIn() {
+    
                 user.login( this.credentials )
                     .then(() => { time.setOwner( user.id ); })
                     .then(() => router.push('/times'))    
                     .catch((err) => {
-                        console.log(errorHandler);
-                         this.errorHandler.message='hello';
-                                 
+                        this.error=err.message;                                 
                     });    
             }
         }
@@ -45,12 +40,15 @@
 
 
 <style scoped>
-
+input {
+    text-align: center;
+    display:block;
+    margin:0 auto;
+    margin-bottom:10px;
+}
+.danger {
+color:white;
+background-color: #dc3545;
     
-    input {
-        text-align: center;
-        display:block;
-        margin:0 auto;
-        margin-bottom:10px;
-    }
+}
 </style>

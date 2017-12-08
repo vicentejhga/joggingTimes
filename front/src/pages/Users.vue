@@ -1,6 +1,7 @@
 
 <template>
   	<div class="loginForm">
+    <p class="danger" > {{this.error}}</p>
     <h1>Users</h1>
         <table>
           <thead>
@@ -67,16 +68,16 @@ export default {
       return {
         editing: null,
         formNewUser: {'firstName':'','lastName':'','email':'','password':''},
-        arrUsers: []
-        ,
-        role: user.role
+        arrUsers: [],
+        role: user.role,
+        error: ''
       }
   },
   created: function(){ 
       user.getUser()
           .then( ( response ) => this.arrUsers = response.data.data )
           .catch(( err )=> {
-            console.log("errroring", err);
+            this.error = err.message;
           });
   },
 
@@ -92,13 +93,12 @@ export default {
                 this.formNewUser = {'firstName':'','lastName':'','email':'','password':''}
               })
             .catch(( error )=>{
-                console.log(error);
+                this.error = error.message;
             })        
       },
       manageTimes: function( selectedUser ) {
           time.setOwner( selectedUser._id );
           router.push('Times')
-
       },
 
       deleteUser:function( selectedUser ) { 
@@ -107,7 +107,7 @@ export default {
               .then(() => user.getUser() )
               .then(( response ) => this.arrUsers = response.data.data )
               .catch(( error )=>{
-                  console.log(error);
+                 this.error = error.message;
               })  
       },
 
@@ -117,7 +117,7 @@ export default {
               .then(() => user.getUser() )
               .then(( response ) => this.arrUsers = response.data.data )
               .catch(( error )=>{
-                  console.log(error);
+                  this.error = error.message;
               })
 
             }
@@ -146,7 +146,11 @@ table {
     .editing .edit {
       display: block
     }
-  
+   .danger {
+        color:white;
+        background-color: #dc3545;    
+    }
+    
 
     input {
       text-align: center
