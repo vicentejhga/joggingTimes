@@ -18,7 +18,7 @@
                   <th> Date <sub>(dd/mm/aaaa)</sub></th>
                   <th> Time <sub>(hh:mm:ss)  </sub></th>
                   <th> Distance <sub>(Km)</sub></th>
-                  <th> Average </th>
+                  <th> Average <sub>(Km/Hour)</sub></th>
                   <th>  </th>
               </tr>
                <tr>
@@ -30,22 +30,22 @@
                 <td> <button v-on:click="addTime">add</button></td>
             </tr>
           </thead>
-          <tbody>     
+          <tbody>      
             <tr v-for="row in this.arrTimes" >
-                  <template v-if ="editing == row" >
-                    <td><input type="date" v-model = "row.date" /></td>
-                    <td><input type="text" v-model = "row.time" /></td>
-                    <td><input type="number" v-model = "row.distance" /></td>
+                  <template v-if ="idToEdit == row._id" >
+                    <td><input type="date" v-model = "formEditTime.date" /></td>
+                    <td><input type="text" v-model = "formEditTime.time" /></td>
+                    <td><input type="number" v-model = "formEditTime.distance" /></td>
                     <td></td>
-                    <td> <button @click="editTime(row)">save</button> </td>
-                    <td> <button @click="editing=null">cancel</button> </td>
+                    <td> <button @click="editTime(formEditTime)">save</button> </td>
+                    <td> <button @click="idToEdit=null">cancel</button> </td>
                 </template>
                 <template v-else>
                     <td> {{ dateFormat(row.date) }}  </td>
                     <td> {{ convertfromSecondsToHMS(row.time) }} </td>
                     <td> {{ row.distance }} </td>
                     <td> {{ row.average }} </td>  
-                    <td> <button @click="editing=row">edit</button> </td>
+                    <td> <button @click="updateEditing(row)">edit</button> </td>
                     <td> <button @click="deleteTime(row)">delete</button> </td>
                 </template>
             </tr>
@@ -66,7 +66,8 @@ export default {
   data () {
       return {  
           ownerInfo: {},   
-          editing: null,
+          formEditTime:{},
+          idToEdit: null,
           formNewTime: {'date':'','time':'','distance':''},
           arrTimes: time.arrTimes,
           filterFrom: '',
@@ -89,6 +90,13 @@ export default {
  
 
   methods: {
+    updateEditing:function( row ) {
+      this.idToEdit = row._id;
+      this.formEditTime = row;
+      this.formEditTime.date = row.date.substr(0, 10);
+      this.formEditTime.time= this.convertfromSecondsToHMS(row.time);
+      this.formEditTime.distance= row.distance;
+    },
       dateFormat:function(value){
         return time.dateFormat(value);
       },
@@ -131,7 +139,7 @@ export default {
       },
 
       editTime:function( selectedTime ) {
-         
+          selectedTime.time = this.convertHMSToSeconds( selectedTime.time);
           time.updateTime( selectedTime )
               .then(() => time.getTimes() )
               .then(()=> this.arrTimes = time.arrTimes )

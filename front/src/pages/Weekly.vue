@@ -6,8 +6,8 @@
             <thead>
                 <tr>
                 	  <th>Week</th>
-                    <th> Average speed </th>
-                    <th> Average distance </th>
+                    <th> Average speed <sub>(Km/Hours)</sub> </th>
+                    <th> Average distance <sub>(Km)</sub></th>
                 </tr>
             </thead>
             <tbody>     

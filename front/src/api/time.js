@@ -42,6 +42,7 @@ export default {
     },
 
     updateTime( objTime ) {
+        
         return axios.put( apiUrl + 'times/' + objTime._id,  objTime )
    },
 

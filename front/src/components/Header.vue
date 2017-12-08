@@ -49,6 +49,7 @@ export default {
 		},
 		
 		logout() {
+			this.selected = 'times';
 			api.logout(  ) 
 				.then(() => { this.user.id = ''; } )
 			 	.then(() => { router.push('/'); }) 
