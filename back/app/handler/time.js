@@ -66,7 +66,7 @@ class JoggingTimeHandler extends BaseAutoBindedClass {
                     time: data.time,
                     date: new Date(data.date) ,
                     userId: data.userId,
-                    average: data.distance/data.time
+                    average: Math.round((data.distance/data.time)*100)/100
                 });
             })
             .then((time) => {

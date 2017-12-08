@@ -102,7 +102,7 @@ export default {
                   this.arrTimes = time.arrTimes;
                   this.formNewTime = {'date':'','distance':'','time':''}
               })
-              .catch(( error )=>{
+              .catch(( err )=>{
                  this.error=err.message;
               })        
       },
@@ -113,7 +113,7 @@ export default {
           time.deleteTime( selectedTime )
               .then(() => time.getTimes() )
               .then( () =>   this.arrTimes = time.arrTimes )
-              .catch(( error )=>{
+              .catch(( err )=>{
                   this.error=err.message;
               })  
       },
@@ -123,7 +123,7 @@ export default {
           time.updateTime( selectedTime )
               .then(() => time.getTimes() )
               .then(()=> this.arrTimes = time.arrTimes )
-              .catch(( error )=>{
+              .catch(( err )=>{
                   this.error=err.message;
               })
     },
@@ -133,7 +133,7 @@ export default {
         time.setFrom(  this.filterFrom );
         time.getTimes() 
               .then(()=> this.arrTimes = time.arrTimes )
-              .catch(( error )=>{
+              .catch(( err )=>{
                   this.error=err.message;
               })
     }
