@@ -48,21 +48,14 @@
 
  		methods: {
       		getDateFromWeekNumber: function( objDate ) {
-				let convertDate= (inputFormat) => {
-				 	let pad = (s) => { return (s < 10) ? '0' + s : s; }
-				  var d = new Date(inputFormat);
-				  return [pad(d.getDate()), pad(d.getMonth()+1), d.getFullYear()].join('/');
-				}
-
-				var d = new Date("Jan 01, "+objDate.year+" 01:00:00");
+				var d = new Date("Jan 01, "+ objDate.year +" 01:00:00");
 				var w = d.getTime() + 604800000 * (objDate.week-1);
-				var n1 = convertDate( new Date(w)) ;
-				var n2 = convertDate( new Date(w + 518400000) );
+				var n1 = time.dateFormat( new Date(w)) ;
+				var n2 = time.dateFormat( new Date(w + 518400000) );
 
 				return n1 + " to " + n2;
       		}
   		}
-
     }
 </script>
 

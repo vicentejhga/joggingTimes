@@ -20,6 +20,8 @@ export default {
     	this.ownerTimes = id;
     },
 
+
+
     getTimes( ) {
         
         return axios.get( apiUrl + 'times/' + this.ownerTimes + '/' + this.from )
@@ -45,9 +47,13 @@ export default {
 
    getWeeklyReport( ) {
         return axios.get( apiUrl + 'times/weekly/' +  this.ownerTimes )
+   },
+
+   dateFormat(inputFormat) {
+        let pad = (s) => { return (s < 10) ? '0' + s : s; }
+        var d = new Date( inputFormat );
+        return [pad(d.getDate()), pad(d.getMonth()+1), d.getFullYear()].join('/');
    }
-
-
 }
 
 

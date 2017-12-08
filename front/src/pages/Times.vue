@@ -39,7 +39,7 @@
                     <td> <button @click="editing=null">cancel</button> </td>
                 </template>
                 <template v-else>
-                    <td> {{ reverse(row.date) }}  </td>
+                    <td> {{ dateFormat(row.date) }}  </td>
                     <td> {{ row.time }} </td>
                     <td> {{ row.distance }} </td>
                     <td> {{ row.average }} </td>  
@@ -87,7 +87,9 @@ export default {
  
 
   methods: {
-      reverse:( value ) => {return value.split('-').reverse().join('-');},
+      dateFormat:function(value){
+        return time.dateFormat(value);
+      },
 
   		addTime:function() {
           let newTime = this.formNewTime;
