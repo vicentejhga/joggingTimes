@@ -122,7 +122,7 @@ class UserHandler {
                         } else {
                             resolve(user);                            
                         }
-                    });
+                    }).sort( { role: -1 } );
                 });
 
             }) 

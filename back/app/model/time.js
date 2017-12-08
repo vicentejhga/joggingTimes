@@ -3,7 +3,7 @@ const Schema = mongoose.Schema;
 const ObjectId = Schema.ObjectId;
 
 let joggingTimeSchema = new Schema({
-    date: String,
+    date: Date,
     time: String,
     distance: Number,
     average: Number,

@@ -50,11 +50,11 @@ class JoggingTimeHandler extends BaseAutoBindedClass {
                     });
                     throw new ValidationError('There are validation errors: ' + errorMessages.join(' && '));
                 }
-
+ 
                 return new JoggingTimeModel({
                     distance: data.distance,
                     time: data.time,
-                    date: data.date ,
+                    date: new Date(data.date) ,
                     userId: data.userId,
                     average: data.distance/data.time
                 });
@@ -82,7 +82,7 @@ class JoggingTimeHandler extends BaseAutoBindedClass {
 //        db.times.find({date:{$gt:""}})
 
         new Promise(function (resolve, reject) {
-            let search = {"userId":userId, "date":{$gt:dataFrom}}
+            let search = {"userId":userId}
             
             JoggingTimeModel.find( search, function (err, times) {
                 if (err !== null) {
@@ -103,19 +103,32 @@ class JoggingTimeHandler extends BaseAutoBindedClass {
 
     getWeeklyReport(req, callback) {
         console.log("here we are");
-
-
-
-          let userId = req.params.userId;
+        let userId = req.params.userId;
         let data = req.body;
         new Promise(function (resolve, reject) {
-            JoggingTimeModel.find({"userId":userId,$project:0}, function (err, times) {
+            /*JoggingTimeModel.find({"userId":userId}, function (err, times) {
                 if (err !== null) {
                     reject(err);
                 } else {
                     resolve(times);
                 }
-            }).sort( { date: -1 } );
+            }).sort( { date: -1 } );*/
+             JoggingTimeModel.aggregate([{ 
+                $project : {
+               
+                week : {
+                    $week : "$date"
+                }
+               
+            }
+    
+} ],  function (err, times) {
+                if (err !== null) {
+                    reject(err);
+                } else {
+                    resolve(times);
+                }
+            })
         })
         .then((times) => {
             console.log(times);
