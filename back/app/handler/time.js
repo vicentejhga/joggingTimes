@@ -81,6 +81,9 @@ class JoggingTimeHandler extends BaseAutoBindedClass {
 
         new Promise(function (resolve, reject) {
             let search = {"userId":userId}
+            if ( dataFrom.length > 0  ) {
+                search["date"]={$gte: dataFrom}              
+            }
             
             JoggingTimeModel.find( search, function (err, times) {
                 if (err !== null) {
