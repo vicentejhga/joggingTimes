@@ -1,4 +1,4 @@
-
+const mongoose = require('mongoose');
 const JoggingTimeModel = require(MODEL_PATH + 'time').JoggingTimeModel;
 const ValidationError = require(ERROR_PATH + 'validation');
 const NotFoundError = require(ERROR_PATH + 'not-found');
@@ -106,38 +106,43 @@ class JoggingTimeHandler extends BaseAutoBindedClass {
         let userId = req.params.userId;
         let data = req.body;
         new Promise(function (resolve, reject) {
-            /*JoggingTimeModel.find({"userId":userId}, function (err, times) {
-                if (err !== null) {
-                    reject(err);
-                } else {
-                    resolve(times);
-                }
-            }).sort( { date: -1 } );*/
-             JoggingTimeModel.aggregate([{ 
-                $project : {
-               
-                week : {
-                    $week : "$date"
-                }
-               
-            }
-    
-} ],  function (err, times) {
-                if (err !== null) {
-                    reject(err);
-                } else {
-                    resolve(times);
-                }
-            })
-        })
-        .then((times) => {
-            console.log(times);
-            callback.onSuccess(times);
-        })
-        .catch((error) => {
-            callback.onError(error);
-        });
-    }
+            JoggingTimeModel.aggregate([
+                                        {   $match: { userId:mongoose.Types.ObjectId(userId) }},
+                                        {   $project : {      
+                                                year : { $year : "$date" }, 
+                                                week : { $week : "$date" },
+                                                userId: "$userId",
+                                                distance: "$distance",
+                                                average: "$average",
+                                                userId: "$userId"
+                                            }
+                                        },
+                                        {   $group : {
+                                                _id : {
+                                                    year : "$year",
+                                                    week : "$week",
+                                                    userId: "$userId"
+                                                }, 
+                                                average:{ $avg: "$average" },     
+                                                distance:{ $avg: "$distance" },     
+                                                total : { $sum: 1 } 
+                                            }
+                                        }], function (err, times) {
+                                                if (err !== null) {
+                                                    reject(err);
+                                                } else {
+                                                    resolve(times);
+                                                }
+                                            })
+                                        })
+                                        .then((times) => {
+                                            console.log(times);
+                                            callback.onSuccess(times);
+                                        })
+                                        .catch((error) => {
+                                            callback.onError(error);
+                                        });
+        }
 
     updateTime(req, callback) {
         let data = req.body;
