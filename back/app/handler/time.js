@@ -107,41 +107,34 @@ class JoggingTimeHandler extends BaseAutoBindedClass {
         let data = req.body;
         new Promise(function (resolve, reject) {
             JoggingTimeModel.aggregate([
-                                        {   $match: { userId:mongoose.Types.ObjectId(userId) }},
-                                        {   $project : {      
-                                                year : { $year : "$date" }, 
-                                                week : { $week : "$date" },
-                                                userId: "$userId",
-                                                distance: "$distance",
-                                                average: "$average",
-                                                userId: "$userId"
-                                            }
-                                        },
-                                        {   $group : {
-                                                _id : {
-                                                    year : "$year",
-                                                    week : "$week",
-                                                    userId: "$userId"
-                                                }, 
-                                                average:{ $avg: "$average" },     
-                                                distance:{ $avg: "$distance" },     
-                                                total : { $sum: 1 } 
-                                            }
-                                        }], function (err, times) {
-                                                if (err !== null) {
-                                                    reject(err);
-                                                } else {
-                                                    resolve(times);
-                                                }
-                                            })
-                                        })
-                                        .then((times) => {
-                                            console.log(times);
-                                            callback.onSuccess(times);
-                                        })
-                                        .catch((error) => {
-                                            callback.onError(error);
-                                        });
+                {   $match: { userId:mongoose.Types.ObjectId(userId) }},
+                {   $project : {      
+                        year : { $year : "$date" }, 
+                        week : { $week : "$date" },
+                        userId: "$userId",
+                        distance: "$distance",
+                        average: "$average",
+                        userId: "$userId"
+                    }
+                },
+                {   $group : {
+                        _id : {
+                            year : "$year",
+                            week : "$week",
+                            userId: "$userId"
+                        }, 
+                        average:{ $avg: "$average" },     
+                        distance:{ $avg: "$distance" },     
+                        total : { $sum: 1 } 
+                    }
+                }], function (err, times) {
+                        if (err !== null) {
+                              callback.onError(err);
+                        } else {
+                            callback.onSuccess(times);
+                        }
+                    })
+                })                                    
         }
 
     updateTime(req, callback) {
