@@ -1,4 +1,3 @@
-
 const router = require('express').Router();
 const AuthController = require(CONTROLLER_PATH + 'auth');
 let authController = new AuthController();

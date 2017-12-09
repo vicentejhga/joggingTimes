@@ -1,31 +1,15 @@
-
 let mongoose = require('mongoose');
 let Schema = mongoose.Schema;
 const crypto = require('crypto');
 let UserSchema = new Schema({
     firstName: String,
     lastName: String,
-    salt: {
-        type: String,
-        required: true
-    },
-    isActive: {
-        type: Boolean, 
-        default: true
-    },
-    role:{
-        type: String, 
-        default: "Normal"
-    },
-    dateCreated: {
-        type: Date, 
-        default: Date.now
-    },
+    salt: { type: String, required: true },
+    isActive: { type: Boolean, default: true },
+    role:{ type: String, default: "Normal" },
+    dateCreated: { type: Date, default: Date.now },
     email: { type: String, index: { unique: true }},
-    hashedPassword: {
-        type: String,
-        required: true,
-    }
+    hashedPassword: { type: String, required: true }
 });
 
 UserSchema.methods.toJSON = function () {

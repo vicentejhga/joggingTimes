@@ -81,12 +81,8 @@ class JoggingTimeHandler extends BaseAutoBindedClass {
                 }
             }).sort( { date: -1 } );
         })
-        .then((times) => {
-            callback.onSuccess(times);
-        })
-        .catch((error) => {
-            callback.onError(error);
-        });
+        .then((times) => { callback.onSuccess(times); })
+        .catch((error) => { callback.onError(error); });
     }
 
 
@@ -117,13 +113,15 @@ class JoggingTimeHandler extends BaseAutoBindedClass {
                         total : { $sum: 1 } 
                     }
                 }], function (err, times) {
-                        if (err !== null) {
-                              callback.onError(err);
-                        } else {
-                            callback.onSuccess(times);
-                        }
-                    })
-                })                                    
+                    if (err !== null) {
+                        reject(err);
+                    } else {
+                        resolve(times);
+                    }
+                })
+            })  
+            .then((times) => { callback.onSuccess(times); })
+            .catch((error) => { callback.onError(error); });                                  
         }
 
     updateTime(req, callback) {
@@ -162,15 +160,9 @@ class JoggingTimeHandler extends BaseAutoBindedClass {
             time.save();
             return time;
         })
-        .then((saved) => {
-            callback.onSuccess(saved);
-        })
-        .catch((error) => {
-            callback.onError(error);
-        });
+        .then((saved) => { callback.onSuccess(saved); })
+        .catch((error) => { callback.onError(error); });
     }
-
-
 
     deleteTime(req, callback) {
         let data = req.body;
@@ -190,8 +182,7 @@ class JoggingTimeHandler extends BaseAutoBindedClass {
                             } else {
                                 if (!time) {
                                     reject(new NotFoundError("Time not found"));
-                                }
-                                else {
+                                } else {
                                     resolve(time);
                                 }
                             }
@@ -203,14 +194,9 @@ class JoggingTimeHandler extends BaseAutoBindedClass {
                 time.remove();
                 return time;
             })
-            .then((saved) => {
-                callback.onSuccess(saved);
-            })
-            .catch((error) => {
-                callback.onError(error);
-            });
+            .then((saved) => { callback.onSuccess(saved); })
+            .catch((error) => { callback.onError(error); });
     }
-
 }
 
 module.exports = JoggingTimeHandler;

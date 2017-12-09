@@ -1,4 +1,3 @@
-
 const UserModel = require(MODEL_PATH + 'user').UserModel;
 const NotFoundError = require(ERROR_PATH + 'not-found');
 const AlreadyExistsError = require(ERROR_PATH + 'already-exists');
@@ -9,7 +8,6 @@ class UserHandler {
     constructor() {
         this._validator = require('validator');
     }
-
 
     static get USER_VALIDATION_SCHEME() {
         return {
@@ -30,9 +28,7 @@ class UserHandler {
                 errorMessage: 'Invalid First Name'
             },
             'email': {
-                isEmail: {
-                    errorMessage: 'Invalid Email'
-                },
+                isEmail: { errorMessage: 'Invalid Email' },
                 errorMessage: "Invalid email provided"
             },
 
@@ -44,7 +40,6 @@ class UserHandler {
                 },
                 errorMessage: 'Invalid Password Format'
             }
-
         };
     }
 
@@ -75,17 +70,11 @@ class UserHandler {
                     });
                 });
             })
-            .then((user) => {
-                callback.onSuccess(user);
-            })
-            .catch((error) => {
-                callback.onError(error);
-            });
+            .then((user) => { callback.onSuccess(user); })
+            .catch((error) => { callback.onError(error); });
     }
 
-
-    getAllUsers(req, userToken, callback) {
-  
+    getAllUsers(req, userToken, callback) { 
         req.getValidationResult()
             .then((result) => {
                 if (!result.isEmpty()) {
@@ -96,18 +85,17 @@ class UserHandler {
                 }
 
                 return new Promise(function (resolve, reject) {
-                        UserModel.findById(userToken.id, function (err, user) {
-                            if (err !== null) {
-                                reject(err);
-                            } 
+                    UserModel.findById(userToken.id, function (err, user) {
+                        if (err !== null) {
+                            reject(err);
+                        } 
 
-                            if ( !user ) {
-                                reject(new NotFoundError("User not found"));
-                            } else {
-                                resolve(user);
-                            }
-                            
-                        });
+                        if ( !user ) {
+                            reject(new NotFoundError("User not found"));
+                        } else {
+                            resolve(user);
+                        }                           
+                    });
                 })
             })
             .then((user)=>{
@@ -122,15 +110,9 @@ class UserHandler {
                 });
 
             }) 
-            .then((user) => {
-                callback.onSuccess(user);
-            })
-            .catch((error) => {
-                callback.onError(error);
-            });
+            .then((user) => { callback.onSuccess(user); })
+            .catch((error) => { callback.onError(error); });
     }
-
-
 
     updateUser(req, callback) {
         let data = req.body;
@@ -167,20 +149,12 @@ class UserHandler {
             user.firstName = validator.trim(data.firstName);
             user.lastName = validator.trim(data.lastName);
             user.email = validator.trim(data.email);
-
             user.save();
             return user;
         })
-        .then((saved) => {
-            callback.onSuccess(saved);
-        })
-        .catch((error) => {
-            console.log(error);
-            callback.onError(error);
-        });
+        .then((saved) => { callback.onSuccess(saved); })
+        .catch((error) => { callback.onError(error); });
     }
-
-
 
     deleteUser(req, callback) {
         let data = req.body;
@@ -213,14 +187,9 @@ class UserHandler {
                 time.remove();
                 return time;
             })
-            .then((saved) => {
-                callback.onSuccess(saved);
-            })
-            .catch((error) => {
-                callback.onError(error);
-            });
+            .then((saved) => { callback.onSuccess(saved); })
+            .catch((error) => {  callback.onError(error); });
     }
-
 
     createNewUser(req, callback) {
         let data = req.body;
@@ -257,12 +226,8 @@ class UserHandler {
                 user.save();
                 return user;
             })
-            .then((saved) => {
-                callback.onSuccess(saved);
-            })
-            .catch((error) => {
-                callback.onError(error);
-            });
+            .then((saved) => { callback.onSuccess(saved); })
+            .catch((error) => { callback.onError(error); });
     }
 }
 

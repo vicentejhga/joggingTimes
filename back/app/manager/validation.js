@@ -6,7 +6,7 @@ class ValidationManager extends BaseAutoBindedClass {
         super();
     }
 
-        provideDefaultValidator() {
+    provideDefaultValidator() {
         return expressValidator({
             errorFormatter: ValidationManager.errorFormatter
         })
