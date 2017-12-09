@@ -8,8 +8,14 @@
                     <div class="text-left">
                         <div class="form-group" :class="{ 'has-error': errors.name.length }">
                             <label for="name">Name</label>
-                            <input type="text" class="form-control" id="name" placeholder="Your name" v-model="user.name">
+                            <input type="text" class="form-control" id="name" placeholder="Your name" v-model="user.firstName">
                             <p class="help-block" v-for="error in errors.name">{{ error }}</p>
+                        </div>
+
+                         <div class="form-group" :class="{ 'has-error': errors.surname.length }">
+                            <label for="surname">Surname</label>
+                            <input type="text" class="form-control" id="surname" placeholder="Your surname" v-model="user.lastName">
+                            <p class="help-block" v-for="error in errors.surname">{{ error }}</p>
                         </div>
 
                         <div class="form-group" :class="{ 'has-error': errors.email.length }">
@@ -24,11 +30,6 @@
                             <p class="help-block" v-for="error in errors.password">{{ error }}</p>
                         </div>
 
-                        <div class="form-group" :class="{ 'has-error': errors.password_confirmation.length }">
-                            <label for="password_confirmation">Password Confirmation</label>
-                            <input type="password" class="form-control" id="password_confirmation" placeholder="Your password confirmation" v-model="user.password_confirmation">
-                            <p class="help-block" v-for="error in errors.password_confirmation">{{ error }}</p>
-                        </div>
                     </div>
 
                     <div class="text-center">
@@ -51,30 +52,30 @@
         data() {
             return {
                 user: {
-                    name: null,
+                    firstName: null,
+                    lastName: null,
                     email: null,
-                    password: null,
-                    password_confirmation: null,
+                    password: null
                 },
                 errors: {
                     name: [],
+                    surname: [],
                     email: [],
-                    password: [],
-                    password_confirmation: [],
+                    password: []
                 },
             }
         },
         methods: {
             resetUser() {
                 this.user = {
-                    name: null,
+                    firstName: null,
+                    lastName: null,
                     email: null,
-                    password: null,
-                    password_confirmation: null,
+                    password: null
                 }
             },
             register(user) {
-                axios.post(API.register, user)
+                axios.post(API.auth, user)
                     .then(response => {
                         this.resetUser()
 
@@ -84,7 +85,7 @@
                     })
                     .catch(error => {
                         let data = error.response.data
-
+         
                         for(let key in this.errors) {
                             // reset all errors
                             this.errors[key] = []

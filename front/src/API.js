@@ -1,9 +1,9 @@
 class API {
 
-    static register = '/api/register'
-    static login = '/auth/'
+
+    static auth = '/auth/'
     static users = '/users/'
- 	static weekly = '/times/weekly'
+ 	static times = '/times/'
 }
 
 export default API

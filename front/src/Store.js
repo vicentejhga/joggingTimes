@@ -16,6 +16,7 @@ const Store = new Vuex.Store({
         },
         currentUser: {
             name: null,
+            surname: null,
             email: null,
             role: null,
             id: null
@@ -25,22 +26,17 @@ const Store = new Vuex.Store({
     actions: {
         login(context, user) {
             return new Promise((resolve, reject) => {
-                console.log('user', user)
-
                 let data = {
                     email: user.email,
                     password: user.password,
                 };
 
-                axios.post(API.login, data)
+                axios.post(API.auth, data)
                     .then(response => {
                         let responseData = response.data.data
                         let now = Date.now()
 
                         responseData.expires_in = responseData.expires_in + now
-
-                    
-                
                         context.commit('updateTokens', responseData)
 
                         resolve(response)
@@ -50,20 +46,17 @@ const Store = new Vuex.Store({
                     })
             })
         },
-        weekly( context ) {
-            return axios.get( apiUrl + 'times/weekly/' + this.state.currentUser.id );
-        },
 
         getUser( context, id ) {
-                console.log(API.users + id);
             return new Promise((resolve, reject) => {
                 axios.get( API.users + id  )
                     .then(response => {
-                        resolve(response);
+                        let responseData = response.data.data
+                        context.commit('updateUser', responseData);
+
+                        resolve(response)
                     })
                     .catch(response => {
-                        console.log("erroring");
-                        console.log( response );
                         reject(response)
                     })    
             })
@@ -75,6 +68,13 @@ const Store = new Vuex.Store({
             state.tokens = tokens
             axios.defaults.headers.common['Authorization'] = 'JWT ' + tokens.token;
         },
+        updateUser(state, user) {
+            state.currentUser.id = user._id;
+            state.currentUser.name = user.name;
+            state.currentUser.surname = user.surname;
+            state.currentUser.role = user.role;
+            state.currentUser.email = user.email;
+        }
     }
 
 })

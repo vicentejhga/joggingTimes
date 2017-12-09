@@ -4,7 +4,7 @@
             <div class="col-md-8 col-md-offset-2">
                 <h1>Home</h1>
                 <div class="text-center">
-                    <router-link class="btn btn-default" :to="{ name: 'Register' }">
+                    <router-link class="btn btn-default" :to="{ name: 'Times' }">
                         Times
                     </router-link>
                      <router-link class="btn btn-default" :to="{ name: 'Weekly' }">
@@ -35,16 +35,7 @@
             }
         },
         methods: {
-            login(user) {
-                Store.dispatch('login', user)
-                    .then(response => {
-
-                    })
-                    .catch(response => {  
-                        let errorMessage = response.response.data.message
-                        this.error= errorMessage                     
-                    })
-            }
+        
         },
     }
 </script>
