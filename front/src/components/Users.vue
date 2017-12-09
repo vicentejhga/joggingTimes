@@ -1,0 +1,158 @@
+<template>
+    	<div class="loginForm">
+			<router-link class="btn btn-default" :to="{ name: 'Home' }">
+              Home
+          	</router-link>
+ 			<router-link class="btn btn-default" :to="{ name: 'Register' }">
+              Times
+          	</router-link>
+        
+          	<router-link class="btn btn-default" :to="{ name: 'Weekly' }">
+              Weekly report
+          	</router-link>
+
+          	<router-link class="btn btn-default" :to="{ name: 'Register' }">
+              Log out
+          	</router-link>
+
+    <p class="danger" > {{this.error}}</p>
+    <h1>Users</h1>
+    <form @submit.prevent="addUser( )"">
+		<input type="text" v-model="formNewUser.firstName" placeholder="Name"/> 
+      	<input type="text" v-model="formNewUser.lastName" placeholder="Surname"/> 
+      	<input type="email" v-model="formNewUser.email" placeholder="E-mail"/> 
+       <input type="password" v-model="formNewUser.password" placeholder="Password" /> 
+        <button class="btn btn-primary" >Create User</button>
+	</form> 
+       
+
+      <table class="table table-striped">
+          <thead>
+             	<tr>
+                  <th> First name </th>
+                  <th> Last name </th>
+                  <th> E-mail </th>
+                  <th> Role </th>
+                  <th>  </th>
+            </tr> 
+        </thead>
+        <tbody>     
+            <tr v-for="row in this.arrUsers" >
+                  <template v-if ="editing == row" >
+                    <td><input type="text" v-model = "row.firstName" /></td>
+                    <td><input type="text" v-model = "row.lastName" /></td>
+                    <td><input type="email" v-model = "row.email" /></td>
+                    <td> {{ row.role }} </td>                 
+                    <td>
+                    	<button class="btn btn-primary">Save</button>
+                    	<button @click="editing=null" class="btn btn-secondary">Cancel</button>
+                    </td>    
+                
+                </template>
+                <template v-else>
+                    <td> {{ row.firstName }}  </td>
+                    <td> {{ row.lastName }} </td>
+                    <td> {{ row.email }} </td>
+                    <td> {{ row.role }} </td> 
+                     <td v-if="deleting==row">
+                     	Sure?
+                    	<button @click="deleteUser" class="btn btn-danger">Delete</button>
+                    	<button @click="deleting=null" class="btn btn-secondary">Cancel</button>
+       	 
+                    </td>
+                    <td v-else>
+                    	<button @click="editing=row" class="btn btn-info">Edit</button>
+                    	<button @click="deleting=row" class="btn btn-danger">Delete</button>
+                    	<button class="btn btn-secondary">Times</button>
+                    </td>   
+                </template>             
+            </tr>
+          </tbody>
+        </table>
+  	</div>
+</template>
+
+<script>
+
+
+export default {
+  	data () {
+      	return {
+ 			arrUsers: [],
+ 			formNewUser:{ 'firstName':'','lastName':'','email':'','password':''},
+ 			error:'',
+ 			editing:null,
+ 			deleting:null
+		} 
+	},
+ 	created: function() {   
+        return axios.get( API.users )      
+    		.then( ( response ) => {
+				this.arrUsers = response.data.data;
+				this.error = '';
+	         })
+	         .catch(( err )=> {
+	            this.error = err.msg;
+	         });
+
+ 	},
+ 	methods:{
+	 	addUser:function(  ){
+	 		let objParams = {'firstName':this.formNewUser.firstName,'lastName':this.formNewUser.lastName,'email':this.formNewUser.email, 'password':this.formNewUser.password  };
+
+	        axios.post( API.users, objParams )
+        		.then( this.refreshTable )
+        		.catch(( err )=> {			        	
+		            this.error = err.response.data.message;			    
+		        });
+	 	},
+	 	refreshTable:function() {
+	 		axios.get( API.users )   
+	    		.then( ( response ) => {
+	    			this.formNewUser = { 
+					    				'firstName':'',
+					    				'lastName':'',
+					    				'email':'',
+					    				'password':''
+					    			};
+	    			this.arrUsers = response.data.data;
+	    			this.error = '';
+		        })
+		        .catch(( err )=> {			        	
+		            this.error = err.response.data.message;			    
+		        });
+	 	},
+	 	updateUser:function(){
+
+	 	},
+	 	deleteUser:function(){
+	 		axios.delete( API.users + this.deleting._id )
+ 		 		.then( this.refreshTable )
+		        .catch(( err )=> {			        	
+		            this.error = err.response.data.message;			    
+		        });
+	 	},
+	 	userTimes:function(){
+
+	 	}
+ 	}
+}
+
+
+
+
+
+</script>
+<style scoped>
+ 	td {
+ 		min-width: 200px;
+	}
+
+	input {
+		text-align: center;
+	}
+
+	form {
+		margin-bottom: 20px;	
+	}
+</style> 

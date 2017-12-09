@@ -1,19 +1,21 @@
 <template>
   	<div>    
-        <p class="danger" > {{this.error}}</p>
+          <router-link class="btn btn-default" :to="{ name: 'Home' }">
+              Home
+          </router-link>
         
           <router-link class="btn btn-default" :to="{ name: 'Register' }">
               Times
           </router-link>
         
-          <router-link class="btn btn-default" :to="{ name: 'Register' }">
+          <router-link class="btn btn-default" :to="{ name: 'Users' }">
               Users
           </router-link>
 
           <router-link class="btn btn-default" :to="{ name: 'Register' }">
               Log out
           </router-link>
-          
+           <p class="danger" > {{this.error}}</p>
           <h1>Weekly report</h1>
        	<table  class="table table-striped">
             <thead >
@@ -26,8 +28,8 @@
             <tbody>     
                 <tr v-for="row in this.arrReport" >
                 	 <td > {{getDateFromWeekNumber( row._id )}} </td>       
-                    <td> {{row.average}}  </td>
-                    <td> {{row.distance}} </td>               
+                    <td> {{Math.round(row.average*1000)/1000}}  </td>
+                    <td> {{Math.round(row.distance*1000)/1000}} </td>               
                 </tr> 
             </tbody>
         </table> 

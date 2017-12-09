@@ -32,4 +32,9 @@ export default {
       color:white;
       background-color: #dc3545;    
 }
+
+ tr th { 
+  text-align: center;
+  background-color: #ccc
+}
 </style>

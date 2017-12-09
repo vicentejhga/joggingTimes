@@ -10,7 +10,7 @@
                      <router-link class="btn btn-default" :to="{ name: 'Weekly' }">
                         Weekly report
                     </router-link>
-                    <router-link class="btn btn-default" :to="{ name: 'Register' }">
+                    <router-link class="btn btn-default" :to="{ name: 'Users' }">
                         Users
                     </router-link>
                     <router-link class="btn btn-default" :to="{ name: 'Register' }">

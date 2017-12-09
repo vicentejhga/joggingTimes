@@ -21,6 +21,13 @@ const Store = new Vuex.Store({
             role: null,
             id: null
         },
+        managedUser : {
+            name: null,
+            surname: null,
+            email: null,
+            role: null,
+            id: null  
+        }
     },
 
     actions: {
