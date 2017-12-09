@@ -3,7 +3,7 @@
 			<router-link class="btn btn-default" :to="{ name: 'Home' }">
               Home
           	</router-link>
- 			<router-link class="btn btn-default" :to="{ name: 'Register' }">
+ 			<router-link class="btn btn-default" :to="{ name: 'Times' }">
               Times
           	</router-link>
         
@@ -44,8 +44,8 @@
                     <td><input type="email" v-model = "row.email" /></td>
                     <td> {{ row.role }} </td>                 
                     <td>
-                    	<button class="btn btn-primary">Save</button>
-                    	<button @click="editing=null" class="btn btn-secondary">Cancel</button>
+                    	<button @click="updateUser(row)" class="btn btn-primary">Save</button>
+                    	<button @click="refreshTable" class="btn btn-secondary">Cancel</button>
                     </td>    
                 
                 </template>
@@ -57,13 +57,13 @@
                      <td v-if="deleting==row">
                      	Sure?
                     	<button @click="deleteUser" class="btn btn-danger">Delete</button>
-                    	<button @click="deleting=null" class="btn btn-secondary">Cancel</button>
+                    	<button @click="refreshTable" class="btn btn-secondary">Cancel</button>
        	 
                     </td>
                     <td v-else>
                     	<button @click="editing=row" class="btn btn-info">Edit</button>
                     	<button @click="deleting=row" class="btn btn-danger">Delete</button>
-                    	<button class="btn btn-secondary">Times</button>
+                    	<button  @click="redirectUserTimes(row)" class="btn btn-secondary">Times</button>
                     </td>   
                 </template>             
             </tr>
@@ -74,6 +74,7 @@
 
 <script>
 
+import router from '../router/index'
 
 export default {
   	data () {
@@ -81,8 +82,8 @@ export default {
  			arrUsers: [],
  			formNewUser:{ 'firstName':'','lastName':'','email':'','password':''},
  			error:'',
- 			editing:null,
- 			deleting:null
+ 			editing: null,
+ 			deleting: null
 		} 
 	},
  	created: function() {   
@@ -107,6 +108,8 @@ export default {
 		        });
 	 	},
 	 	refreshTable:function() {
+			this.editing = null;
+ 			this.deleting = null;
 	 		axios.get( API.users )   
 	    		.then( ( response ) => {
 	    			this.formNewUser = { 
@@ -122,8 +125,12 @@ export default {
 		            this.error = err.response.data.message;			    
 		        });
 	 	},
-	 	updateUser:function(){
-
+	 	updateUser:function( objUser ) { 		
+			axios.put( API.users + objUser._id,  objUser )
+	 			.then( this.refreshTable )
+        		.catch(( err )=> {			        	
+		            this.error = err.response.data.message;			    
+		        });
 	 	},
 	 	deleteUser:function(){
 	 		axios.delete( API.users + this.deleting._id )
@@ -132,13 +139,11 @@ export default {
 		            this.error = err.response.data.message;			    
 		        });
 	 	},
-	 	userTimes:function(){
-
+	 	redirectUserTimes:function( objUser ) {
+	 		router.push('/times/'+ objUser._id);
 	 	}
  	}
 }
-
-
 
 
 

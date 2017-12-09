@@ -29,6 +29,11 @@ export default new Router({
       name: 'Home',
       component: Home
     },
+     {
+      path: '/times/:user',
+      name: 'UserTimes',
+      component: Times
+    },
     {
       path: '/times',
       name: 'Times',

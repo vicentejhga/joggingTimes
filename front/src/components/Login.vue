@@ -51,8 +51,7 @@
                     })
                     .then(()=>{ router.push('/home'); })
                     .catch(response => {  
-                        let errorMessage = response.response.data.message
-                        this.error= errorMessage                     
+                        this.error = response.response.data.message;                     
                     })
             }
         },

@@ -20,14 +20,7 @@ const Store = new Vuex.Store({
             email: null,
             role: null,
             id: null
-        },
-        managedUser : {
-            name: null,
-            surname: null,
-            email: null,
-            role: null,
-            id: null  
-        }
+        } 
     },
 
     actions: {
@@ -60,7 +53,6 @@ const Store = new Vuex.Store({
                     .then(response => {
                         let responseData = response.data.data
                         context.commit('updateUser', responseData);
-
                         resolve(response)
                     })
                     .catch(response => {
@@ -68,6 +60,8 @@ const Store = new Vuex.Store({
                     })    
             })
         }
+
+
     },
 
     mutations: {
@@ -77,11 +71,11 @@ const Store = new Vuex.Store({
         },
         updateUser(state, user) {
             state.currentUser.id = user._id;
-            state.currentUser.name = user.name;
-            state.currentUser.surname = user.surname;
+            state.currentUser.name = user.firstName;
+            state.currentUser.surname = user.lastName;
             state.currentUser.role = user.role;
             state.currentUser.email = user.email;
-        }
+        } 
     }
 
 })
