@@ -1,28 +1,21 @@
 <template>
-    <div id="app">
-        <img src="./assets/logo.png">
-        <app-header ></app-header>  
-        <router-view/>
-    </div>
+  <div id="app">
+    <img src="./assets/logo.png">
+
+<!--
+      <loading v-if="loggingIn"/>  --><!--Before you know if the user is logged in or not-->
+     <!-- <login v-else-if="!user && $route.meta.requiresLogin"/>
+      <denied v-else-if="!user.pages.includes($route.name)"/>
+      <router-view v-else/> 
+    -->
+    <router-view></router-view>
+  </div>
 </template>
 
 <script>
-
-    import Header from './components/Header.vue'
-    export default {
-      name: 'app',
-     data () {
-        return {
-     
-        }
-      }
-      ,
-      components: {
-          'app-header': Header 
-        }
-
-    }
-
+export default {
+  name: 'app'
+}
 </script>
 
 <style>
@@ -33,5 +26,10 @@
   text-align: center;
   color: #2c3e50;
   margin-top: 60px;
+}
+
+.danger {
+      color:white;
+      background-color: #dc3545;    
 }
 </style>

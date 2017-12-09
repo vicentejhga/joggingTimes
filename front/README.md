@@ -1,6 +1,8 @@
-# front
+## Laravel Passport 5.x & VueJS 2.x Authentication (Client Side Code)
 
-> A Vue.js project
+Laravel Passport 5.x & VueJS 2.x Authentication (Client Side Code) Example
+
+Check step by step video on [youtube](https://www.youtube.com/playlist?list=PLKmlCa2HUPq_SJxoT1YfQ_j7Ry6CIDd-G).
 
 ## Build Setup
 
@@ -16,15 +18,6 @@ npm run build
 
 # build for production and view the bundle analyzer report
 npm run build --report
-
-# run unit tests
-npm run unit
-
-# run e2e tests
-npm run e2e
-
-# run all tests
-npm test
 ```
 
-For a detailed explanation on how things work, check out the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).
+For detailed explanation on how things work, checkout the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).

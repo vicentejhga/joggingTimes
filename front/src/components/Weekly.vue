@@ -23,7 +23,7 @@
 
 
 <script>
-    import time from '../api/time.js'
+   
     export default {
         name: 'Weekly', 
         data () {
@@ -34,7 +34,7 @@
         },
 
         created: function() { 
-      		time.getWeeklyReport()
+      	  Store.dispatch('weekly')
 	          .then( ( response ) => { 
 					      this.arrReport = response.data.data;
 	          })
@@ -49,7 +49,6 @@
       				var w = d.getTime() + 604800000 * (objDate.week-1);
       				var n1 = time.dateFormat( new Date(w)) ;
       				var n2 = time.dateFormat( new Date(w + 518400000) );
-
       				return n1 + " to " + n2;
       		}
   		}
@@ -57,19 +56,7 @@
 </script>
 
 
-<style scoped>
-    .danger {
-        color:white;
-        background-color: #dc3545;    
-    }
+<style scoped>   
     
-    
-    table {
-        margin-left:auto; 
-        margin-right:auto;
-    }
-
-    td {
-    	width: 300px
-    }
+  
 </style>

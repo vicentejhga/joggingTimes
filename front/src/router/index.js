@@ -1,43 +1,35 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Login from '@/pages/Login'
-import Register from '@/pages/Register'
-import Times from '@/pages/Times'
-import Users from '@/pages/Users'
-import Weekly from '@/pages/Weekly'
+
+import Register from '@/components/Register'
+import Login from '@/components/Login'
+import Home from '@/components/Home'
+import Weekly from '@/components/Weekly'
 
 Vue.use(Router)
 
 export default new Router({
   routes: [
-    {
-      path: '/',
-      name: 'Login',
-      component: Login
-    },
+
     {
       path: '/register',
       name: 'Register',
       component: Register
     },
     {
-      path: '/times',
-      name: 'Times',
-      component: Times
-    },
+      path: '/',
+      name: 'Login',
+      component: Login
+    }, 
+    {
+      path: '/home',
+      name: 'Home',
+      component: Home
+    }, 
     {
       path: '/weekly',
       name: 'Weekly',
       component: Weekly
-    },
-    
-    {
-      path: '/users',
-      name: 'Users',
-      component: Users
     }
   ]
-
 })
-
-

@@ -8,8 +8,6 @@
     <div v-else>
         <h1>Your times</h1>
     </div>
-
-
       <label> Filter from:</label>
         <input type="date" class="bottomMargin" v-model="filterFrom" @change="updateDateFilter"/>
        <table>
