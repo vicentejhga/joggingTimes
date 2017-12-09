@@ -21,7 +21,7 @@ let UserSchema = new Schema({
         type: Date, 
         default: Date.now
     },
-    email: String,
+    email: { type: String, index: { unique: true }},
     hashedPassword: {
         type: String,
         required: true,

@@ -87,7 +87,12 @@ export default {
               this.error=err.message;
           });
   },
- 
+  mounted:function(){
+    console.log("mounted");
+  },
+ updated:function(){
+  console.log("updated");
+ },
 
   methods: {
     updateEditing:function( row ) {
