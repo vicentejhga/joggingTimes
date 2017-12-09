@@ -1,10 +1,11 @@
  <template> 
 	<div class="nav" > 
 		<ul id="menu" v-if="user.id.length > 0">
-			<a href="#" @click="goToTimesPage()" ><li v-bind:class="{active:selected=='times'}">Times</li></a>
+			<a  @click="goToTimesPage()" ><li v-bind:class="{active:selected=='times'}">Times</li></a>
 			<a href="#" @click="goToWeeklyReportPage()"><li v-bind:class="{active:selected=='weekly'}">Weekly report</li></a>
 			<a href="#" @click="manageUsers()" v-if="user.role!='Normal'"><li v-bind:class="{active:selected=='users'}">Manage users</li></a>
 			<a href="#" @click="logout()"><li>Log out</li></a>	
+			<router-link :to="{ name: 'Times', params: { error: 'bar' }}">Bar</router-link>
 		</ul> 
 	</div>
 	
@@ -36,10 +37,13 @@ export default {
 			this.selected = 'times';
 			time.setOwner(user.id);
 			router.push('/times')
+//router.go('Times');
+
 		},
 
 		goToWeeklyReportPage( ){
 		 	this.selected = 'weekly';
+		 	time.setOwner(user.id);
 			router.push('/weekly')
 		},
 

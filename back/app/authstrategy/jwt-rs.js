@@ -19,10 +19,12 @@ class JwtRsStrategy extends BaseAuthStrategy {
         if (!options) {
             throw new TypeError('JwtRsStrategy requires options');
         }
+
         this._privateKey = options.privateKey;
         if (!this._privateKey) {
             throw new TypeError('JwtRsStrategy requires a private key');
         }
+        
         this._publicKey = options.publicKey;
         if (!this._publicKey) {
             throw new TypeError('JwtRsStrategy requires a public key');

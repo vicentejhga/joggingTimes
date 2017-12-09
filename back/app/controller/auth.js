@@ -1,4 +1,3 @@
-
 const BaseController = require(CONTROLLER_PATH + 'base');
 const AuthHandler = require(HANDLER_PATH + 'auth');
 
@@ -12,7 +11,6 @@ class AuthController extends BaseController {
     // Request token by credentials
     create(req, res, next) {
         let responseManager = this._responseManager;
-        let that = this;
         this.authenticate(req, res, next, (user) => {
             let response =  {
                 onSuccess: function( jwtToken ) {
@@ -23,17 +21,18 @@ class AuthController extends BaseController {
                     responseManager.respondWithError(res, error.status || 401, error.message);
                 }
             }
-            that._authHandler.issueNewToken(req, user, response);
+            this._authHandler.issueNewToken(req, user, response);
         });
     }
 
     // Revoke Token
     remove(req, res, next) {
         let responseManager = this._responseManager;
-        let that = this;
+        let authHandler = this._authHandler;
+        
         this._passport.authenticate('jwt-rs-auth', {
             onVerified: function (token, user) {
-                that._authHandler.revokeToken(req, token, responseManager.getDefaultResponseHandler(res));
+                authHandler.revokeToken(req, token, responseManager.getDefaultResponseHandler(res));
             },
             onFailure: function (error) {
                 responseManager.respondWithError(res, error.status || 401, error.message);
@@ -43,8 +42,7 @@ class AuthController extends BaseController {
     }
 
     authenticate(req, res, next, callback) {
-        let responseManager = this._responseManager;
-         
+        let responseManager = this._responseManager;     
         this._passport.authenticate('credentials-auth', function (err, user) {        
             if (err) {
                 responseManager.respondWithError(res, err.status || 401, err.message || "");

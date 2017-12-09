@@ -7,14 +7,11 @@ class UserController extends BaseController {
         this._userHandler = new UserHandler();
     }
 
-
     get(req, res, next) {  
-        console.log("***********************************");
         this.authenticate(req, res, next, (token, user) => {
             this._userHandler.getUserInfo(req, user, this._responseManager.getDefaultResponseHandler(res));
        },'Admin,Manager,Itself');    
     } 
-
 
     remove(req, res, next) {
         this.authenticate(req, res, next, (token, user) => {
@@ -22,11 +19,9 @@ class UserController extends BaseController {
         },'Admin,Manager');
     }
 
-
     create(req, res) {
         this._userHandler.createNewUser(req, this._responseManager.getDefaultResponseHandler(res));
     }
-
 
     getAll(req, res, next) {
         this.authenticate(req, res, next, (token, user) => {
@@ -34,13 +29,11 @@ class UserController extends BaseController {
         },'Admin,Manager');
     }
 
-
     update(req, res, next) {   
         this.authenticate(req, res, next, (token, user) => {
             this._userHandler.updateUser(req, this._responseManager.getDefaultResponseHandler(res));     
         },'Admin,Manager');    
-    }
-   
+    }   
 }
 
 module.exports = UserController;

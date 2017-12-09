@@ -14,48 +14,34 @@ class JoggingTimeHandler extends BaseAutoBindedClass {
         return {
             'distance':{
                 notEmpty: true,
-                  isNumeric:{
-                    errorMessage: 'Invalid time'
-                },
+                isNumeric:{ errorMessage: 'Distance is not numeric' },
                 errorMessage: 'Invalid distance'
             },
             'time':{
                 notEmpty: true,
-                isNumeric:{
-                    errorMessage: 'Invalid time'
-                },
+                isNumeric:{ errorMessage: 'Time is not numeric' },
                 errorMessage: 'Invalid time'
             },
             'date':{
                 notEmpty: true,
-                isDate:{
-                    errorMessage: 'Invalid date'
-                },
+                isDate:{ errorMessage: 'Invalid date' },
                 errorMessage: 'Invalid date'
             },  
             'userId': {
-                isMongoId: {
-                    errorMessage: 'Invalid user Id'
-                },
+                isMongoId: { errorMessage: 'Invalid user Id' },
                 errorMessage: 'Invalid user Id'
             }
-            
         };
     }
 
-
     createNewTime(req, callback) {
         let data = req.body;
-        let validator = this._validator;
-        
+        let validator = this._validator;       
         req.checkBody(JoggingTimeHandler.JOGGING_TIME_VALIDATION_SCHEME);
-          
         req.getValidationResult()
             .then(function (result) {
- 
                 if (!result.isEmpty()) {
                     let errorMessages = result.array().map(function (elem) {
-
                         return elem.msg;
                     });
                     throw new ValidationError('There are validation errors: ' + errorMessages.join(' && '));
@@ -71,20 +57,11 @@ class JoggingTimeHandler extends BaseAutoBindedClass {
             })
             .then((time) => {
                 time.save();
-
                 return time;
             })
-            .then((saved) => {
-                callback.onSuccess(saved);
-            })
-            .catch((error) => {
-
-                callback.onError(error);
-            });
+            .then((saved) => { callback.onSuccess(saved); })
+            .catch((error) => { callback.onError(error); });
     }
-
-
-
 
     getAll(req, callback) {
         let userId = req.params.userId;

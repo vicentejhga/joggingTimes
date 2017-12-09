@@ -1,10 +1,9 @@
-
 const RevokedToken = require(MODEL_PATH + 'auth/revoked-token').RevokedTokenModel;
 const NotFoundError = require(ERROR_PATH + 'invalid-payload');
 const BaseAutoBindedClass = require(BASE_PACKAGE_PATH + 'base-autobind');
+const ForbiddenError = require(ERROR_PATH + 'forbidden');
 let crypto = require('crypto');
 const SHA_HASH_LENGTH = 64;
-const ForbiddenError = require(ERROR_PATH + 'forbidden');
 
 class AuthHandler extends BaseAutoBindedClass {
     constructor() {
@@ -24,8 +23,6 @@ class AuthHandler extends BaseAutoBindedClass {
         }
     }
 
-
- 
     revokeToken(req,token, callback) {
         let that = this;
         req.checkParams('token', 'Invalid token id provided').notEmpty().isAlphanumeric().isLength(SHA_HASH_LENGTH);
@@ -66,9 +63,7 @@ class AuthHandler extends BaseAutoBindedClass {
         return hashedValid === hashed;
     }
 
-
-    _provideTokenPayload(user) {
-   
+    _provideTokenPayload(user) {   
         return {   
             id: user.id,
             role: user.role,
@@ -85,8 +80,6 @@ class AuthHandler extends BaseAutoBindedClass {
             algorithm: config.jwtOptions.algorithm
         };
     }
-
-
 }
 
 module.exports = AuthHandler;

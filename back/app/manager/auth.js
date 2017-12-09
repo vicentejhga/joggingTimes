@@ -1,7 +1,6 @@
 
 const BaseAutoBindedClass = require(BASE_PACKAGE_PATH + 'base-autobind');
 const JwtRsStrategy = require(AUTH_STRATEGY + 'jwt-rs');
-const SecretKeyAuth = require(AUTH_STRATEGY + 'secret-key');
 const CredentialsAuth = require(AUTH_STRATEGY + 'credentials');
 const ExtractJwt = require("passport-jwt").ExtractJwt;
 const JwtToken = require(MODEL_PATH + 'auth/jwt-token');
@@ -21,11 +20,9 @@ class AuthManager extends BaseAutoBindedClass {
     _setupStrategies() {
         // Init JWT strategy
         let jwtOptions = this._provideJwtOptions();
-        let secretKeyAuth = new SecretKeyAuth({secretKey: this._provideSecretKey()});
         let jwtRs = new JwtRsStrategy(jwtOptions, this._verifyRevokedToken);
         this._strategies.push(jwtRs);
         this._strategies.push(new CredentialsAuth());
-        this._strategies.push(secretKeyAuth);
     }
 
     _verifyRevokedToken(token, payload, callback) {
