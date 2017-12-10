@@ -125,9 +125,11 @@ class JoggingTimeHandler extends BaseAutoBindedClass {
         }
 
     updateTime(req, callback) {
+
         let data = req.body;
         let validator = this._validator;
         req.checkBody(JoggingTimeHandler.JOGGING_TIME_VALIDATION_SCHEME);
+
         req.getValidationResult()
             .then(function (result) {
                 if (!result.isEmpty()) {
@@ -154,8 +156,8 @@ class JoggingTimeHandler extends BaseAutoBindedClass {
         )
         .then((time) => {
             time.date = validator.trim(data.date);
-            time.time = validator.trim(data.time);
-            time.distance = validator.trim(data.distance);
+            time.time = data.time;
+            time.distance = data.distance;
             time.average = data.distance/data.time;
             time.save();
             return time;
