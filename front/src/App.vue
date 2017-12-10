@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <img src="./assets/logo.png">
-
+    <app-menu ></app-menu>  
 <!--
       <loading v-if="loggingIn"/>  --><!--Before you know if the user is logged in or not-->
      <!-- <login v-else-if="!user && $route.meta.requiresLogin"/>
@@ -13,12 +13,17 @@
 </template>
 
 <script>
+import Menu from './components/Menu.vue'
 export default {
-  name: 'app'
+  name: 'app',
+  components: {
+      'app-menu': Menu 
+  }
 }
 </script>
 
 <style>
+
 #app {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;

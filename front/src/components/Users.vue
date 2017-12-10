@@ -1,19 +1,6 @@
 <template>
     	<div class="loginForm">
-			<router-link class="btn btn-default" :to="{ name: 'Home' }">
-              Home
-          	</router-link>
- 			<router-link class="btn btn-default" :to="{ name: 'Times' }">
-              Times
-          	</router-link>
-        
-          	<router-link class="btn btn-default" :to="{ name: 'Weekly' }">
-              Weekly report
-          	</router-link>
-
-          	<router-link class="btn btn-default" :to="{ name: 'Register' }">
-              Log out
-          	</router-link>
+		
 
     <p class="danger" > {{this.error}}</p>
     <h1>Users</h1>

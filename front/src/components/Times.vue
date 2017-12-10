@@ -1,22 +1,7 @@
 <template>
     	<div class="loginForm">
-			<router-link class="btn btn-default" :to="{ name: 'Home' }">
-              Home
-          	</router-link>
-          		<router-link :key="$route.fullPath" class="btn btn-default" :to="{ name: 'Times' }">
-              Times
-          	</router-link>
- 			<router-link class="btn btn-default" :to="{ name: 'Users' }">
-              Users
-          	</router-link>
-        
-          	<router-link class="btn btn-default" :to="{ name: 'Weekly' }">
-              Weekly report
-          	</router-link>
-
-          	<router-link class="btn btn-default" :to="{ name: 'Register' }">
-              Log out
-          	</router-link>
+			
+   
     <h1>Times</h1>
 
     <form @submit.prevent="addTime( )"">
@@ -27,7 +12,7 @@
 	</form> 
 
      <label> Filter from:</label>
-        <input type="date" class="bottomMargin" v-model="filterFrom" @change="updateDateFilter"/>
+        <input type="date" class="bottomMargin" v-model="filterFrom" @change="refreshTable"/>
 
    <table class="table table-striped">
           <thead>
@@ -50,9 +35,9 @@
                     <td> <button @click="editTime(formEditTime)">save</button> </td>
                     <td> <button @click="idToEdit=null">cancel</button> </td>
                 </template>
-                <template v-else>
+                <template v-else>-->
                     <td> {{ dateFormat(row.date) }}  </td>
-                    <td> {{ convertfromSecondsToHMS(row.time) }} </td>-->
+                    <td> {{ convertfromSecondsToHMS(row.time) }} </td>
                     <td> {{ row.distance }} </td>
                     <td> {{ row.average }} </td>  
                     <td> <button @click="updateEditing(row)">edit</button> </td>
@@ -63,20 +48,14 @@
 
         </tbody>
     </table>
-
-
-
-
-
-
-
-
    </div>
 </template>
 
 <script>
 
+
 import router from '../router/index'
+
 
 export default {
   	data () {
@@ -90,9 +69,7 @@ export default {
 		} 
 	},
  	created: function() { 
- 	console.log("creaetd");  
-     	return this.refreshTable();
-
+ 	   	return this.refreshTable();
  	},
 
 
@@ -115,8 +92,10 @@ export default {
 		        });
 
  		},
-    updateDateFilter:function() {
-
+    dateFormat(inputFormat) {
+        let pad = (s) => { return (s < 10) ? '0' + s : s; }
+        var d = new Date( inputFormat );
+        return [pad(d.getDate()), pad(d.getMonth()+1), d.getFullYear()].join('/');
     },
  		convertfromSecondsToHMS:function( seconds ){
     		var date = new Date(null);
@@ -137,8 +116,7 @@ export default {
         }
 
         return new Promise((resolve, reject) => {
-        	console.log("INSIDEEEEE");
-            axios.get( API.times + userId  )
+        	  axios.get( API.times + userId + '/' +  this.filterFrom)
                 .then(response => {
                  this.arrTimes = response.data.data;
                 })
