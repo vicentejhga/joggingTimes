@@ -1,4 +1,3 @@
-
 const BaseAutoBindedClass = require(BASE_PACKAGE_PATH + 'base-autobind');
 const JwtRsStrategy = require(AUTH_STRATEGY + 'jwt-rs');
 const CredentialsAuth = require(AUTH_STRATEGY + 'credentials');
