@@ -16,19 +16,14 @@ window.Store = Store
 Vue.config.productionTip = false
 
 router.beforeEach(function (to, from, next) {
-
- 
     if (to.meta.requiresAuth && !Store.state.authenticated ) {
-        next({
-      		path: '/'
-    	})
+        next({ path: '/' });
     } else {
-    	axios.defaults.headers.common['Authorization'] ='JWT ' + Store.state.tokens.token;
+    	  axios.defaults.headers.common['Authorization'] ='JWT ' + Store.state.tokens.token;
         next()
     }
 })
 
-/* eslint-disable no-new */
 new Vue({
   el: '#app',
   router,
