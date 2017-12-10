@@ -22,7 +22,6 @@ export default {
     }
   },
   updated:function() {
-    console.log(Store);
       this.role = Store.state.currentUser.role;
       this.email = Store.state.currentUser.email;
       this.authenticated= Store.state.authenticated

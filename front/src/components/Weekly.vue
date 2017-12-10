@@ -42,7 +42,7 @@
 					      this.arrReport = response.data.data;
 	          })
 	          .catch(( err )=> {
-	            this.error = err.msg;
+	            this.error = err.response.data.message;          
 	          });
  		},
 

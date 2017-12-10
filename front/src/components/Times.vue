@@ -1,7 +1,7 @@
 <template>
-    	<div class="loginForm">
+    	<div >
 			
-   
+     <p class="danger" > {{this.error}}</p>
     <h1>Times</h1>
 
     <form @submit.prevent="addTime( )"">
@@ -116,7 +116,7 @@ export default {
         return axios.delete( API.times + id,  { 'data':  obj})
             .then(this.refreshTable)
             .catch(( err )=>{
-                this.error=err.message;
+                this.error = err.response.data.message;         
             })  
  
     },
@@ -132,14 +132,10 @@ export default {
 
           axios.put( API.times + obj._id,  obj )
               .then(this.refreshTable)
-              .catch(( err )=>{
-                console.log(err);
-                this.error=err.message;
+              .catch(( err )=>{          
+                this.error = err.response.data.message;         
               })  
     },
-
-
-
 
     dateFormat:function(inputFormat) {
         let pad = (s) => { return (s < 10) ? '0' + s : s; }
@@ -172,34 +168,22 @@ export default {
       },
 
      refreshTable:function(){
+        this.error = '';
         return new Promise((resolve, reject) => {
         	  axios.get( API.times + this.ownerId + '/' +  this.filterFrom)
                 .then(response => {
                  this.arrTimes = response.data.data;
                 })
-                .catch(response => {
-                    console.log(response);
+                .catch(err => {
+                    this.error = err.response.data.message;         
                 })    
         })
-
-
 	 	}	
  	}
 }
-
-
-
 </script>
 <style scoped>
- 	td {
- 		min-width: 200px;
-	}
-
-	input {
-		text-align: center;
-	}
-
-	form {
-		margin-bottom: 20px;	
-	}
+ 	td { min-width: 200px; }
+	input { text-align: center; }
+	form { margin-bottom: 20px;	 }
 </style> 

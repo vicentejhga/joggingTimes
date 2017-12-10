@@ -98,6 +98,7 @@ export default {
 	 	refreshTable:function() {
 			this.editing = null;
  			this.deleting = null;
+      this.error = '';
 	 		axios.get( API.users )   
 	    		.then( ( response ) => {
 	    			this.formNewUser = { 
