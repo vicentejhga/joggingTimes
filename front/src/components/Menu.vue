@@ -1,7 +1,7 @@
 <template>
 	<div v-if="this.$route.path!='/'&&this.$route.path!='/register'">
 	   <router-link class="btn btn-default" :to="{ name: 'Home' }" v-bind:class="{active:this.$route.path=='/home'}">
-        Home{{role}}
+        Home
   	 </router-link>
   		<router-link class="btn btn-default" :to="{ name: 'Times' }" v-bind:class="{active:this.$route.path=='/times'}">
         Times
@@ -24,11 +24,11 @@ export default {
   name: 'menu',
   data() {
       return {
-          role:''
+          role:Store.state.currentUser.role
       }
   },
   updated:function() {
-      this.role =Store.state.currentUser.role;
+      this.role = Store.state.currentUser.role;
   },
   
   methods:{
