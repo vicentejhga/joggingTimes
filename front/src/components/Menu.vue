@@ -24,7 +24,7 @@ export default {
   name: 'menu',
   data() {
       return {
-          role:Store.state.currentUser.role
+          role:''
       }
   },
   updated:function() {

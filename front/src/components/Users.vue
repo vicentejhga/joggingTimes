@@ -50,7 +50,7 @@
                     <td v-else>
                     	<button @click="editing=row" class="btn btn-info">Edit</button>
                     	<button @click="deleting=row" class="btn btn-danger">Delete</button>
-                    	<button  @click="redirectUserTimes(row)" class="btn btn-secondary">Times</button>
+                    	<button  @click="redirectUserTimes(row)" class="btn btn-secondary" v-if="role=='Admin'">Times</button>
                     </td>   
                 </template>             
             </tr>
@@ -70,7 +70,8 @@ export default {
  			formNewUser:{ 'firstName':'','lastName':'','email':'','password':''},
  			error:'',
  			editing: null,
- 			deleting: null
+ 			deleting: null,
+      role: Store.state.currentUser.role
 		} 
 	},
  	created: function() {   
