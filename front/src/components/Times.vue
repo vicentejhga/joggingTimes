@@ -1,10 +1,13 @@
 <template>
     <div >	
         <p class="danger" > {{this.error}}</p>
-        <h1>Times</h1>
+        <div class="alert alert-success"  v-if="managedUser!=null">
+            <h3>Modifying {{managedUser.email}} 's times</h3>
+        </div>     
+        <h1 v-else>Times</h1>
 
         <form @submit.prevent="addTime( )"">
-    		    <input type="date" v-model="formNewTime.date" placeholder="Date"/> 
+    		<input type="date" v-model="formNewTime.date" placeholder="Date"/> 
           	<input type="text" v-model="formNewTime.time" placeholder="Time ( hh:mm:ss )"/> 
           	<input type="number" v-model="formNewTime.distance" placeholder="Distance (Km)"/> 
             <button class="btn btn-primary" >Create Time</button>
@@ -69,15 +72,18 @@
        			editing: null,
        			deleting: null,
                 idToEdit: null, 
-                utility: utility
+                utility: utility,
+                managedUser: null
     		    } 
     	},
 
      	created: function() { 
             if ( typeof( this.$route.params.user ) != "undefined" ) {
                 this.ownerId = this.$route.params.user;
+                this.managedUser = Store.state.managedUser;
             } else {
                 this.ownerId = Store.state.currentUser.id;
+                this.managedUser = null;
             }
        	   	return this.refreshTable();
        	},
@@ -94,7 +100,7 @@
                    
       	        axios.post( API.times, objParams )
         	        	.then(()=> {
-        	        		  this.formNewTime =  {'date':'','time':'','distance':''} 
+        	        		this.formNewTime =  {'date':'','time':'','distance':''} 
         	        	})
                 		.then( this.refreshTable )
                 		.catch(( err )=> { this.error = err.response.data.message; });
@@ -106,8 +112,7 @@
                 let obj = { 'userId': this.ownerTimes };    
                 return axios.delete( API.times + id, { 'data':  obj})
                     .then(this.refreshTable)
-                    .catch(( err )=>{ this.error = err.response.data.message; })  
-         
+                    .catch(( err )=>{ this.error = err.response.data.message; })           
             },
 
             editTime:function(){

@@ -135,6 +135,7 @@
         	 	},
 
         	 	redirectUserTimes:function( objUser ) {
+                Store.dispatch('setUserToModify', objUser);
         	 		  router.push('/times/'+ objUser._id);
         	 	}
         }

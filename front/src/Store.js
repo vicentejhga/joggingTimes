@@ -19,7 +19,8 @@ const Store = new Vuex.Store({
             email: null,
             role: null,
             id: null
-        } 
+        },
+        managedUser: { }
     },
 
     actions: {
@@ -58,6 +59,10 @@ const Store = new Vuex.Store({
                         reject(response)
                     })    
             })
+        },
+
+        setUserToModify(context, user ) {
+            context.commit('updateManagedUser', user);
         }
     },
 
@@ -71,8 +76,13 @@ const Store = new Vuex.Store({
             state.currentUser = user;
             state.currentUser.id = user._id;
         } ,
+
         cleanState(state){
             state.authenticated = false;
+        },
+
+        updateManagedUser(state,user){
+            state.managedUser = user;
         }
     }
 })
