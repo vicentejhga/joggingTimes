@@ -41,7 +41,7 @@
                     <td> {{ dateFormat(row.date) }}  </td>
                     <td> {{ convertfromSecondsToHMS(row.time) }} </td>
                     <td> {{ row.distance }} </td>
-                    <td> {{ row.average }} </td>  
+                    <td> {{ Math.round(row.average*1000)/1000 }} </td>  
                     <td v-if="deleting==row"> 
                         <button @click="deleteTime(row)"  class="btn btn-danger">Delete</button>  
                         <button @click="deleting=null" class="btn btn-secondary">Cancel</button> 
@@ -128,7 +128,7 @@ export default {
           '_id': this.formEditTime._id,
           'userId': this.formEditTime.userId,
       };
-
+        this.idToEdit=null;
 
           axios.put( API.times + obj._id,  obj )
               .then(this.refreshTable)

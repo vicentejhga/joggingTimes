@@ -17,37 +17,44 @@ export default new Router({
     {
       path: '/register',
       name: 'Register',
-      component: Register
+      component: Register,
+      meta: { requiresAuth: false }
     },
     {
       path: '/',
       name: 'Login',
-      component: Login
+      component: Login,
+      meta: { requiresAuth: false }
     }, 
     {
       path: '/home',
       name: 'Home',
-      component: Home
+      component: Home,
+      meta: { requiresAuth: true }
     },
      {
       path: '/times/:user',
       name: 'UserTimes',
-      component: Times
+      component: Times,
+      meta: { requiresAuth: true }
     },
     {
       path: '/times',
       name: 'Times',
-      component: Times
+      component: Times,
+      meta: { requiresAuth: true }
     }, 
     {
       path: '/weekly',
       name: 'Weekly',
-      component: Weekly
+      component: Weekly,
+      meta: { requiresAuth: true }
     }, 
     {
       path: '/users',
       name: 'Users',
-      component: Users
+      component: Users,
+      meta: { requiresAuth: true }
     }
   ]
 })

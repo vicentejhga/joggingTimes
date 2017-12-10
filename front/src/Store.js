@@ -14,6 +14,7 @@ const Store = new Vuex.Store({
             refresh_token: null,
             token_type: null
         },
+        authenticated: false,
         currentUser: {
             name: null,
             surname: null,
@@ -38,13 +39,17 @@ const Store = new Vuex.Store({
 
                         responseData.expires_in = responseData.expires_in + now
                         context.commit('updateTokens', responseData)
-
+                        
                         resolve(response)
                     })
                     .catch(response => {
                         reject(response)
                     })
             })
+        },   
+        logout(context) {
+            context.commit('cleanState');
+          
         },
 
         getUser( context, id ) {
@@ -67,6 +72,7 @@ const Store = new Vuex.Store({
     mutations: {
         updateTokens(state, tokens) {
             state.tokens = tokens
+            state.authenticated = true;
             axios.defaults.headers.common['Authorization'] = 'JWT ' + tokens.token;
         },
         updateUser(state, user) {
@@ -75,7 +81,11 @@ const Store = new Vuex.Store({
             state.currentUser.surname = user.lastName;
             state.currentUser.role = user.role;
             state.currentUser.email = user.email;
-        } 
+        } ,
+        cleanState(state){
+            state.authenticated = false;
+        
+        }
     }
 
 })

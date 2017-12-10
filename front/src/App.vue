@@ -1,23 +1,18 @@
 <template>
   <div id="app">
-    <img src="./assets/logo.png">
+    <img src="./assets/logo.png">  
     <app-menu ></app-menu>  
-<!--
-      <loading v-if="loggingIn"/>  --><!--Before you know if the user is logged in or not-->
-     <!-- <login v-else-if="!user && $route.meta.requiresLogin"/>
-      <denied v-else-if="!user.pages.includes($route.name)"/>
-      <router-view v-else/> 
-    -->
     <router-view :key="$route.fullPath"></router-view>
   </div>
 </template>
 
 <script>
 import Menu from './components/Menu.vue'
+
 export default {
   name: 'app',
-  components: {
-      'app-menu': Menu 
+  components: { 
+      'app-menu': Menu
   }
 }
 </script>
