@@ -85,7 +85,8 @@ export default {
  			formNewTime: {'date':'','time':'','distance':''},
  			error:'',
  			editing: null,
- 			deleting: null
+ 			deleting: null,
+      filterFrom: ''
 		} 
 	},
  	created: function() { 
@@ -94,12 +95,7 @@ export default {
 
  	},
 
- 
- 	mounted:function(){
- 		console.log("updated");
- 		return this.refreshTable();
 
- 	}, 
  	methods:{
  		addTime:function() {
 			let objParams = {
@@ -119,7 +115,9 @@ export default {
 		        });
 
  		},
+    updateDateFilter:function() {
 
+    },
  		convertfromSecondsToHMS:function( seconds ){
     		var date = new Date(null);
         	date.setSeconds(seconds); // specify value for SECONDS here

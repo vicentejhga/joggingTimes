@@ -8,7 +8,7 @@
       <denied v-else-if="!user.pages.includes($route.name)"/>
       <router-view v-else/> 
     -->
-    <router-view></router-view>
+    <router-view :key="$route.fullPath"></router-view>
   </div>
 </template>
 
