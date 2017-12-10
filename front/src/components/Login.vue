@@ -19,8 +19,7 @@
 
                     <div class="text-center">
                         <button class="btn btn-primary">Login</button>
-                        <br><br>
-
+                    
                         <router-link class="btn btn-default" :to="{ name: 'Register' }">
                             Register
                         </router-link>
@@ -32,7 +31,8 @@
 </template>
 
 <script>
-   import router from '../router/index'
+    import router from '../router/index'
+    
     export default {
         data() {
             return {
@@ -50,10 +50,10 @@
                         return Store.dispatch('getUser', response.data.data.userId );
                     })
                     .then(()=>{ router.push('/home'); })
-                    .catch(response => {  
+                    .catch( response => {  
                         this.error = response.response.data.message;                     
                     })
             }
-        },
+        }
     }
 </script>
