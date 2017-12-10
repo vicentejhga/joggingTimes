@@ -76,8 +76,8 @@ export default {
        			editing: null,
        			deleting: null,
             filterFrom: '',
-            ownerId:'',
-            idToEdit:null
+            ownerId: '',
+            idToEdit: null
 		    } 
 	},
  	created: function() { 
@@ -93,9 +93,9 @@ export default {
  	methods:{
  		addTime:function() {
 			   let objParams = {
-								'date':this.formNewTime.date,
-								'time':this.convertHMSToSeconds(this.formNewTime.time),
-								'distance':this.formNewTime.distance,
+								'date': this.formNewTime.date,
+								'time': this.convertHMSToSeconds(this.formNewTime.time),
+								'distance': this.formNewTime.distance,
                 'userId': this.ownerId
 			  				};
            

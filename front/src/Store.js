@@ -9,10 +9,8 @@ const Store = new Vuex.Store({
 
     state: {
         tokens: {
-            access_token: null,
-            expires_in: null,
-            refresh_token: null,
-            token_type: null
+            token: null,
+            userId: null
         },
         authenticated: false,
         currentUser: {
@@ -35,11 +33,7 @@ const Store = new Vuex.Store({
                 axios.post(API.auth, data)
                     .then(response => {
                         let responseData = response.data.data
-                        let now = Date.now()
-
-                        responseData.expires_in = responseData.expires_in + now
-                        context.commit('updateTokens', responseData)
-                        
+                        context.commit('updateTokens', responseData)                        
                         resolve(response)
                     })
                     .catch(response => {
@@ -47,9 +41,9 @@ const Store = new Vuex.Store({
                     })
             })
         },   
-        logout(context) {
-            context.commit('cleanState');
-          
+
+        logout( context ) {
+            context.commit('cleanState'); 
         },
 
         getUser( context, id ) {
@@ -65,8 +59,6 @@ const Store = new Vuex.Store({
                     })    
             })
         }
-
-
     },
 
     mutations: {
@@ -76,18 +68,13 @@ const Store = new Vuex.Store({
             axios.defaults.headers.common['Authorization'] = 'JWT ' + tokens.token;
         },
         updateUser(state, user) {
+            state.currentUser = user;
             state.currentUser.id = user._id;
-            state.currentUser.name = user.firstName;
-            state.currentUser.surname = user.lastName;
-            state.currentUser.role = user.role;
-            state.currentUser.email = user.email;
         } ,
         cleanState(state){
             state.authenticated = false;
-        
         }
     }
-
 })
 
 export default Store
