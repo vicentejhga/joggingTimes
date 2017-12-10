@@ -35,8 +35,8 @@
                         </td>
                     </template>
                     <template v-else>
-                        <td> {{ dateFormat(row.date) }}  </td>
-                        <td> {{ convertfromSecondsToHMS(row.time) }} </td>
+                        <td> {{ utility.dateFormat(row.date) }}  </td>
+                        <td> {{ utility.convertfromSecondsToHMS(row.time) }} </td>
                         <td> {{ row.distance }} </td>
                         <td> {{ Math.round(row.average*1000)/1000 }} </td>  
                         <td v-if="deleting==row"> 
@@ -44,7 +44,7 @@
                             <button @click="deleting=null" class="btn btn-secondary">Cancel</button> 
                         </td>
                         <td v-else>
-                            <button @click="updateEditing(row)" class="btn btn-info">Edit</button>
+                            <button @click="prepareForEdition(row)" class="btn btn-info">Edit</button>
                             <button @click="deleting=row" class="btn btn-danger">Delete</button>
                         </td>                      
                     </template>
@@ -55,24 +55,25 @@
 </template>
 
 <script>
-    import router from '../router/index'
+    import utility from '../utility/date.js'
 
     export default {
       	data () {
           	return {
-           			arrTimes: [],
+       			arrTimes: [],
                 formEditTime:{},
-           			formNewTime: {'date':'','time':'','distance':''},
-           			error:'',
-           			editing: null,
-           			deleting: null,
+       			formNewTime: {'date':'','time':'','distance':''},
+       			error:'',
                 filterFrom: '',
                 ownerId: '',
-                idToEdit: null
+       			editing: null,
+       			deleting: null,
+                idToEdit: null, 
+                utility: utility
     		    } 
-    	  },
+    	},
 
-     	  created: function() { 
+     	created: function() { 
             if ( typeof( this.$route.params.user ) != "undefined" ) {
                 this.ownerId = this.$route.params.user;
             } else {
@@ -83,11 +84,11 @@
 
 
        	methods:{
-         		addTime:function() {
-        			  let objParams = {
-        								'date': this.formNewTime.date,
-        								'time': this.convertHMSToSeconds(this.formNewTime.time),
-        								'distance': this.formNewTime.distance,
+         	addTime:function() {
+        		let objParams = {
+						'date': this.formNewTime.date,
+						'time': this.utility.convertHMSToSeconds(this.formNewTime.time),
+						'distance': this.formNewTime.distance,
                         'userId': this.ownerId
         			  };
                    
@@ -113,7 +114,7 @@
                 let obj = {
                     'date': this.formEditTime.date,
                     'distance': this.formEditTime.distance,
-                    'time': this.convertHMSToSeconds(this.formEditTime.time),
+                    'time': this.utility.convertHMSToSeconds(this.formEditTime.time),
                     '_id': this.formEditTime._id,
                     'userId': this.formEditTime.userId,
                 };
@@ -124,40 +125,23 @@
                         .catch(( err )=> { this.error = err.response.data.message; })  
             },
 
-            dateFormat:function(inputFormat) {
-                let pad = (s) => { return (s < 10) ? '0' + s : s; }
-                var d = new Date( inputFormat );
-                return [pad(d.getDate()), pad(d.getMonth()+1), d.getFullYear()].join('/');
-            },
-
-         		convertfromSecondsToHMS:function( seconds )  {   
-            		  var date = new Date(null);
-                	date.setSeconds(seconds); 
-                	return date.toISOString().substr(11, 8);
-            },
-
-            convertHMSToSeconds:function( hms ){
-                var a = hms.split(':'); 
-                return (+a[0]) * 60 * 60 + (+a[1]) * 60 + (+a[2]); 
-            },
-              
-            updateEditing:function( row ) {
-                this.idToEdit = row._id;
-                this.formEditTime = row;
-                this.formEditTime.date = row.date.substr(0, 10);
-                this.formEditTime.time = this.convertfromSecondsToHMS(row.time);
-                this.formEditTime.distance= row.distance;
-                return this.refreshTable();        
-            },
-
             refreshTable:function(){
                 this.error = '';
                 return new Promise((resolve, reject) => {
-                	  axios.get( API.times + this.ownerId + '/' +  this.filterFrom)
+                      axios.get( API.times + this.ownerId + '/' +  this.filterFrom)
                         .then(response => { this.arrTimes = response.data.data; })
                         .catch(err => { this.error = err.response.data.message; })    
                 })
-        	 	}	
+            },
+
+            prepareForEdition:function( row ) {
+                this.idToEdit = row._id;
+                this.formEditTime = row;
+                this.formEditTime.date = row.date.substr(0, 10);
+                this.formEditTime.time = this.utility.convertfromSecondsToHMS(row.time);
+                this.formEditTime.distance= row.distance;
+                return this.refreshTable();        
+            }  
         }
     }
 </script>

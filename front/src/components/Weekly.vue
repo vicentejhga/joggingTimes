@@ -22,11 +22,14 @@
 </template>
 
 <script>  
+    import utility from '../utility/date.js'
+
     export default {
         name: 'Weekly', 
         data () {
             return {
                arrReport:[],
+               utility: utility,
                error:''
             }  
         },
@@ -42,17 +45,11 @@
  		    },
 
      		methods: {
-            dateFormat(inputFormat) {
-              let pad = (s) => { return (s < 10) ? '0' + s : s; }
-              var d = new Date( inputFormat );
-              return [pad(d.getDate()), pad(d.getMonth()+1), d.getFullYear()].join('/');
-            },
-
           	getDateFromWeekNumber: function( objDate ) {
         				var d = new Date("Jan 01, "+ objDate.year +" 01:00:00");
         				var w = d.getTime() + 604800000 * (objDate.week-1);
-        				var n1 = this.dateFormat( new Date(w)) ;
-        				var n2 = this.dateFormat( new Date(w + 518400000) );
+        				var n1 = this.utility.dateFormat( new Date(w)) ;
+        				var n2 = this.utility.dateFormat( new Date(w + 518400000) );
         				return n1 + " to " + n2;
           	}
       	}
