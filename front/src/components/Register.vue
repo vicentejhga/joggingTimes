@@ -29,14 +29,10 @@
                             <input type="password" class="form-control" id="password" placeholder="Your password" v-model="user.password">
                             <p class="help-block" v-for="error in errors.password">{{ error }}</p>
                         </div>
-
                     </div>
 
                     <div class="text-center">
                         <button class="btn btn-primary">Register</button>
-
-                        <br><br>
-
                         <router-link class="btn btn-default" :to="{ name: 'Login' }">
                             Login
                         </router-link>
@@ -78,22 +74,15 @@
                 axios.post(API.auth, user)
                     .then(response => {
                         this.resetUser()
-
-                        let successMessage = response.data.message
-
-                        alert(successMessage)
+                        let successMessage = response.data.message                   
                     })
                     .catch(error => {
-                        let data = error.response.data
-         
+                        let data = error.response.data       
                         for(let key in this.errors) {
                             // reset all errors
                             this.errors[key] = []
 
                             let errorMessage = data[key]
-
-                            console.log('key', key)
-                            console.log('errorMessage', errorMessage)
 
                             if(errorMessage)
                                 this.errors[key] = errorMessage

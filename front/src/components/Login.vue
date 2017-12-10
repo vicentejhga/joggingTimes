@@ -43,6 +43,7 @@
                 error:''
             }
         },
+        
         methods: {
             login(user) {
                 Store.dispatch('login', user)
