@@ -16,6 +16,56 @@ Two independent folders to separate the back-end and front-end logic .<br/>
 
 To know more, each one of them has their own README.md
 
+# Installation
+## Prerequisites
++ Node
++ Github
++ Mongodb ( https://www.liquidweb.com/kb/how-to-install-mongodb-on-centos-6/ )
+
+## Clone repositorie
+```git clone git@git.toptal.com:Vicente-Jose-Hernandez-Garcia/vicente-jose-hernandez-garcia.git```
+
+## Install dependencies in back folder
+```
+cd vicente-jose-hernandez-garcia/back
+npm install
+```
+
+## Install dependencies in front folder
+```
+cd ../front
+```
+Install vue-cli ( https://github.com/vuejs/vue-cli )
+```
+npm install -g vue-cli
+
+```
+Install package.json dependencies
+
+```
+npm install
+
+```
+
+## Create a webpack template
+vue init webpack 
+
+```
+  Generate project in current directory? (Y/n) Y
+  Project name: intro
+  Project description: intro
+  Author: intro
+  Install vue-router? (Y/n)Y
+  Use ESLint to lint your code? (Y/n)Y  
+    Standard
+  Set up unit tests (Y/n)n
+  Setup e2e tests with Nightwatch? (Y/n)n
+
+```
+```
+npm install
+npm run dev
+```
 
 
 # Credentials ( In my local )
