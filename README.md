@@ -10,9 +10,9 @@
 + All actions need to be done client side using AJAX, refreshing the page is not acceptable.
 
 # Structure
-Two independent folders to separate the back-end and front-end logic .
-Back-end: RESTfull Web service in NodeJS
-Front-end: VueJS tool
+Two independent folders to separate the back-end and front-end logic .<br/>
++ Back-end: RESTfull Web service in NodeJS
++ Front-end: VueJS tool
 
 To know more, each one of them has their own README.md
 
