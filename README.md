@@ -35,21 +35,23 @@ npm install
 ```
 cd ../front
 ```
+
 Install vue-cli ( https://github.com/vuejs/vue-cli )
-```
-npm install -g vue-cli
 
 ```
+npm install -g vue-cli
+```
+
 Install package.json dependencies
 
 ```
 npm install
-
 ```
 
 ## Create a webpack template
+```
 vue init webpack 
-
+```
 ```
   Generate project in current directory? (Y/n) Y
   Project name: intro
@@ -60,7 +62,6 @@ vue init webpack
     Standard
   Set up unit tests (Y/n)n
   Setup e2e tests with Nightwatch? (Y/n)n
-
 ```
 ```
 npm install
