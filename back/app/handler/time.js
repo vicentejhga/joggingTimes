@@ -157,8 +157,8 @@ class JoggingTimeHandler extends BaseAutoBindedClass {
         .then((time) => {
             time.date = validator.trim(data.date);
             time.time = data.time;
-            time.distance = data.distance;
-            time.average = data.distance/data.time;
+            time.distance = data.distance;    
+            time.average = Math.round((data.distance/data.time*60*60)*100)/100
             time.save();
             return time;
         })
