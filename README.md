@@ -75,7 +75,7 @@ npm run dev
 email: admin@gmail.com 
 password: admin
 ```
- ### Manager
+### Manager
 ``` 
 email: manager1@gmail.com 
 password: manager
@@ -84,7 +84,7 @@ password: manager
 email: manager2@gmail.com 
 password: manager
 ```
- ### Normal
+### Normal
 ``` 
 email: normal1@gmail.com 
 password: normal
