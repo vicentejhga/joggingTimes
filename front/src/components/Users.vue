@@ -121,8 +121,9 @@
         	 	updateUser:function( objUser ) { 		
         			  axios.put( API.users + objUser._id,  objUser )
         	 			    .then( this.refreshTable )
-                		.catch(( err )=> {			        	
-        		            this.error = err.response.data.message;			    
+                		.catch(( err )=> {	
+                    console.log(err);	
+                        this.error = err.response.data.message;			    
         		        });
         	 	},
 

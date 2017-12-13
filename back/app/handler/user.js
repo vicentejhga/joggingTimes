@@ -124,10 +124,11 @@ class UserHandler {
         req.getValidationResult()
             .then(function (result) {
                 if (!result.isEmpty()) {
-                    let errorMessages = result.array().map(function (elem) {
-                        return elem.msg;
-                    });
-                    throw new ValidationError('There are validation errors: ' + errorMessages.join(' && '));
+                    console.log(result);
+    
+
+                   throw new ValidationError('Duplicated user');
+                    
                 }
                 return new Promise(function (resolve, reject) {
                     UserModel.findOne({_id: req.params.id}, function (err, user) {

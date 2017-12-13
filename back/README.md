@@ -12,7 +12,7 @@ The restfull API recognize 3 user roles: Admin, Manager, Normal. [Itself] it's n
 
 ## Request
 ### Auth
-[POST]=> /auth/   
+[POST]=> /auth/    <br/>
 + Create and get token
 + Parameters: {email,password} 
 + Response: { token, userId } 
